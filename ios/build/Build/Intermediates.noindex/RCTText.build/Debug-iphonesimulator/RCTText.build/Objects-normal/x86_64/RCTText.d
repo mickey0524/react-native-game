@@ -1,0 +1,21 @@
+dependencies: \
+  /Users/baihao/github/game/node_modules/react-native/Libraries/Text/RCTText.m \
+  /Users/baihao/github/game/node_modules/react-native/Libraries/Text/RCTText.h \
+  /Users/baihao/github/game/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTUtils.h \
+  /Users/baihao/github/game/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTAssert.h \
+  /Users/baihao/github/game/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTDefines.h \
+  /Users/baihao/github/game/ios/build/Build/Products/Debug-iphonesimulator/include/React/UIView+React.h \
+  /Users/baihao/github/game/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTComponent.h \
+  /Users/baihao/github/game/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGEnums.h \
+  /Users/baihao/github/game/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGMacros.h \
+  /Users/baihao/github/game/node_modules/react-native/Libraries/Text/RCTShadowText.h \
+  /Users/baihao/github/game/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTShadowView.h \
+  /Users/baihao/github/game/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTRootView.h \
+  /Users/baihao/github/game/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBridge.h \
+  /Users/baihao/github/game/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBridgeDelegate.h \
+  /Users/baihao/github/game/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTJavaScriptLoader.h \
+  /Users/baihao/github/game/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBridgeModule.h \
+  /Users/baihao/github/game/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTFrameUpdate.h \
+  /Users/baihao/github/game/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTInvalidating.h \
+  /Users/baihao/github/game/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/Yoga.h \
+  /Users/baihao/github/game/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTTextDecorationLineType.h
