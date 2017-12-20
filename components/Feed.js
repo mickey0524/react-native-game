@@ -23,14 +23,22 @@ export default class Feed extends Component {
       isRefreshing: false,
     }
     this.isEndReached = false;
-    this.onClickText = this.onClickText.bind(this);
     this.fetchData = this.fetchData.bind(this);
     this.onEndReached = this.onEndReached.bind(this);
+    this.onPressItem = this.onPressItem.bind(this);
+    this.renderItem = this.renderItem.bind(this);
   }
 
-  onClickText() {
+  /**
+   * 点击feed流item跳转详情页
+   * @param {object} item feed流元素数据 
+   */
+  onPressItem(item) {
     const { navigate } = this.props.navigation;
-    navigate('Detail', {});
+    if (item.type == 'article') {
+      let articleId = /groupid=(.*)$/gi.exec(item.article_url)[1];
+      navigate('ArticleDetail', { source: `https://open.toutiao.com/a${articleId}/` });
+    }
   }
 
   /**
@@ -78,7 +86,7 @@ export default class Feed extends Component {
    */
   renderItem({ item }) {
     return (
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => this.onPressItem(item)}>
         {
           item.type == 'card' ? <GameCell gameInfo={item} />
             : item.article_type == 3 ? <ArticleThreeImgCell articleInfo={item} />

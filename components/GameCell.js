@@ -13,10 +13,6 @@ class GameCell extends Component {
     super(props)
   }
 
-  onLoadImg(ev) {
-    console.log(ev.nativeEvent);
-  }
-
   render() {
     let imgUrl = this.props.gameInfo.image_list[0].replace('img', 'obj');
     imgUrl = imgUrl.replace('http', 'https');
@@ -26,8 +22,7 @@ class GameCell extends Component {
           { this.props.gameInfo.title }
         </Text>
         <Image style={styles.gameImg} 
-          source={{ uri: imgUrl }}
-          onLoad={this.onLoadImg} />
+          source={{ uri: imgUrl }} />
         <View style={styles.gameInfo}>
           <Text style={styles.gameName}>{ this.props.gameInfo.name }</Text>
           <View style={styles.download}>

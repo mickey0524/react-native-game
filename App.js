@@ -2,11 +2,12 @@ import { AppRegistry } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 
 import Feed from './components/Feed';
-import Detail from './components/Detail';
+import { ArticleDetail, CardDetail } from './components/Detail';
 
 const App = StackNavigator({
   Feed: { screen: Feed },
-  Detail: { screen: Detail },
+  ArticleDetail: { screen: ArticleDetail },
+  CardDetail: { screen: CardDetail },
 });
 
 export default App;
