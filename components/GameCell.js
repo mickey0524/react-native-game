@@ -13,6 +13,10 @@ class GameCell extends Component {
     super(props)
   }
 
+  onLoadImg(ev) {
+    console.log(ev.nativeEvent);
+  }
+
   render() {
     let imgUrl = this.props.gameInfo.image_list[0].replace('img', 'obj');
     imgUrl = imgUrl.replace('http', 'https');
@@ -22,7 +26,8 @@ class GameCell extends Component {
           { this.props.gameInfo.title }
         </Text>
         <Image style={styles.gameImg} 
-          source={{ uri: imgUrl }}/>
+          source={{ uri: imgUrl }}
+          onLoad={this.onLoadImg} />
         <View style={styles.gameInfo}>
           <Text style={styles.gameName}>{ this.props.gameInfo.name }</Text>
           <View style={styles.download}>
@@ -36,10 +41,6 @@ class GameCell extends Component {
 
 const styles = StyleSheet.create({
   gameWrap: {
-    borderColor: '#F4F5F6',
-    borderStyle: 'solid',
-    borderTopWidth: 6,
-    borderBottomWidth: 6,
     padding: 15,
   },
   gameTitle: {
@@ -51,15 +52,17 @@ const styles = StyleSheet.create({
     width: 345,
     height: 194,
     marginBottom: 10,
+    backgroundColor: '#F4F5F6',
   },
   gameInfo: {
     flex: 1,
     flexDirection: 'row',
+    alignItems: 'center',
   },
   gameName: {
     fontSize: 12,
     color: '#999999',
-    marginRight: 7,
+    marginRight: 5,
   },
   download: {
     width: 60,
