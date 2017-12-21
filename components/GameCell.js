@@ -26,6 +26,7 @@ class GameCell extends Component {
         <View style={styles.gameInfo}>
           <Text style={styles.gameName}>{ this.props.gameInfo.name }</Text>
           <View style={styles.download}>
+            <Image source={require('../assets/download.png')} style={styles.downloadIcon} />
             <Text style={styles.downloadText}>APP下载</Text>
           </View>
         </View>
@@ -65,12 +66,21 @@ const styles = StyleSheet.create({
     backgroundColor: '#2A90D7',
     borderRadius: 3,
     overflow: 'hidden',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 5,
   },
   downloadText: {
     fontSize: 10,
     color: '#FFF',
     textAlign: 'center',
-  }
+  },
+  downloadIcon: {
+    width: 8,
+    height: 8,
+  },
 });
 
 export {
