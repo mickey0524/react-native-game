@@ -7,9 +7,10 @@ import {
   Image,
   ImageBackground,
   FlatList,
+  ScrollView,
 } from 'react-native';
 
-const PixelRatio = require('PixelRatio');
+const PixelRatio = require('PixelRatio').get();
 const Dimensions = require('Dimensions');
 const { width: totalWidth, height: totalHeight } = Dimensions.get('window');
 const detailData = require("../conf/detailMock.json");
@@ -45,16 +46,28 @@ class CardDetail extends Component {
 
   constructor(props) {
     super(props)
+    this.state = {
+      isDescShrink: true,
+    }
+    this.showText = this.showText.bind(this);
   }
 
   componentWillMount() {
     this.detailData = detailData;
   }
+
+  showText() {
+    let isDeskShrink = this.state.isDescShrink;
+    this.setState({
+      isDescShrink: !isDeskShrink,
+    });
+  }
   
   render() {
     let { banner, content, desc, message, recommend } = this.detailData;
+    desc = { spread: desc, shrink: desc.slice(0, 45) + '...' };
     return (
-      <View>
+      <ScrollView style={{backgroundColor: '#FFF'}}>
         <ImageBackground style={styles.imageBackground} source={{ uri: banner.background }}>
           <View style={styles.bannerWrap}>
             <Image style={styles.bannerIcon} source={{ uri: banner.icon }} />
@@ -68,7 +81,8 @@ class CardDetail extends Component {
             </View>
           </View>
         </ImageBackground>
-        <View style={styles.contentWrap}>
+
+        <View style={[styles.contentWrap, styles.viewBottomBorder]}>
           <FlatList
             horizontal={true}
             ItemSeparatorComponent={() => <View style={{ width: 3 }} />}
@@ -89,7 +103,17 @@ class CardDetail extends Component {
             }
           </View>
         </View>
-      </View>
+
+        <View style={styles.viewBottomBorder}>
+          <View style={styles.descTitle}>
+            <Text style={styles.descTitleText}>应用描述</Text>
+          </View>
+          { this.state.isDescShrink ? 
+            <Text style={styles.descContent}>{desc.shrink}<Text style={styles.showText} onPress={this.showText}>更多</Text></Text> :
+            <Text style={styles.descContent}>{desc.spread}<Text style={styles.showText} onPress={this.showText}>收起</Text></Text>
+          }
+        </View>
+      </ScrollView>
     );
   }
   
@@ -104,6 +128,11 @@ const styles = StyleSheet.create({
   webview: {
     width: totalWidth,
     height: totalHeight,
+  },
+  viewBottomBorder: {
+    borderBottomWidth: 6,
+    borderColor: '#F4F5F6',
+    borderStyle: 'solid',
   },
 
   imageBackground: {
@@ -154,10 +183,7 @@ const styles = StyleSheet.create({
   },
 
   contentWrap: {
-    backgroundColor: '#FFF',
-    borderBottomWidth: 6,
-    borderColor: '#F4F5F6',
-    borderStyle: 'solid',
+    marginTop: 2,
   },
   contentImg: {
     width: 135,
@@ -174,14 +200,35 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     backgroundColor: '#F4F5F6',
     borderWidth: 1 / PixelRatio,
-    borderColor: '#E8E8E8',
     borderStyle: 'solid',
+    borderColor: '#E8E8E8',
     borderRadius: 4,
     overflow: 'hidden',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-  }
+  },
+
+  descTitle: {
+    paddingLeft: 15,
+    paddingVertical: 9,
+    borderBottomWidth: 1 / PixelRatio,
+    borderStyle: 'solid',
+    borderColor: '#E8E8E8',
+  },
+  descTitleText: {
+    fontSize: 14,
+    color: '#222',
+  },
+  descContent: {
+    padding: 15,
+    fontSize: 14,
+    color: '#999',
+    lineHeight: 20,
+  },
+  showText: {
+    color: '#406599',
+  },
 });
 
 export {
