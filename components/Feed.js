@@ -7,9 +7,7 @@ import { FEED } from '../conf/api';
 
 const Platform = require('Platform');
 const Dimensions = require('Dimensions');
-
-let totalWidth = Dimensions.get('window').width;
-let totalHeight = Dimensions.get('window').height;
+const { width: totalWidth, height: totalHeight } = Dimensions.get('window');
 export default class Feed extends Component {
 
   static navigationOptions = {
@@ -38,6 +36,9 @@ export default class Feed extends Component {
     if (item.type == 'article') {
       let articleId = /groupid=(.*)$/gi.exec(item.article_url)[1];
       navigate('ArticleDetail', { source: `https://open.toutiao.com/a${articleId}/` });
+    } else {
+      let cardId = item.app_info.download_info.id;
+      navigate('CardDetail', { cardId });
     }
   }
 
