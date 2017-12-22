@@ -14,6 +14,7 @@ const PixelRatio = require('PixelRatio').get();
 const Dimensions = require('Dimensions');
 const { width: totalWidth, height: totalHeight } = Dimensions.get('window');
 const detailData = require("../conf/detailMock.json");
+const SHRINK_BASE = 45;
 
 class ArticleDetail extends Component {
 
@@ -65,7 +66,15 @@ class CardDetail extends Component {
   
   render() {
     let { banner, content, desc, message, recommend } = this.detailData;
-    desc = { spread: desc, shrink: desc.slice(0, 45) + '...' };
+    let engNum = 0;
+    for (let num of desc.slice(0, SHRINK_BASE)) {
+      if (/^[a-zA-Z]$/gi.test(num)) {
+        engNum += 1;
+      }
+    }
+    let engToCh = engNum - Math.ceil(engNum / 3 * 2); // 3个英文字母宽度约等于2个汉字的宽度
+    let tail = SHRINK_BASE + engToCh;
+    desc = { spread: desc, shrink: desc.slice(0, tail) + '...' };
     return (
       <ScrollView style={{backgroundColor: '#FFF'}}>
         <ImageBackground style={styles.imageBackground} source={{ uri: banner.background }}>
@@ -109,8 +118,8 @@ class CardDetail extends Component {
             <Text style={styles.descTitleText}>应用描述</Text>
           </View>
           { this.state.isDescShrink ? 
-            <Text style={styles.descContent}>{desc.shrink}<Text style={styles.showText} onPress={this.showText}>更多</Text></Text> :
-            <Text style={styles.descContent}>{desc.spread}<Text style={styles.showText} onPress={this.showText}>收起</Text></Text>
+            <Text style={styles.descContent}>{desc.shrink}<Text style={styles.showText} onPress={this.showText}> 更多</Text></Text> :
+            <Text style={styles.descContent}>{desc.spread}<Text style={styles.showText} onPress={this.showText}> 收起</Text></Text>
           }
         </View>
       </ScrollView>
@@ -212,6 +221,7 @@ const styles = StyleSheet.create({
   descTitle: {
     paddingLeft: 15,
     paddingVertical: 9,
+    marginBottom: 15,
     borderBottomWidth: 1 / PixelRatio,
     borderStyle: 'solid',
     borderColor: '#E8E8E8',
@@ -221,7 +231,8 @@ const styles = StyleSheet.create({
     color: '#222',
   },
   descContent: {
-    padding: 15,
+    paddingHorizontal: 15,
+    paddingBottom: 15,
     fontSize: 14,
     color: '#999',
     lineHeight: 20,
