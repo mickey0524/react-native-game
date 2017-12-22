@@ -57,11 +57,30 @@ class CardDetail extends Component {
     this.detailData = detailData;
   }
 
+  /**
+   * 点击更多或者收起
+   */
   showText() {
     let isDeskShrink = this.state.isDescShrink;
     this.setState({
       isDescShrink: !isDeskShrink,
     });
+  }
+
+  /**
+   * 渲染推荐的item  
+   */
+  renderRecItem({ item }) {
+    return (
+      <View style={styles.recItem}>
+        <Image source={{ uri: item.icon }} style={styles.recIcon} />
+        <Text numberOfLines={1} style={styles.recName}>{item.name}</Text>
+        <Text numberOfLines={1} style={styles.recSize}>大小：{item.size}M</Text>
+        <View style={styles.downloadWrap}>
+          <Text style={styles.download}>下载</Text>
+        </View>
+      </View>
+    );
   }
   
   render() {
@@ -93,6 +112,7 @@ class CardDetail extends Component {
 
         <View style={[styles.contentWrap, styles.viewBottomBorder]}>
           <FlatList
+            showsHorizontalScrollIndicator={false}
             horizontal={true}
             ItemSeparatorComponent={() => <View style={{ width: 3 }} />}
             getItemLayout={(data, index) => ({ length: 135, offset: 138 * index, index})}
@@ -122,6 +142,7 @@ class CardDetail extends Component {
             <Text style={styles.descContent}>{desc.spread}<Text style={styles.showText} onPress={this.showText}> 收起</Text></Text>
           }
         </View>
+
         <View style={styles.viewBottomBorder}>
           <View style={styles.descTitle}>  
             <Text style={styles.descTitleText}>其他信息</Text>
@@ -131,6 +152,24 @@ class CardDetail extends Component {
             <Text>{'\r\n'}更新信息：{message.modifyTime}</Text>
             <Text>{'\r\n'}客服信息：{message.phone}</Text>
           </Text>
+        </View>
+   
+        <View style={styles.viewBottomBorder}>
+          <View style={[styles.descTitle, { marginBottom: 0}]}>
+            <Text style={styles.descTitleText}>游戏推荐</Text>
+          </View>
+          <FlatList
+            style={{ paddingVertical: 20 }}
+            showsHorizontalScrollIndicator={false}
+            horizontal={true}
+            ItemSeparatorComponent={() => <View style={{ width: 15 }} />}
+            ListHeaderComponent={() => <View style={{ width: 10 }} />}
+            ListFooterComponent={() => <View style={{ width: 10 }} />}
+            getItemLayout={(data, index) => ({ length: 70, offset: 85 * index, index })}
+            initialNumToRender={5}
+            data={recommend}
+            keyExtractor={(item, index) => index}
+            renderItem={this.renderRecItem} />
         </View>
       </ScrollView>
     );
@@ -249,6 +288,28 @@ const styles = StyleSheet.create({
   },
   showText: {
     color: '#406599',
+  },
+
+  recItem: {
+    width: 70,
+    display: 'flex',
+    alignItems: 'center',
+  },
+  recIcon: {
+    width: 59,
+    height: 59,
+    borderRadius: 13,
+    marginBottom: 11,
+  },
+  recName: {
+    fontSize: 14,
+    color: '#222',
+    marginBottom: 5,
+  },
+  recSize: {
+    fontSize: 12,
+    color: '#999',
+    marginBottom: 10,
   },
 });
 
