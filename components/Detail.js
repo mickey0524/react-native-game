@@ -122,6 +122,16 @@ class CardDetail extends Component {
             <Text style={styles.descContent}>{desc.spread}<Text style={styles.showText} onPress={this.showText}> 收起</Text></Text>
           }
         </View>
+        <View style={styles.viewBottomBorder}>
+          <View style={styles.descTitle}>  
+            <Text style={styles.descTitleText}>其他信息</Text>
+          </View>
+          <Text style={styles.descContent}>
+            <Text>当前版本：{message.version}</Text>
+            <Text>{'\r\n'}更新信息：{message.modifyTime}</Text>
+            <Text>{'\r\n'}客服信息：{message.phone}</Text>
+          </Text>
+        </View>
       </ScrollView>
     );
   }
