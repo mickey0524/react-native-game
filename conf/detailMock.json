@@ -1,17 +1,17 @@
 {
   "banner": {
-    "background": "https://sf3-ttcdn-tos.pstatp.com/obj/game-files/f3640a37e10bc057d39258ed95bb062f.png",
-    "icon": "https://sf3-ttcdn-tos.pstatp.com/obj/game-files/2fd169b8187459e201d03b9218448d39.jpeg",
+    "background": "https://sf3-ttcdn-tos.pstatp.com/img/game-files/f3640a37e10bc057d39258ed95bb062f.png",
+    "icon": "https://sf3-ttcdn-tos.pstatp.com/img/game-files/2fd169b8187459e201d03b9218448d39.jpeg",
     "name": "阴阳师-网易和风 匠心巨制",
     "size": "960",
     "title": "2017颜值担当手游，还没玩过阴阳师？下载玩一玩"
   },
   "content": {
     "thumbnail": [
-      "https://sf3-ttcdn-tos.pstatp.com/obj/game-files/3cd181b3b8654748fff300afb21ddd3d.jpeg",
-      "https://sf3-ttcdn-tos.pstatp.com/obj/game-files/26318467ede42703ffde0fff53abebbd.jpeg",
-      "https://sf3-ttcdn-tos.pstatp.com/obj/game-files/8cd425894c0d3bc8d9e47dbbed6074f9.jpeg",
-      "https://sf3-ttcdn-tos.pstatp.com/obj/game-files/09f9d3420625a7a80d821f9041fc9331.jpeg"
+      "https://sf3-ttcdn-tos.pstatp.com/img/game-files/3cd181b3b8654748fff300afb21ddd3d.jpeg",
+      "https://sf3-ttcdn-tos.pstatp.com/img/game-files/26318467ede42703ffde0fff53abebbd.jpeg",
+      "https://sf3-ttcdn-tos.pstatp.com/img/game-files/8cd425894c0d3bc8d9e47dbbed6074f9.jpeg",
+      "https://sf3-ttcdn-tos.pstatp.com/img/game-files/09f9d3420625a7a80d821f9041fc9331.jpeg"
     ],
     "category": [ "角色扮演", "唯美", "休闲" ]
   },
@@ -23,42 +23,42 @@
   },
   "recommend": [
     {
-      "icon": "https://sf3-ttcdn-tos.pstatp.com/obj/game-files/503fe498a7942ffa94acdb0324c4a4dc.jpeg",
+      "icon": "https://sf3-ttcdn-tos.pstatp.com/img/game-files/503fe498a7942ffa94acdb0324c4a4dc.jpeg",
       "name": "武林萌主-Q版武侠卡牌手游",
       "size": "160"
     },
     {
-      "icon": "https://sf3-ttcdn-tos.pstatp.com/obj/game-files/70cd7f76f06b5c76d31d74e9b373ea53.jpeg",
+      "icon": "https://sf3-ttcdn-tos.pstatp.com/img/game-files/70cd7f76f06b5c76d31d74e9b373ea53.jpeg",
       "name": "宫廷Q传",
       "size": "460"
     },
     {
-      "icon": "https://sf3-ttcdn-tos.pstatp.com/obj/game-files/ffd0c6c25c2930ecc5e6e7f4053ec577.jpeg",
+      "icon": "https://sf3-ttcdn-tos.pstatp.com/img/game-files/ffd0c6c25c2930ecc5e6e7f4053ec577.jpeg",
       "name": "放开那三国",
       "size": "435"
     },
     {
-      "icon": "https://sf3-ttcdn-tos.pstatp.com/obj/game-files/14a1773a0a84275c510a825a120881c0.jpeg",
+      "icon": "https://sf3-ttcdn-tos.pstatp.com/img/game-files/14a1773a0a84275c510a825a120881c0.jpeg",
       "name": "少女咖啡枪",
       "size": "1710"
     },
     {
-      "icon": "https://sf3-ttcdn-tos.pstatp.com/obj/game-files/7e2a9fcc9a9d96281ef765c2d669de02.jpeg",
+      "icon": "https://sf3-ttcdn-tos.pstatp.com/img/game-files/7e2a9fcc9a9d96281ef765c2d669de02.jpeg",
       "name": "消灭星星经典版",
       "size": "56"
     },
     {
-      "icon": "https://sf3-ttcdn-tos.pstatp.com/obj/game-files/8874f92bf1df783dbbf76588b8c0f6c3.jpeg",
+      "icon": "https://sf3-ttcdn-tos.pstatp.com/img/game-files/8874f92bf1df783dbbf76588b8c0f6c3.jpeg",
       "name": "黎明之光-全新骑战职业枪骑士重装登场",
       "size": "175"
     },
     {
-      "icon": "https://sf3-ttcdn-tos.pstatp.com/obj/game-files/44e717885344a30e1f3a68f611b3b54d.jpeg",
+      "icon": "https://sf3-ttcdn-tos.pstatp.com/img/game-files/44e717885344a30e1f3a68f611b3b54d.jpeg",
       "name": "少女前线-二次元枪娘养成战术手游",
       "size": "395"
     },
     {
-      "icon": "https://sf3-ttcdn-tos.pstatp.com/obj/game-files/77b954dacf96f16c0324fa07926bba52.jpeg",
+      "icon": "https://sf3-ttcdn-tos.pstatp.com/img/game-files/77b954dacf96f16c0324fa07926bba52.jpeg",
       "name": "秘宝猎人--网易逗趣射击闯关手游",
       "size": "482"
     }

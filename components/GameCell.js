@@ -6,7 +6,7 @@ import {
   StyleSheet,
 } from 'react-native';
 
-const Platform = require('Platform');
+import { getImgUrl } from '../utils/util';
 
 class GameCell extends Component {
   constructor(props) {
@@ -14,8 +14,7 @@ class GameCell extends Component {
   }
 
   render() {
-    let imgUrl = this.props.gameInfo.image_list[0].replace('img', 'obj');
-    imgUrl = imgUrl.replace('http', 'https');
+    let imgUrl = getImgUrl(this.props.gameInfo.image_list[0], 'FEED_CARD');
     return (
       <View style={styles.gameWrap}>
         <Text style={styles.gameTitle}>

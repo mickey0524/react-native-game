@@ -10,10 +10,13 @@ import {
   ScrollView,
 } from 'react-native';
 
+import { getImgUrl } from '../utils/util';
+
 const PixelRatio = require('PixelRatio').get();
 const Dimensions = require('Dimensions');
 const { width: totalWidth, height: totalHeight } = Dimensions.get('window');
 const detailData = require("../conf/detailMock.json");
+
 const SHRINK_BASE = 45;
 
 class ArticleDetail extends Component {
@@ -54,7 +57,15 @@ class CardDetail extends Component {
   }
 
   componentWillMount() {
-    this.detailData = detailData;
+    let { banner, content, desc, message, recommend } = detailData;
+    banner.background = getImgUrl(banner.background, 'DETAIL_BANNER_BACKGROUND');
+    banner.icon = getImgUrl(banner.icon, 'DETAIL_BANNER_ICON');
+    content.thumbnail = content.thumbnail.map(imgUrl => getImgUrl(imgUrl, 'DETAIL_CONTENT_IMG'));
+    recommend = recommend.map(game => {
+      game.icon = getImgUrl(game.icon, 'DETAIL_RECO_ICON');
+      return game;
+    });
+    this.detailData = { banner, content, desc, message, recommend };
   }
 
   /**

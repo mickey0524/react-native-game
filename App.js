@@ -6,8 +6,8 @@ import { ArticleDetail, CardDetail } from './components/Detail';
 
 const App = StackNavigator({
   Feed: { screen: Feed },
-  CardDetail: { screen: CardDetail },
   ArticleDetail: { screen: ArticleDetail },
+  CardDetail: { screen: CardDetail },
 });
 
 export default App;
