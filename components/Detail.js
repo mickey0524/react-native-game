@@ -57,7 +57,7 @@ class CardDetail extends Component {
   }
 
   componentWillMount() {
-    let { banner, content, desc, message, recommend } = detailData;
+    let { banner, content, desc, message, recommend } = JSON.parse(JSON.stringify(detailData));
     banner.background = getImgUrl(banner.background, 'DETAIL_BANNER_BACKGROUND');
     banner.icon = getImgUrl(banner.icon, 'DETAIL_BANNER_ICON');
     content.thumbnail = content.thumbnail.map(imgUrl => getImgUrl(imgUrl, 'DETAIL_CONTENT_IMG'));
@@ -96,6 +96,7 @@ class CardDetail extends Component {
   
   render() {
     let { banner, content, desc, message, recommend } = this.detailData;
+    console.log(banner.background);
     let engNum = 0;
     for (let num of desc.slice(0, SHRINK_BASE)) {
       if (/^[a-zA-Z]$/gi.test(num)) {
@@ -257,6 +258,7 @@ const styles = StyleSheet.create({
   contentImg: {
     width: 135,
     height: 240,
+    backgroundColor: '#F4F5F6',
   },
   contentCategory: {
     padding: 15,
@@ -311,6 +313,7 @@ const styles = StyleSheet.create({
     height: 59,
     borderRadius: 13,
     marginBottom: 11,
+    backgroundColor: '#F4F5F6',
   },
   recName: {
     fontSize: 14,
