@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, ScrollView } from 'react-native';
+
 import { GameCell } from './GameCell';
 import { ArticleOneImgCell, ArticleThreeImgCell } from './ArticleCell';
-
+import BottomLoading from '../components/BottomLoading';
 import { FEED } from '../conf/api'; 
 
 const Platform = require('Platform');
@@ -27,6 +28,24 @@ export default class Feed extends Component {
     this.renderItem = this.renderItem.bind(this);
   }
 
+  render() {
+    return (
+      <View style={styles.container}>
+        <FlatList
+          refreshing={this.state.isRefreshing}
+          onRefresh={() => this.fetchData(0)}
+          ItemSeparatorComponent={() => <View style={styles.ItemSeparator} />}
+          // getItemLayout={(data, index) => ({ length: 345, offset: 351 * index, index})}
+          initialNumToRender={Math.ceil(totalHeight / 200)}
+          data={this.state.feedData}
+          keyExtractor={(item, index) => index}
+          onEndReachedThreshold={0.2}
+          onEndReached={this.onEndReached}
+          renderItem={this.renderItem} />
+      </View>
+    );
+  }
+
   /**
    * 点击feed流item跳转详情页
    * @param {object} item feed流元素数据 
@@ -37,6 +56,7 @@ export default class Feed extends Component {
       let articleId = /groupid=(.*)$/gi.exec(item.article_url)[1];
       navigate('ArticleDetail', { source: `https://open.toutiao.com/a${articleId}/` });
     } else {
+      this.isRotate = false;
       let cardId = item.app_info.download_info.id;
       navigate('CardDetail', { cardId });
     }
@@ -46,10 +66,13 @@ export default class Feed extends Component {
    * 滚动到底部拉取数据
    */
   onEndReached() {
-    if (this.isEndReached) {
+    if (this.state.isEndReached) {
       return;
     }
-    this.isEndReached = true;
+    this.setState({
+      isEndReached: true,
+    });
+    // this.isEndReached = true;
     this.fetchData(1);
   }
 
@@ -65,15 +88,17 @@ export default class Feed extends Component {
         isRefreshing: true,
       });
     }
-    fetch(url).then(res => res.json()).then(res => {      
+    fetch(url).then(res => res.json()).then(res => {
       let feedData = dir ? [...this.state.feedData, ...res.data] : [...res.data, ...this.state.feedData],
-        isRefreshing = false;
-      if (dir) {
-        this.isEndReached = false;
-      }
+        isRefreshing = false,
+        isEndReached = false;
+      // if (dir) {
+      //   this.isEndReached = false;
+      // }
       this.setState({
         feedData,
         isRefreshing,
+        isEndReached,
       });
     })
     .catch(err => {
@@ -85,34 +110,17 @@ export default class Feed extends Component {
    * 生成FlatList中的item
    * @param {object} param0 对象参数 
    */
-  renderItem({ item }) {
+  renderItem({ item, index }) {
     return (
-      <TouchableOpacity onPress={() => this.onPressItem(item)}>
-        {
-          item.type == 'card' ? <GameCell gameInfo={item} />
-            : item.article_type == 3 ? <ArticleThreeImgCell articleInfo={item} />
-            : <ArticleOneImgCell articleInfo={item} />
-        }
-      </TouchableOpacity>
-    );
-  }
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <FlatList
-          refreshing={this.state.isRefreshing}
-          onRefresh={() => this.fetchData(0)}
-          ItemSeparatorComponent={ () => <View style={styles.ItemSeparator} /> }
-          // getItemLayout={(data, index) => ({ length: 345, offset: 351 * index, index})}
-          initialNumToRender={ Math.ceil(totalHeight / 200) }
-          data={this.state.feedData}
-          keyExtractor={(item, index) => index}
-          onEndReachedThreshold={0.2}
-          onEndReached={this.onEndReached}
-          renderItem={this.renderItem} />
-      </View>
-    );
+      index == this.state.feedData.length - 1 && this.state.isEndReached ? <BottomLoading />
+        : <TouchableOpacity onPress={() => this.onPressItem(item)}>
+            {
+              item.type == 'card' ? <GameCell gameInfo={item} />
+                : item.article_type == 3 ? <ArticleThreeImgCell articleInfo={item} />
+                : <ArticleOneImgCell articleInfo={item} />
+            }
+          </TouchableOpacity>
+      );
   }
 }
 

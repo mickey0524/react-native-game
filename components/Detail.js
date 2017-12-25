@@ -57,6 +57,7 @@ class CardDetail extends Component {
   }
 
   componentWillMount() {
+    let cardId = this.props.navigation.state.params.cardId;
     let { banner, content, desc, message, recommend } = JSON.parse(JSON.stringify(detailData));
     banner.background = getImgUrl(banner.background, 'DETAIL_BANNER_BACKGROUND');
     banner.icon = getImgUrl(banner.icon, 'DETAIL_BANNER_ICON');
@@ -65,38 +66,11 @@ class CardDetail extends Component {
       game.icon = getImgUrl(game.icon, 'DETAIL_RECO_ICON');
       return game;
     });
-    this.detailData = { banner, content, desc, message, recommend };
-  }
-
-  /**
-   * 点击更多或者收起
-   */
-  showText() {
-    let isDeskShrink = this.state.isDescShrink;
-    this.setState({
-      isDescShrink: !isDeskShrink,
-    });
-  }
-
-  /**
-   * 渲染推荐的item  
-   */
-  renderRecItem({ item }) {
-    return (
-      <View style={styles.recItem}>
-        <Image source={{ uri: item.icon }} style={styles.recIcon} />
-        <Text numberOfLines={1} style={styles.recName}>{item.name}</Text>
-        <Text numberOfLines={1} style={styles.recSize}>大小：{item.size}M</Text>
-        <View style={styles.downloadWrap}>
-          <Text style={styles.download}>下载</Text>
-        </View>
-      </View>
-    );
+    this.detailData = { banner, content, desc, message, recommend };            
   }
   
   render() {
     let { banner, content, desc, message, recommend } = this.detailData;
-    console.log(banner.background);
     let engNum = 0;
     for (let num of desc.slice(0, SHRINK_BASE)) {
       if (/^[a-zA-Z]$/gi.test(num)) {
@@ -186,7 +160,33 @@ class CardDetail extends Component {
       </ScrollView>
     );
   }
-  
+
+  /**
+   * 点击更多或者收起
+   */
+  showText() {
+    let isDeskShrink = this.state.isDescShrink;
+    this.setState({
+      isDescShrink: !isDeskShrink,
+    });
+  }
+
+  /**
+   * 渲染推荐的item  
+   */
+  renderRecItem({ item }) {
+    return (
+      <View style={styles.recItem}>
+        <Image source={{ uri: item.icon }} style={styles.recIcon} />
+        <Text numberOfLines={1} style={styles.recName}>{item.name}</Text>
+        <Text numberOfLines={1} style={styles.recSize}>大小：{item.size}M</Text>
+        <View style={styles.downloadWrap}>
+          <Text style={styles.download}>下载</Text>
+        </View>
+      </View>
+    );
+  }
+
 }
 
 const styles = StyleSheet.create({
