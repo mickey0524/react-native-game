@@ -24,7 +24,7 @@ export default class Feed extends Component {
     super(props);
     this.state = {
       feedData: [],
-      isRefreshing: false,
+      isRefreshing: true,
     }
     this.isEndReached = false;
     this.fetchData = this.fetchData.bind(this);

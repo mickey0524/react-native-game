@@ -78,85 +78,89 @@ class CardDetail extends Component {
     let tail = SHRINK_BASE + engToCh;
     desc = { spread: desc, shrink: desc.slice(0, tail) + '...' };
     return (
-      <ScrollView style={{backgroundColor: '#FFF'}}>
+      <View>
         <MyStaturBar backgroundColor={SKY_BLUE} barStyle={'light-content'} />
         <ToolBar title={this.gameName} navigation={this.props.navigation} isLeftIconShow={true} />
-        <ImageBackground style={styles.imageBackground} source={{ uri: banner.background }}>
-          <View style={styles.bannerWrap}>
-            <Image style={styles.bannerIcon} source={{ uri: banner.icon }} />
-            <View style={styles.bannerInfo}>
-              <Text numberOfLines={1} style={styles.gameName}>{banner.name}</Text>
-              <Text numberOfLines={1} style={styles.gameInfo}>大小: {banner.size}M</Text>
-              <Text numberOfLines={1} style={styles.gameInfo}>{banner.title}</Text>
+        <ScrollView style={{backgroundColor: SKY_BLUE}}>
+          <View style={{backgroundColor: '#FFF'}}>
+            <ImageBackground style={styles.imageBackground} source={{ uri: banner.background }}>
+              <View style={styles.bannerWrap}>
+                <Image style={styles.bannerIcon} source={{ uri: banner.icon }} />
+                <View style={styles.bannerInfo}>
+                  <Text numberOfLines={1} style={styles.gameName}>{banner.name}</Text>
+                  <Text numberOfLines={1} style={styles.gameInfo}>大小: {banner.size}M</Text>
+                  <Text numberOfLines={1} style={styles.gameInfo}>{banner.title}</Text>
+                </View>
+                <View style={styles.downloadWrap}>
+                  <Text style={styles.download}>下载</Text>
+                </View>
+              </View>
+            </ImageBackground>
+
+            <View style={[styles.contentWrap, styles.viewBottomBorder]}>
+              <FlatList
+                showsHorizontalScrollIndicator={false}
+                horizontal={true}
+                ItemSeparatorComponent={() => <View style={{ width: 3 }} />}
+                getItemLayout={(data, index) => ({ length: 135, offset: 138 * index, index})}
+                initialNumToRender={Math.ceil(totalWidth / 138)}
+                data={content.thumbnail}
+                keyExtractor={(item, index) => index}
+                renderItem={({ item, index }) => <Image source={{ uri: item }} style={[styles.contentImg, index == 0 && { marginLeft: 15}]}/>} />
+              <View style={styles.contentCategory}>
+                {
+                  content.category.map((item, index) => {
+                    return (
+                      <View key={index} style={styles.contentCategoryItem}>
+                        <Text>{item}</Text>
+                      </View>
+                    );
+                  })
+                }
+              </View>
             </View>
-            <View style={styles.downloadWrap}>
-              <Text style={styles.download}>下载</Text>
+
+            <View style={styles.viewBottomBorder}>
+              <View style={styles.descTitle}>
+                <Text style={styles.descTitleText}>应用描述</Text>
+              </View>
+              { this.state.isDescShrink ? 
+                <Text style={styles.descContent}>{desc.shrink}<Text style={styles.showText} onPress={this.showText}> 更多</Text></Text> :
+                <Text style={styles.descContent}>{desc.spread}<Text style={styles.showText} onPress={this.showText}> 收起</Text></Text>
+              }
+            </View>
+
+            <View style={styles.viewBottomBorder}>
+              <View style={styles.descTitle}>  
+                <Text style={styles.descTitleText}>其他信息</Text>
+              </View>
+              <Text style={styles.descContent}>
+                <Text>当前版本：{message.version}</Text>
+                <Text>{'\r\n'}更新信息：{message.modifyTime}</Text>
+                <Text>{'\r\n'}客服信息：{message.phone}</Text>
+              </Text>
+            </View>
+      
+            <View style={styles.viewBottomBorder}>
+              <View style={[styles.descTitle, { marginBottom: 0}]}>
+                <Text style={styles.descTitleText}>游戏推荐</Text>
+              </View>
+              <FlatList
+                style={{ paddingVertical: 20 }}
+                showsHorizontalScrollIndicator={false}
+                horizontal={true}
+                ItemSeparatorComponent={() => <View style={{ width: 15 }} />}
+                ListHeaderComponent={() => <View style={{ width: 10 }} />}
+                ListFooterComponent={() => <View style={{ width: 10 }} />}
+                getItemLayout={(data, index) => ({ length: 70, offset: 85 * index, index })}
+                initialNumToRender={5}
+                data={recommend}
+                keyExtractor={(item, index) => index}
+                renderItem={this.renderRecItem} />
             </View>
           </View>
-        </ImageBackground>
-
-        <View style={[styles.contentWrap, styles.viewBottomBorder]}>
-          <FlatList
-            showsHorizontalScrollIndicator={false}
-            horizontal={true}
-            ItemSeparatorComponent={() => <View style={{ width: 3 }} />}
-            getItemLayout={(data, index) => ({ length: 135, offset: 138 * index, index})}
-            initialNumToRender={Math.ceil(totalWidth / 138)}
-            data={content.thumbnail}
-            keyExtractor={(item, index) => index}
-            renderItem={({ item, index }) => <Image source={{ uri: item }} style={[styles.contentImg, index == 0 && { marginLeft: 15}]}/>} />
-          <View style={styles.contentCategory}>
-            {
-              content.category.map((item, index) => {
-                return (
-                  <View key={index} style={styles.contentCategoryItem}>
-                    <Text>{item}</Text>
-                  </View>
-                );
-              })
-            }
-          </View>
-        </View>
-
-        <View style={styles.viewBottomBorder}>
-          <View style={styles.descTitle}>
-            <Text style={styles.descTitleText}>应用描述</Text>
-          </View>
-          { this.state.isDescShrink ? 
-            <Text style={styles.descContent}>{desc.shrink}<Text style={styles.showText} onPress={this.showText}> 更多</Text></Text> :
-            <Text style={styles.descContent}>{desc.spread}<Text style={styles.showText} onPress={this.showText}> 收起</Text></Text>
-          }
-        </View>
-
-        <View style={styles.viewBottomBorder}>
-          <View style={styles.descTitle}>  
-            <Text style={styles.descTitleText}>其他信息</Text>
-          </View>
-          <Text style={styles.descContent}>
-            <Text>当前版本：{message.version}</Text>
-            <Text>{'\r\n'}更新信息：{message.modifyTime}</Text>
-            <Text>{'\r\n'}客服信息：{message.phone}</Text>
-          </Text>
-        </View>
-   
-        <View style={styles.viewBottomBorder}>
-          <View style={[styles.descTitle, { marginBottom: 0}]}>
-            <Text style={styles.descTitleText}>游戏推荐</Text>
-          </View>
-          <FlatList
-            style={{ paddingVertical: 20 }}
-            showsHorizontalScrollIndicator={false}
-            horizontal={true}
-            ItemSeparatorComponent={() => <View style={{ width: 15 }} />}
-            ListHeaderComponent={() => <View style={{ width: 10 }} />}
-            ListFooterComponent={() => <View style={{ width: 10 }} />}
-            getItemLayout={(data, index) => ({ length: 70, offset: 85 * index, index })}
-            initialNumToRender={5}
-            data={recommend}
-            keyExtractor={(item, index) => index}
-            renderItem={this.renderRecItem} />
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </View>
     );
   }
 
