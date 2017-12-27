@@ -1,20 +1,25 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, ScrollView } from 'react-native';
+import { 
+  View,
+  Text, 
+  StyleSheet, 
+  FlatList,
+  TouchableOpacity,
+  ScrollView,
+  Platform,
+  Dimensions,
+} from 'react-native';
 
 import { GameCell } from './GameCell';
 import { ArticleOneImgCell, ArticleThreeImgCell } from './ArticleCell';
 import BottomLoading from '../components/BottomLoading';
+import MyStatusBar from '../components/MyStatusBar';
+import ToolBar from '../components/ToolBar';
+import { SKY_BLUE } from '../conf/color';
 import { FEED } from '../conf/api'; 
 
-const Platform = require('Platform');
-const Dimensions = require('Dimensions');
 const { width: totalWidth, height: totalHeight } = Dimensions.get('window');
 export default class Feed extends Component {
-
-  static navigationOptions = {
-    title: '今日游戏',
-  };
-
   constructor(props) {
     super(props);
     this.state = {
@@ -31,11 +36,12 @@ export default class Feed extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <MyStatusBar backgroundColor={SKY_BLUE} barStyle={'light-content'} />
+        <ToolBar title={'今日游戏'} isLeftIconShow={false} />
         <FlatList
           refreshing={this.state.isRefreshing}
           onRefresh={() => this.fetchData(0)}
           ItemSeparatorComponent={() => <View style={styles.ItemSeparator} />}
-          // getItemLayout={(data, index) => ({ length: 345, offset: 351 * index, index})}
           initialNumToRender={Math.ceil(totalHeight / 200)}
           data={this.state.feedData}
           keyExtractor={(item, index) => index}
@@ -53,12 +59,13 @@ export default class Feed extends Component {
   onPressItem(item) {
     const { navigate } = this.props.navigation;
     if (item.type == 'article') {
-      let articleId = /groupid=(.*)$/gi.exec(item.article_url)[1];
-      navigate('ArticleDetail', { source: `https://open.toutiao.com/a${articleId}/` });
+      let articleId = /groupid=(.*)$/gi.exec(item.article_url)[1],
+        articleName = item.title;
+      navigate('ArticleDetail', { source: `https://open.toutiao.com/a${articleId}/`, articleName });
     } else {
-      this.isRotate = false;
-      let cardId = item.app_info.download_info.id;
-      navigate('CardDetail', { cardId });
+      let cardId = item.app_info.download_info.id,
+        gameName = item.name;
+      navigate('CardDetail', { cardId, gameName });
     }
   }
 
@@ -127,8 +134,6 @@ export default class Feed extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#FFF',
     width: totalWidth,
   },

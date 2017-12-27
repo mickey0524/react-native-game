@@ -50,7 +50,7 @@ export default class extends Component {
       toValue: 360,
       duration: 600,
       easing: Easing.linear,
-    }).start(() => { this.props.isRotate && this.startAnimation() });
+    }).start(() => { this.startAnimation() });
   }
 
 }

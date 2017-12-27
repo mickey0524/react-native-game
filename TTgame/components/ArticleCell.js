@@ -4,10 +4,10 @@ import {
   Text,
   Image,
   StyleSheet,
+  Dimensions,
 } from 'react-native';
 
-const Dimensions = require('Dimensions');
-let totalWidth = Dimensions.get('window').width;
+const totalWidth = Dimensions.get('window').width;
 
 class ArticleOneImgCell extends Component {
   constructor(props) {

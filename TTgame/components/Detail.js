@@ -8,48 +8,46 @@ import {
   ImageBackground,
   FlatList,
   ScrollView,
+  Dimensions,
+  PixelRatio,
 } from 'react-native';
 
+import MyStaturBar from '../components/MyStatusBar';
+import ToolBar from '../components/ToolBar';
 import { getImgUrl } from '../utils/util';
+import { SKY_BLUE } from '../conf/color';
 
-const PixelRatio = require('PixelRatio').get();
-const Dimensions = require('Dimensions');
-const { width: totalWidth, height: totalHeight } = Dimensions.get('window');
 const detailData = require("../conf/detailMock.json");
 
+const dpr = PixelRatio.get();
+const { width: totalWidth, height: totalHeight } = Dimensions.get('window');
 const SHRINK_BASE = 45;
 
 class ArticleDetail extends Component {
-
-  static navigationOptions = {
-    title: '游戏文章',
-  };
-
   constructor(props) {
     super(props);
+    this.source = this.props.navigation.state.params.source;
+    this.articleName = this.props.navigation.state.params.articleName;
   }
 
-  componentWillMount() {
-    this.source = this.props.navigation.state.params.source;
-  }
-  
   render() {
     return (
-      <WebView
-        style={styles.webview} 
-        source={{ uri: this.source }}
-        startInLoadingState={true} />
+      <View style={styles.container}>
+        <MyStaturBar backgroundColor={SKY_BLUE} barStyle={'light-content'} />
+        <ToolBar title={this.articleName} navigation={this.props.navigation} isLeftIconShow={true} />
+        <WebView
+          scalesPageToFit={true}
+          source={{ uri: this.source }}
+          startInLoadingState={true} />
+      </View>
     );
   }
 }
 
 class CardDetail extends Component {
-  static navigationOptions = {
-    title: '游戏卡片',
-  };
-
   constructor(props) {
-    super(props)
+    super(props);
+    this.gameName = this.props.navigation.state.params.gameName;    
     this.state = {
       isDescShrink: true,
     }
@@ -57,7 +55,6 @@ class CardDetail extends Component {
   }
 
   componentWillMount() {
-    let cardId = this.props.navigation.state.params.cardId;
     let { banner, content, desc, message, recommend } = JSON.parse(JSON.stringify(detailData));
     banner.background = getImgUrl(banner.background, 'DETAIL_BANNER_BACKGROUND');
     banner.icon = getImgUrl(banner.icon, 'DETAIL_BANNER_ICON');
@@ -82,6 +79,8 @@ class CardDetail extends Component {
     desc = { spread: desc, shrink: desc.slice(0, tail) + '...' };
     return (
       <ScrollView style={{backgroundColor: '#FFF'}}>
+        <MyStaturBar backgroundColor={SKY_BLUE} barStyle={'light-content'} />
+        <ToolBar title={this.gameName} navigation={this.props.navigation} isLeftIconShow={true} />
         <ImageBackground style={styles.imageBackground} source={{ uri: banner.background }}>
           <View style={styles.bannerWrap}>
             <Image style={styles.bannerIcon} source={{ uri: banner.icon }} />
@@ -192,8 +191,6 @@ class CardDetail extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   webview: {
     width: totalWidth,
@@ -270,7 +267,7 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     paddingHorizontal: 10,
     backgroundColor: '#F4F5F6',
-    borderWidth: 1 / PixelRatio,
+    borderWidth: 1 / dpr,
     borderStyle: 'solid',
     borderColor: '#E8E8E8',
     borderRadius: 4,
@@ -284,7 +281,7 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     paddingVertical: 9,
     marginBottom: 15,
-    borderBottomWidth: 1 / PixelRatio,
+    borderBottomWidth: 1 / dpr,
     borderStyle: 'solid',
     borderColor: '#E8E8E8',
   },
