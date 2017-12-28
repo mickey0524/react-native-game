@@ -8,7 +8,7 @@ import {
 
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
 
-export default class MyStatusBar extends Component {
+class MyStatusBar extends Component {
   constructor(props) {
     super(props);
   }
@@ -28,3 +28,8 @@ const styles = StyleSheet.create({
     height: STATUSBAR_HEIGHT,
   },
 });
+
+export {
+  MyStatusBar,
+  STATUSBAR_HEIGHT,
+}

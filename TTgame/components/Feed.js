@@ -12,8 +12,8 @@ import {
 
 import { GameCell } from './GameCell';
 import { ArticleOneImgCell, ArticleThreeImgCell } from './ArticleCell';
+import { MyStatusBar } from '../components/MyStatusBar';
 import BottomLoading from '../components/BottomLoading';
-import MyStatusBar from '../components/MyStatusBar';
 import ToolBar from '../components/ToolBar';
 import { SKY_BLUE } from '../conf/color';
 import { FEED } from '../conf/api'; 
