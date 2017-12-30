@@ -12,6 +12,9 @@ import imageSize from '../conf/imageSize';
 const getImgUrl = (url, mark) => {
   let { width, height } = imageSize[mark];
   url = url.replace(/^(http\:)/gi, $0 => 'https:');
+  if (/obj/gi.test(url)) {
+    return url;
+  }
   let format = /\.([a-zA-Z]+?)$/gi.exec(url)[1];
   width = width * PixelRatio;
   height = height * PixelRatio;

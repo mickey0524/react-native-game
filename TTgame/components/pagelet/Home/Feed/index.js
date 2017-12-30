@@ -28,7 +28,7 @@ export default class Feed extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      feedData: [],
+      feedData: [{}],
       isRefreshing: true,
     }
     this.isEndReached = false;
@@ -76,13 +76,10 @@ export default class Feed extends Component {
    * 滚动到底部拉取数据
    */
   onEndReached() {
-    if (this.state.isEndReached) {
+    if (this.isEndReached) {
       return;
     }
-    this.setState({
-      isEndReached: true,
-    });
-    // this.isEndReached = true;
+    this.isEndReached = true;
     this.fetchData(1);
   }
 
@@ -99,17 +96,16 @@ export default class Feed extends Component {
       });
     }
     fetch(url).then(res => res.json()).then(res => {
-      let feedData = dir ? [...this.state.feedData, ...res.data] : [...res.data, ...this.state.feedData],
-        isRefreshing = false,
-        isEndReached = false;
-      // if (dir) {
-      //   this.isEndReached = false;
-      // }
+      let curFeedData = this.state.feedData.slice(0, this.state.feedData.length - 1);
+      let feedData = dir ? [...curFeedData, ...res.data, {}] : [...res.data, ...this.state.feedData],
+        isRefreshing = false;
       this.setState({
         feedData,
         isRefreshing,
-        isEndReached,
       });
+      if (dir) {
+        this.isEndReached = false;
+      }
     })
     .catch(err => {
       console.log(err);
@@ -122,7 +118,7 @@ export default class Feed extends Component {
    */
   renderItem({ item, index }) {
     return (
-      index == this.state.feedData.length - 1 && this.state.isEndReached ? <BottomLoading />
+      index == this.state.feedData.length - 1 ? <BottomLoading />
         : <TouchableOpacity onPress={() => this.onPressItem(item)} activeOpacity={1}>
             {
               item.type == 'card' ? <GameCell gameInfo={item} />

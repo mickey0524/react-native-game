@@ -3,6 +3,7 @@ import { PixelRatio } from 'react-native';
 
 import Feed from './Feed';
 import Rank from './Rank';
+import Hall from './Hall';
 
 import { SKY_BLUE } from '../../../conf/color';
 
@@ -11,6 +12,9 @@ const dpr = PixelRatio.get();
 const RouteConfigs = {
   Feed: {
     screen: Feed,
+  },
+  Hall: {
+    screen: Hall,
   },
   Rank: {
     screen: Rank,
