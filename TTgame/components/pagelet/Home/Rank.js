@@ -35,8 +35,8 @@ export default class Rank extends Component {
     this.onPressGameItem = this.onPressGameItem.bind(this);
   }
 
-  componentWillMount() {
-    this.fetchData();  
+  componentDidMount() {
+    this.fetchData();
   }
   
   render() {
@@ -87,7 +87,7 @@ export default class Rank extends Component {
    */
   renderItem({ item, index }) {
     return (
-      <TouchableOpacity onPress={() => this.onPressGameItem(item)}>
+      <TouchableOpacity onPress={() => this.onPressGameItem(item)} activeOpacity={1}>
         <View style={styles.itemWrap}>
           {
             index == 0 ? <Image source={require('../../../assets/ic_game_no.1.png')} style={styles.rankIcon} />

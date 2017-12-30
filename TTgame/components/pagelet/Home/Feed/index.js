@@ -4,8 +4,8 @@ import {
   Text, 
   StyleSheet, 
   FlatList,
-  TouchableOpacity,
   ScrollView,
+  TouchableOpacity,
   Platform,
   Dimensions,
 } from 'react-native';
@@ -123,7 +123,7 @@ export default class Feed extends Component {
   renderItem({ item, index }) {
     return (
       index == this.state.feedData.length - 1 && this.state.isEndReached ? <BottomLoading />
-        : <TouchableOpacity onPress={() => this.onPressItem(item)}>
+        : <TouchableOpacity onPress={() => this.onPressItem(item)} activeOpacity={1}>
             {
               item.type == 'card' ? <GameCell gameInfo={item} />
                 : item.article_type == 3 ? <ArticleThreeImgCell articleInfo={item} />
