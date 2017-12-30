@@ -1,17 +1,18 @@
 import { StackNavigator } from 'react-navigation';
 
-import Feed from '../components/pagelet/Home/Feed/Feed';
+// import Feed from '../components/pagelet/Home/Feed/Feed';
+import Home from '../components/pagelet/Home';
 import ArticleDetail from '../components/pagelet/Detail/ArticleDetail';
 import CardDetail from '../components/pagelet/Detail/GameDetail';
 
 const stackConfig = {
-  initialRouteName: 'Feed',
+  initialRouteName: 'Home',
   headerMode: 'none',
   mode: 'card',
 };
 
 const App = StackNavigator({
-  Feed: { screen: Feed },
+  Home: { screen: Home },
   CardDetail: { screen: CardDetail },
   ArticleDetail: { screen: ArticleDetail },
 }, stackConfig);
