@@ -6,7 +6,7 @@ import {
   StyleSheet,
 } from 'react-native';
 
-import { getImgUrl } from '../utils/util';
+import { getImgUrl } from '../../../../utils/util';
 
 class GameCell extends Component {
   constructor(props) {
@@ -25,7 +25,7 @@ class GameCell extends Component {
         <View style={styles.gameInfo}>
           <Text style={styles.gameName}>{ this.props.gameInfo.name }</Text>
           <View style={styles.download}>
-            <Image source={require('../assets/download.png')} style={styles.downloadIcon} />
+            <Image source={require('../../../../assets/download.png')} style={styles.downloadIcon} />
             <Text style={styles.downloadText}>APP下载</Text>
           </View>
         </View>

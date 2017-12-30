@@ -12,11 +12,11 @@ import {
 
 import { GameCell } from './GameCell';
 import { ArticleOneImgCell, ArticleThreeImgCell } from './ArticleCell';
-import { MyStatusBar } from '../components/MyStatusBar';
-import BottomLoading from '../components/BottomLoading';
-import ToolBar from '../components/ToolBar';
-import { SKY_BLUE } from '../conf/color';
-import { FEED } from '../conf/api'; 
+import { MyStatusBar } from '../../../common/MyStatusBar';
+import BottomLoading from '../../../common/BottomLoading';
+import ToolBar from '../../../common/ToolBar';
+import { SKY_BLUE } from '../../../../conf/color';
+import { FEED } from '../../../../conf/api'; 
 
 const { width: totalWidth, height: totalHeight } = Dimensions.get('window');
 export default class Feed extends Component {

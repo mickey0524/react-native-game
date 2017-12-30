@@ -1,7 +1,8 @@
 import { StackNavigator } from 'react-navigation';
 
-import Feed from '../components/Feed';
-import { ArticleDetail, CardDetail } from '../components/Detail';
+import Feed from '../components/pagelet/Home/Feed/Feed';
+import ArticleDetail from '../components/pagelet/Detail/ArticleDetail';
+import CardDetail from '../components/pagelet/Detail/GameDetail';
 
 const stackConfig = {
   initialRouteName: 'Feed',

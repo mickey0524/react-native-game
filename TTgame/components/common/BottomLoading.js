@@ -36,7 +36,7 @@ export default class extends Component {
                 .interpolate({ inputRange: [0, 360], outputRange: ['0deg', '360deg'] })
             }]
           }]}
-          source={require('../assets/rotate-load.png')} />
+          source={require('../../assets/rotate-load.png')} />
       </View>
     );
   }

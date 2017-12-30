@@ -7,7 +7,7 @@ import {
   Dimensions,
 } from 'react-native';
 
-import { SKY_BLUE } from '../conf/color';
+import { SKY_BLUE } from '../../conf/color';
 
 const totalWidth = Dimensions.get('window').width;
 
@@ -22,7 +22,7 @@ export default class ToolBar extends Component {
       <View style={styles.toolBar}>
         { this.props.isLeftIconShow && 
           <Text style={styles.backIconWrap} onPress={() => this.onPressBackIcon()}>
-            <Image source={require('../assets/back.png')} 
+            <Image source={require('../../assets/back.png')} 
               style={styles.backIcon} />
           </Text>
         }
