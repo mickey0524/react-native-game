@@ -18,5 +18,9 @@ export default {
   DETAIL_RECO_ICON: {
     width: 59,
     height: 59,
-  }, 
+  },
+  RANK_ICON: {
+    width: 59,
+    height: 59,
+  },
 }

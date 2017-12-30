@@ -19,7 +19,7 @@ export default class Hello extends Component {
       <View style={styles.container}>
         <MyStatusBar backgroundColor={SKY_BLUE} barStyle={'light-content'} />
         <ToolBar title={'今日游戏'} isLeftIconShow={false} />
-        <TabContainer />
+        <TabContainer screenProps={this.props.navigation}/>
       </View>
     );
   }

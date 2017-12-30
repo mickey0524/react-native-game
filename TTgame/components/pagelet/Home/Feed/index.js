@@ -22,7 +22,7 @@ const { width: totalWidth, height: totalHeight } = Dimensions.get('window');
 export default class Feed extends Component {
 
   static navigationOptions = {
-    tabBarLabel: '精品推荐',
+    tabBarLabel: '推荐',
   }
 
   constructor(props) {
@@ -41,8 +41,6 @@ export default class Feed extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {/* <MyStatusBar backgroundColor={SKY_BLUE} barStyle={'light-content'} />
-        <ToolBar title={'今日游戏'} isLeftIconShow={false} /> */}
         <FlatList
           refreshing={this.state.isRefreshing}
           onRefresh={() => this.fetchData(0)}
@@ -62,7 +60,7 @@ export default class Feed extends Component {
    * @param {object} item feed流元素数据 
    */
   onPressItem(item) {
-    const { navigate } = this.props.navigation;
+    const { navigate } = this.props.screenProps;
     if (item.type == 'article') {
       let articleId = /groupid=(.*)$/gi.exec(item.article_url)[1],
         articleName = item.title;

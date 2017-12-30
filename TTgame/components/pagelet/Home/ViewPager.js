@@ -2,7 +2,7 @@ import { TabNavigator } from 'react-navigation';
 import { PixelRatio } from 'react-native';
 
 import Feed from './Feed';
-import Hello from './Hello';
+import Rank from './Rank';
 
 import { SKY_BLUE } from '../../../conf/color';
 
@@ -12,12 +12,13 @@ const RouteConfigs = {
   Feed: {
     screen: Feed,
   },
-  Hello: {
-    screen: Hello,
+  Rank: {
+    screen: Rank,
   },
 };
 
 const TabNavigatorConfig = {
+  initialRouteName: 'Feed',
   tabBarPosition: 'top',
   swipeEnabled: true,
   animationEnabled: true,
