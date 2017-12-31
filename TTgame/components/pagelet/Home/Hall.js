@@ -72,6 +72,9 @@ export default class Hall extends Component {
    * @param {object} param0 列表块参数
    */
   renderItem({ item, index }) {
+    if (this.state.hallData.length == 1) {
+      return null;
+    }
     return (
       index == this.state.hallData.length - 1 ? 
         this.state.hasMore ? <BottomLoading /> : null :

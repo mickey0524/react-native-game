@@ -100,8 +100,8 @@ export default class CardDetail extends Component {
                     showsHorizontalScrollIndicator={false}
                     horizontal={true}
                     ItemSeparatorComponent={() => <View style={{ width: 3 }} />}
-                    getItemLayout={(data, index) => ({ length: 135, offset: 138 * index, index })}
-                    initialNumToRender={Math.ceil(totalWidth / 138)}
+                    // getItemLayout={(data, index) => ({ length: 135, offset: 138 * index, index })}
+                    initialNumToRender={3}
                     data={content.thumbnail}
                     keyExtractor={(item, index) => index}
                     renderItem={({ item, index }) => <Image source={{ uri: item }} style={[styles.contentImg, index == 0 && { marginLeft: 15 }]} />} />
@@ -150,7 +150,7 @@ export default class CardDetail extends Component {
                     ItemSeparatorComponent={() => <View style={{ width: 15 }} />}
                     ListHeaderComponent={() => <View style={{ width: 10 }} />}
                     ListFooterComponent={() => <View style={{ width: 10 }} />}
-                    getItemLayout={(data, index) => ({ length: 70, offset: 85 * index, index })}
+                    // getItemLayout={(data, index) => ({ length: 70, offset: 85 * index, index })}
                     initialNumToRender={5}
                     data={recommend}
                     keyExtractor={(item, index) => index}

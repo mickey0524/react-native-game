@@ -49,6 +49,7 @@ export default class extends Component {
     Animated.timing(this.state.rotateValue, {
       toValue: 360,
       duration: 600,
+      useNativeDriver: true,
       easing: Easing.linear,
     }).start(() => { this.startAnimation() });
   }

@@ -30,6 +30,7 @@ export default class Feed extends Component {
     this.state = {
       feedData: [{}],
       isRefreshing: true,
+      // ifAnimated: true,
     }
     this.isEndReached = false;
     this.fetchData = this.fetchData.bind(this);
@@ -117,6 +118,9 @@ export default class Feed extends Component {
    * @param {object} param0 对象参数 
    */
   renderItem({ item, index }) {
+    if (this.state.feedData.length == 1) {
+      return null;
+    }
     return (
       index == this.state.feedData.length - 1 ? <BottomLoading />
         : <TouchableOpacity onPress={() => this.onPressItem(item)} activeOpacity={1}>
