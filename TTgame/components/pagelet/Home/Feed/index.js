@@ -5,7 +5,7 @@ import {
   StyleSheet, 
   FlatList,
   ScrollView,
-  TouchableOpacity,
+  TouchableWithoutFeedback,
   Platform,
   Dimensions,
 } from 'react-native';
@@ -123,13 +123,15 @@ export default class Feed extends Component {
     }
     return (
       index == this.state.feedData.length - 1 ? <BottomLoading />
-        : <TouchableOpacity onPress={() => this.onPressItem(item)} activeOpacity={1}>
-            {
-              item.type == 'card' ? <GameCell gameInfo={item} />
-                : item.article_type == 3 ? <ArticleThreeImgCell articleInfo={item} />
-                : <ArticleOneImgCell articleInfo={item} />
-            }
-          </TouchableOpacity>
+        : <TouchableWithoutFeedback onPress={() => this.onPressItem(item)}>
+            <View>
+              {
+                item.type == 'card' ? <GameCell gameInfo={item} />
+                  : item.article_type == 3 ? <ArticleThreeImgCell articleInfo={item} />
+                  : <ArticleOneImgCell articleInfo={item} />
+              }
+            </View>
+          </TouchableWithoutFeedback>
       );
   }
 }

@@ -8,7 +8,7 @@ import {
   Platform,
   Dimensions,
   PixelRatio,
-  TouchableOpacity,
+  TouchableWithoutFeedback,
 } from 'react-native';
 
 import { RANK_HOT, RANK_NEW } from '../../../conf/api';
@@ -87,7 +87,7 @@ export default class Rank extends Component {
    */
   renderItem({ item, index }) {
     return (
-      <TouchableOpacity onPress={() => this.onPressGameItem(item)} activeOpacity={1}>
+      <TouchableWithoutFeedback onPress={() => this.onPressGameItem(item)}>
         <View style={styles.itemWrap}>
           {
             index == 0 ? <Image source={require('../../../assets/ic_game_no.1.png')} style={styles.rankIcon} />
@@ -105,7 +105,7 @@ export default class Rank extends Component {
             <Text style={styles.download}>下载</Text>
           </View>
         </View>
-      </TouchableOpacity>
+      </TouchableWithoutFeedback>
     );
   }
 

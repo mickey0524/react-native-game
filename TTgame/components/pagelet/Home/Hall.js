@@ -5,6 +5,7 @@ import {
   ActivityIndicator,
   Image,
   FlatList,
+  TouchableWithoutFeedback,
   StyleSheet,
   Dimensions,
   Platform,
@@ -36,6 +37,7 @@ export default class Hall extends Component {
     this.gameBoxIds = [];
     this.fetchData = this.fetchData.bind(this);
     this.renderItem = this.renderItem.bind(this);
+    this.onPressItem = this.onPressItem.bind(this);
   }
   
   componentWillMount() {
@@ -84,8 +86,10 @@ export default class Hall extends Component {
               {
                 this.state.swiperArr.map((item, index) => {
                   return (
-                    <Image key={index} source={{ uri: getImgUrl(item.image_url, 'HALL_SWIPER') }}
-                      style={styles.swiperItem} />
+                    <TouchableWithoutFeedback key={index} onPress={() => this.onPressItem(item.title)}>
+                      <Image source={{ uri: getImgUrl(item.image_url, 'HALL_SWIPER') }}
+                        style={styles.swiperItem} />
+                    </TouchableWithoutFeedback>
                   );
                 })
               }
@@ -97,14 +101,16 @@ export default class Hall extends Component {
               {
                 item.game_lists.map((game, gameIndex) => {
                   return (
-                    <View key={gameIndex} style={[styles.gameItem, (gameIndex + 1) % 4 == 0 && { marginRight: 0 }]}>
-                      <Image style={styles.gameIcon} source={{ uri: getImgUrl(game.avatar, 'HALL_ICON') }}/>
-                      <Text numberOfLines={1} style={styles.gameName}>{ game.name }</Text>
-                      <Text numberOfLines={1} style={styles.gameSize}>{ game.size }</Text>
-                      <View style={styles.downloadWrap}>
-                        <Text style={styles.download}>下载</Text>
+                    <TouchableWithoutFeedback key={gameIndex} onPress={() => this.onPressItem(item.name)}>
+                      <View style={[styles.gameItem, (gameIndex + 1) % 4 == 0 && { marginRight: 0 }]}>
+                        <Image style={styles.gameIcon} source={{ uri: getImgUrl(game.avatar, 'HALL_ICON') }}/>
+                        <Text numberOfLines={1} style={styles.gameName}>{ game.name }</Text>
+                        <Text numberOfLines={1} style={styles.gameSize}>{ game.size }</Text>
+                        <View style={styles.downloadWrap}>
+                          <Text style={styles.download}>下载</Text>
+                        </View>
                       </View>
-                    </View>
+                    </TouchableWithoutFeedback>
                   );
                 })
               }
@@ -112,19 +118,34 @@ export default class Hall extends Component {
             <View style={styles.bannerWrap}>
               {
                 item.game_banner.length == 1 ?
-                <Image style={styles.bigBanner}
-                  source={{ uri: getImgUrl(item.game_banner[0].image_url, 'HALL_BIG_BANNER') }} /> :
+                <TouchableWithoutFeedback onPress={() => {this.onPressItem(item.game_banner[0].title)}}>
+                  <Image style={styles.bigBanner}
+                    source={{ uri: getImgUrl(item.game_banner[0].image_url, 'HALL_BIG_BANNER') }} />
+                </TouchableWithoutFeedback> :
                 <View style={styles.smallBannerWrap}>
-                  <Image style={styles.smallBanner}
-                    source={{ uri: getImgUrl(item.game_banner[0].image_url, 'HALL_SMALL_BANNER') }} />
-                  <Image style={styles.smallBanner} 
-                    source={{ uri: getImgUrl(item.game_banner[1].image_url, 'HALL_SMALL_BANNER') }} />              
+                  <TouchableWithoutFeedback onPress={() => {this.onPressItem(item.game_banner[0].title)}}>
+                    <Image style={styles.smallBanner}
+                      source={{ uri: getImgUrl(item.game_banner[0].image_url, 'HALL_SMALL_BANNER') }} />
+                  </TouchableWithoutFeedback>
+                  <TouchableWithoutFeedback onPress={() => { this.onPressItem(item.game_banner[1].title) }}>
+                    <Image style={styles.smallBanner}
+                      source={{ uri: getImgUrl(item.game_banner[1].image_url, 'HALL_SMALL_BANNER') }} />
+                  </TouchableWithoutFeedback>         
                 </View>
               }
             </View>
           </View>
         </View>
     );
+  }
+
+  /**
+   * 点击跳转游戏详情页
+   * @param {string} gameName 游戏名
+   */
+  onPressItem(gameName) {
+    const { navigate } = this.props.screenProps;
+    navigate('CardDetail', { gameName });
   }
 
   /**
