@@ -38,6 +38,7 @@ export default class Hall extends Component {
     this.fetchData = this.fetchData.bind(this);
     this.renderItem = this.renderItem.bind(this);
     this.onPressItem = this.onPressItem.bind(this);
+    this.onPressShowMore = this.onPressShowMore.bind(this);
   }
   
   componentWillMount() {
@@ -96,7 +97,10 @@ export default class Hall extends Component {
             </Swiper>
           }
           <View>
-            <Text style={styles.gameBoxTitle}>{item.title}</Text>
+            <View style={styles.gameBoxTitleWrap}>
+              <Text style={styles.gameBoxTitle}>{item.title}</Text>
+              <Text style={styles.gameBoxTitle} onPress={() => this.onPressShowMore(item.game_box_id, item.title)}>查看全部</Text>
+            </View>
             <View style={styles.gameList}>
               {
                 item.game_lists.map((game, gameIndex) => {
@@ -149,6 +153,16 @@ export default class Hall extends Component {
   }
 
   /**
+   * 点击查看更多，进入游戏块
+   * @param {string} gameBoxId 游戏块id
+   * @param {string} gameBoxName 游戏块名称
+   */
+  onPressShowMore(gameBoxId, gameBoxName) {
+    const { navigate } = this.props.screenProps;
+    navigate('GameBox', { gameBoxId, gameBoxName });
+  }
+
+  /**
    * 拉取数据
    */
   fetchData() {
@@ -197,10 +211,15 @@ const styles = StyleSheet.create({
     width: totalWidth,
     height: 6,
   },
+  gameBoxTitleWrap: {
+    paddingHorizontal: 15,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   gameBoxTitle: {
     fontSize: 16,
     color: '#222',
-    paddingLeft: 15,
     paddingTop: 15,
   },
   gameList: {

@@ -25,7 +25,7 @@ const TabNavigatorConfig = {
   initialRouteName: 'Feed',
   tabBarPosition: 'top',
   swipeEnabled: true,
-  animationEnabled: true,
+  animationEnabled: false,
   lazy: true,
   tabBarOptions: {
     showIcon: false,

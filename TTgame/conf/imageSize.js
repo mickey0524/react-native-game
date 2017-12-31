@@ -42,4 +42,8 @@ export default {
     width: 168,
     height: 84,
   },
+  GAME_BOX_ICON: {
+    width: 74,
+    height: 74,
+  },
 }
