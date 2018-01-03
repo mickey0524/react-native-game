@@ -42,7 +42,7 @@ export default class Hall extends Component {
   }
   
   componentWillMount() {
-    this.fetchData();
+    this.fetchData();      
   }
   
   render() {

@@ -4,6 +4,7 @@ import {
   Text,
   Image,
   SectionList,
+  ActivityIndicator,
   StyleSheet,
   Platform,
   Dimensions,
@@ -11,6 +12,7 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 
+import { MyStatusBar, STATUSBAR_HEIGHT } from '../../common/MyStatusBar';
 import { RANK_HOT, RANK_NEW } from '../../../conf/api';
 import { getImgUrl } from '../../../utils/util';
 
@@ -27,7 +29,7 @@ export default class Rank extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isRefreshing: true,
+      isLoading: true,
       rankData: [],
     };
     this.fetchData = this.fetchData.bind(this);
@@ -42,14 +44,21 @@ export default class Rank extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <SectionList
-          sections={this.state.rankData}
-          refreshing={this.state.isRefreshing}
-          onRefresh={() => this.fetchData()}
-          keyExtractor={(item, index) => index}
-          ItemSeparatorComponent={() => <View style={styles.ItemSeparator} />}
-          renderSectionHeader={this.renderSectionHeader}
-          renderItem={this.renderItem} />
+        {
+          this.state.isLoading &&
+          <View style={styles.maskWrap}>
+            <ActivityIndicator />
+          </View>
+        }
+        {
+          !this.state.isLoading && 
+          <SectionList
+            sections={this.state.rankData}
+            keyExtractor={(item, index) => index}
+            ItemSeparatorComponent={() => <View style={styles.ItemSeparator} />}
+            renderSectionHeader={this.renderSectionHeader}
+            renderItem={this.renderItem} />
+        }
       </View>
     );
   }
@@ -73,7 +82,7 @@ export default class Rank extends Component {
       });
       this.setState({
         rankData: dataArr,
-        isRefreshing: false,
+        isLoading: false,
       });
     })
     .catch(err => {
@@ -136,6 +145,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFF',
+  },
+  maskWrap: {
+    width: totalWidth,
+    height: totalHeight - 90 - STATUSBAR_HEIGHT,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   ItemSeparator: {
     backgroundColor: '#E8E8E8',

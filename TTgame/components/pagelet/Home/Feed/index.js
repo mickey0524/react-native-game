@@ -30,6 +30,7 @@ export default class Feed extends Component {
     this.state = {
       feedData: [{}],
       isRefreshing: true,
+      contentOffsetY: 0,
       // ifAnimated: true,
     }
     this.isEndReached = false;
@@ -37,12 +38,14 @@ export default class Feed extends Component {
     this.onEndReached = this.onEndReached.bind(this);
     this.onPressItem = this.onPressItem.bind(this);
     this.renderItem = this.renderItem.bind(this);
+    this._onScroll = this._onScroll.bind(this);
   }
 
   render() {
     return (
       <View style={styles.container}>
         <FlatList
+          onScroll={this._onScroll}
           refreshing={this.state.isRefreshing}
           onRefresh={() => this.fetchData(0)}
           ItemSeparatorComponent={() => <View style={styles.ItemSeparator} />}
@@ -54,6 +57,18 @@ export default class Feed extends Component {
           renderItem={this.renderItem} />
       </View>
     );
+  }
+
+  /**
+   * 滑动的时候记录列表滑动的距离
+   * @param {object} ev 滑动事件对象
+   */
+  _onScroll(ev) {
+    // 获取滑动的距离
+    let { y } = ev.nativeEvent.contentOffset;
+    this.setState({
+      contentOffsetY: y > 0 ? y : 0,
+    });
   }
 
   /**
@@ -100,13 +115,15 @@ export default class Feed extends Component {
       let curFeedData = this.state.feedData.slice(0, this.state.feedData.length - 1);
       let feedData = dir ? [...curFeedData, ...res.data, {}] : [...res.data, ...this.state.feedData],
         isRefreshing = false;
-      this.setState({
-        feedData,
-        isRefreshing,
-      });
-      if (dir) {
-        this.isEndReached = false;
-      }
+      setTimeout(() => {
+        this.setState({
+          feedData,
+          isRefreshing,
+        });
+        if (dir) {
+          this.isEndReached = false;
+        }
+      }, 200);
     })
     .catch(err => {
       console.log(err);
@@ -126,7 +143,7 @@ export default class Feed extends Component {
         : <TouchableWithoutFeedback onPress={() => this.onPressItem(item)}>
             <View>
               {
-                item.type == 'card' ? <GameCell gameInfo={item} />
+                item.type == 'card' ? <GameCell gameInfo={item} contentOffsetY={this.state.contentOffsetY} />
                   : item.article_type == 3 ? <ArticleThreeImgCell articleInfo={item} />
                   : <ArticleOneImgCell articleInfo={item} />
               }
