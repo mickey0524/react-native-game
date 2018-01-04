@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import {
   View,
-  Text,
   Image,
-  StyleSheet,
+  Animated,
+  Easing,
   Dimensions,
 } from 'react-native';
 
@@ -15,8 +15,10 @@ export default class LazyImage extends Component {
     super(props);
     this.state = {
       isImgShow: false,
+      opacity: new Animated.Value(0),
     };
     this.compareDis = this.compareDis.bind(this);
+    this.startAnimation = this.startAnimation.bind(this);
   }
 
   componentDidMount() {
@@ -37,11 +39,31 @@ export default class LazyImage extends Component {
 
   render() {
     return (
-      <Image
-        style={this.props.imgStyle}
-        source={this.state.isImgShow ? { uri: this.props.imgUrl } : {}}
-        ref={(img) => {this.img = img;}} />
+      <View style={{backgroundColor: '#F4F5F6'}}>
+        <Animated.View
+          style={{
+            opacity: this.state.opacity,
+          }}>
+          <Image
+            onLoad={this.startAnimation}
+            style={this.props.imgStyle}
+            source={this.state.isImgShow ? { uri: this.props.imgUrl } : {}}
+            ref={(img) => {this.img = img;}} />
+        </Animated.View>
+      </View>
     );
+  }
+
+  /**
+   * opacity加载的动画
+   */
+  startAnimation() {
+    Animated.timing(this.state.opacity, {
+      toValue: 1,
+      duration: 100,
+      useNativeDriver: true,
+      easing: Easing.linear,
+    }).start();
   }
 
   /**
@@ -56,9 +78,3 @@ export default class LazyImage extends Component {
     }
   }
 }
-
-const styles = StyleSheet.create({
-  imgStyle: {
-    backgroundColor: '#F4F5F6',
-  },
-})

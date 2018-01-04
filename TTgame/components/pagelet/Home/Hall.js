@@ -83,7 +83,7 @@ export default class Hall extends Component {
         this.state.hasMore ? <BottomLoading /> : null :
         <View>
           { index == 0 &&
-            <Swiper autoplay={true} loadMinimal={false} height={140}>
+            <Swiper autoplay={true} loadMinimal={false} height={140} autoplayTimeout={5}>
               {
                 this.state.swiperArr.map((item, index) => {
                   return (
