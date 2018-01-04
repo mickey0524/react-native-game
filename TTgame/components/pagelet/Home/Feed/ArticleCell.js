@@ -7,6 +7,8 @@ import {
   Dimensions,
 } from 'react-native';
 
+import LazyImage from '../../../common/LazyImage';
+
 const totalWidth = Dimensions.get('window').width;
 
 class ArticleOneImgCell extends Component {
@@ -27,7 +29,11 @@ class ArticleOneImgCell extends Component {
       <View style={{padding: 15}}>
         <View style={styles.oneImgWrap}>
           <Text style={styles.oneTitle}>{this.props.articleInfo.title}</Text>
-          <Image style={styles.oneImg} source={{ uri: this.imgUrl }}/>
+          <LazyImage
+            contentOffsetY={this.props.contentOffsetY}          
+            loadDirection={this.props.loadDirection}
+            imgStyle={styles.oneImg}
+            imgUrl={this.imgUrl } />
         </View>
         <View style={styles.articleInfo}>
           <Text style={styles.articleInfoText}>{this.props.articleInfo.source}</Text>
@@ -66,7 +72,13 @@ class ArticleThreeImgCell extends Component {
           {
             this.imgList.map((img, index) => {
               return (
-                index <= 2 && <Image key={index} style={[styles.threeImg, index == 2 && { marginRight: 0 }]} source={{ uri: img }}/>
+                index <= 2 && 
+                  <LazyImage
+                    key={index}
+                    contentOffsetY={this.props.contentOffsetY}
+                    loadDirection={this.props.loadDirection}
+                    imgStyle={[styles.threeImg, index == 2 && { marginRight: 0 }]}
+                    imgUrl={img} />
               );
             })
           }

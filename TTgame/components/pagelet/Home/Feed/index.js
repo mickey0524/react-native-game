@@ -33,12 +33,18 @@ export default class Feed extends Component {
       contentOffsetY: 0,
       // ifAnimated: true,
     }
+    this.afterFirstFetch = false; // 第一次加载手动在cwm中执行，而不是Flatlist滚动到底部触发
+    this.loadDirection = 0; // 判断当前是下拉刷新还是滑动到底部刷新
     this.isEndReached = false;
     this.fetchData = this.fetchData.bind(this);
     this.onEndReached = this.onEndReached.bind(this);
     this.onPressItem = this.onPressItem.bind(this);
     this.renderItem = this.renderItem.bind(this);
     this._onScroll = this._onScroll.bind(this);
+  }
+
+  componentWillMount() {
+    this.fetchData(0);    
   }
 
   render() {
@@ -53,7 +59,7 @@ export default class Feed extends Component {
           data={this.state.feedData}
           keyExtractor={(item, index) => index}
           onEndReachedThreshold={0.2}
-          onEndReached={this.onEndReached}
+          onEndReached={this.afterFirstFetch ? this.onEndReached : null}
           renderItem={this.renderItem} />
       </View>
     );
@@ -104,6 +110,7 @@ export default class Feed extends Component {
    * @param {Number} dir 决定是加到数组的前面还是后面
    */
   fetchData(dir) {
+    this.loadDirection = dir;
     let platform = Platform.OS == 'ios' ? '1' : '0';
     let url = `${FEED}&platform=${platform}`;
     if (!dir) {
@@ -122,6 +129,9 @@ export default class Feed extends Component {
         });
         if (dir) {
           this.isEndReached = false;
+        }
+        if (!this.afterFirstFetch) {
+          this.afterFirstFetch = true;
         }
       }, 200);
     })
@@ -143,9 +153,20 @@ export default class Feed extends Component {
         : <TouchableWithoutFeedback onPress={() => this.onPressItem(item)}>
             <View>
               {
-                item.type == 'card' ? <GameCell gameInfo={item} contentOffsetY={this.state.contentOffsetY} />
-                  : item.article_type == 3 ? <ArticleThreeImgCell articleInfo={item} />
-                  : <ArticleOneImgCell articleInfo={item} />
+                item.type == 'card' ? 
+                  <GameCell 
+                    gameInfo={item}
+                    contentOffsetY={this.state.contentOffsetY}
+                    loadDirection={this.loadDirection} />
+                  : item.article_type == 3 ? 
+                    <ArticleThreeImgCell
+                      articleInfo={item} 
+                      contentOffsetY={this.state.contentOffsetY}
+                      loadDirection={this.loadDirection} /> : 
+                    <ArticleOneImgCell
+                      articleInfo={item}
+                      contentOffsetY={this.state.contentOffsetY}
+                      loadDirection={this.loadDirection} />
               }
             </View>
           </TouchableWithoutFeedback>
