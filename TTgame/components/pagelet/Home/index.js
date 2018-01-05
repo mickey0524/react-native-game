@@ -11,6 +11,10 @@ import { SKY_BLUE } from '../../../conf/color';
 
 export default class Hello extends Component {
   
+  static navigationOptions = {
+    drawerLabel: null,
+  }
+
   constructor(props) {
     super(props);
   }
