@@ -69,7 +69,7 @@ export default class CardDetail extends Component {
     return (
       <View style={styles.container}>
         <MyStatusBar backgroundColor={SKY_BLUE} barStyle={'light-content'} />
-        <ToolBar title={this.gameName} navigation={this.props.navigation} isLeftIconShow={true} />
+        <ToolBar title={this.gameName} navigation={this.props.navigation} leftIcon={'back'} />
         <ScrollView style={{ backgroundColor: SKY_BLUE }}>
           <View style={{ backgroundColor: '#FFF' }}>
             {

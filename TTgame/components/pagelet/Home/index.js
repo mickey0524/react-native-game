@@ -10,6 +10,7 @@ import { MyStatusBar } from '../../common/MyStatusBar';
 import { SKY_BLUE } from '../../../conf/color';
 
 export default class Hello extends Component {
+  
   constructor(props) {
     super(props);
   }
@@ -18,8 +19,8 @@ export default class Hello extends Component {
     return (
       <View style={styles.container}>
         <MyStatusBar backgroundColor={SKY_BLUE} barStyle={'light-content'} />
-        <ToolBar title={'今日游戏'} isLeftIconShow={false} />
-        <TabContainer screenProps={this.props.navigation}/>
+        <ToolBar title={'今日游戏'} leftIcon={'menu'} navigation={this.props.navigation}/>
+        <TabContainer screenProps={this.props.screenProps}/>
       </View>
     );
   }

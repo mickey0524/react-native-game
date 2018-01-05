@@ -20,7 +20,7 @@ export default class ArticleDetail extends Component {
     return (
       <View style={styles.container}>
         <MyStatusBar backgroundColor={SKY_BLUE} barStyle={'light-content'} />
-        <ToolBar title={this.articleName} navigation={this.props.navigation} isLeftIconShow={true} />
+        <ToolBar title={this.articleName} navigation={this.props.navigation} leftIcon={'back'} />
         <WebView
           scalesPageToFit={true}
           source={{ uri: this.source }}

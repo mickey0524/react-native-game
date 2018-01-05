@@ -7,6 +7,7 @@ import {
   Dimensions,
 } from 'react-native';
 
+import Icon from 'react-native-vector-icons/Feather';
 import LazyImage from '../../../common/LazyImage';
 import { getImgUrl } from '../../../../utils/util';
 
@@ -32,7 +33,7 @@ class GameCell extends Component {
         <View style={styles.gameInfo}>
           <Text style={styles.gameName}>{ this.props.gameInfo.name }</Text>
           <View style={styles.download}>
-            <Image source={require('../../../../assets/download.png')} style={styles.downloadIcon} />
+            <Icon name='download' color={'#FFF'} size={8} />
             <Text style={styles.downloadText}>APP下载</Text>
           </View>
         </View>
@@ -54,10 +55,10 @@ const styles = StyleSheet.create({
   gameImg: {
     width: 345,
     height: 194,
-    marginBottom: 10,
     backgroundColor: '#F4F5F6',
   },
   gameInfo: {
+    marginTop: 10,
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
@@ -83,10 +84,6 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: '#FFF',
     textAlign: 'center',
-  },
-  downloadIcon: {
-    width: 8,
-    height: 8,
   },
 });
 

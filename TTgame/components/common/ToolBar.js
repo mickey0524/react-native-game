@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Dimensions,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import { SKY_BLUE } from '../../conf/color';
 
@@ -14,16 +15,19 @@ const totalWidth = Dimensions.get('window').width;
 export default class ToolBar extends Component {
   constructor(props) {
     super(props);
-    this.onPressBackIcon = this.onPressBackIcon.bind(this);
+    this.onPressLeftIcon = this.onPressLeftIcon.bind(this);
   }
 
   render() {
     return (
       <View style={styles.toolBar}>
-        { this.props.isLeftIconShow && 
-          <Text style={styles.backIconWrap} onPress={() => this.onPressBackIcon()}>
-            <Image source={require('../../assets/back.png')} 
-              style={styles.backIcon} />
+        { 
+          <Text style={styles.backIconWrap} onPress={() => this.onPressLeftIcon()}>
+            {
+              this.props.leftIcon == 'back' ?
+              <Icon name='md-arrow-back' size={25} color={'#FFF'} /> :
+              <Icon name='md-menu' size={25} color={'#FFF' }/>
+            }
           </Text>
         }
         <Text style={styles.title} numberOfLines={1}>{this.props.title}</Text>
@@ -31,8 +35,15 @@ export default class ToolBar extends Component {
     );
   }
 
-  onPressBackIcon() {
-    this.props.navigation.goBack();
+  /**
+   * 点击toolbar左端的icon，当左端为back的时候回到上个页面，为menu的时候展开抽屉菜单栏
+   */
+  onPressLeftIcon() {
+    if (this.props.leftIcon == 'back') {
+      this.props.navigation.goBack();
+    } else {
+      this.props.navigation.navigate('DrawerOpen');
+    }
   }
 }
 
@@ -48,14 +59,10 @@ const styles = StyleSheet.create({
   backIconWrap: {
     width: 40,
     height: 50,
-    lineHeight: 40,
+    lineHeight: 55,
     position: 'absolute',
     left: 15,
     textAlign: 'center',
-  },
-  backIcon: {
-    width: 20,
-    height: 20,
   },
   title: {
     fontSize: 20,
