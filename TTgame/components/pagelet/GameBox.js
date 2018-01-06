@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   View,
   Text,
@@ -23,7 +24,7 @@ const { width: totalWidth, height: totalHeight } = Dimensions.get('window');
 const platform = Platform.OS === 'ios' ? 1 : 0;
 const dpr = PixelRatio.get();
 
-export default class GameBox extends Component {
+class GameBox extends Component {
   constructor(props) {
     super(props);
     this.gameBoxId = this.props.navigation.state.params.gameBoxId;
@@ -44,7 +45,7 @@ export default class GameBox extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <MyStatusBar backgroundColor={color.SKY_BLUE} barStyle={'light-content'} />
+        <MyStatusBar barStyle={'light-content'} />
         <ToolBar title={this.gameBoxName} navigation={this.props.navigation} leftIcon={'back'} />
         {
           this.state.isLoading &&
@@ -114,7 +115,7 @@ export default class GameBox extends Component {
               <Text numberOfLines={1} style={styles.gameDesc}>{item.size}</Text>
               <Text numberOfLines={1} style={styles.gameDesc}>{item.desc}</Text>
             </View>
-            <View style={styles.downloadWrap}>
+            <View style={[styles.downloadWrap, {backgroundColor: this.props.theme.focusColor}]}>
               <Text style={styles.download}>下载</Text>
             </View>
           </View>
@@ -122,6 +123,15 @@ export default class GameBox extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  let { theme } = state;
+  return {
+    theme,
+  };
+}
+
+export default connect(mapStateToProps)(GameBox);
 
 const styles = StyleSheet.create({
   container: {
@@ -177,7 +187,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#498FD2',
+    // backgroundColor: '#498FD2',
     borderRadius: 4,
     overflow: 'hidden',
   },

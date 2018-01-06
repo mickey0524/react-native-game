@@ -1,12 +1,14 @@
+import React, { Component } from 'react';
 import { TabNavigator } from 'react-navigation';
 import { PixelRatio } from 'react-native';
+import { connect } from 'react-redux';
 
 import Feed from './Feed';
 import Rank from './Rank';
 import Hall from './Hall';
-
 import color from '../../../conf/color';
 
+const DefaultTabBar = TabNavigator.Presets['AndroidTopTabs'].tabBarComponent;
 const dpr = PixelRatio.get();
 
 const RouteConfigs = {
@@ -21,23 +23,42 @@ const RouteConfigs = {
   },
 };
 
+const tabBarComponent = (props) => {
+  return (
+    <DefaultTabBar {...props}
+      style={{backgroundColor: props.theme.themeColor}} />
+  )
+}
+
+const mapStateToProps = (state) => {
+  let { theme } = state;
+  return {
+    theme,
+  }
+}
+
 const TabNavigatorConfig = {
   initialRouteName: 'Feed',
+  tabBarComponent: connect(mapStateToProps)(tabBarComponent),
   tabBarPosition: 'top',
   swipeEnabled: true,
   animationEnabled: false,
   lazy: true,
   tabBarOptions: {
     showIcon: false,
-    activeTintColor: color.SKY_BLUE,
-    inactiveTintColor: '#000',
+    activeTintColor: '#FFF',
+    inactiveTintColor: '#FFF',
+    indicatorStyle: {
+      width: 0,
+    },
     labelStyle: {
       fontSize: 15,
     },
     tabStyle: {
-      height: 30,
+      height: 40,
     },
     style: {
+      elevation: 4,
       height: 40,
       backgroundColor: '#FFF',
       borderBottomWidth: 1 / dpr,

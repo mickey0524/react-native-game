@@ -6,7 +6,7 @@ import {
 import color from '../../conf/color';
 
 const initState = {
-  themeColor: color.TT_RED,
+  themeColor: color.SKY_BLUE,
   focusColor: color.SKY_BLUE,
 }
 

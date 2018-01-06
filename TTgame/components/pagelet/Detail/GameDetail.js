@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'; 
 import {
   View,
   Text,
@@ -16,7 +17,6 @@ import {
 import { MyStatusBar, STATUSBAR_HEIGHT } from '../../common/MyStatusBar';
 import ToolBar from '../../common/ToolBar';
 import { getImgUrl } from '../../../utils/util';
-import color from '../../../conf/color';
 
 const detailData = require("../../../conf/detailMock.json");
 
@@ -24,7 +24,7 @@ const dpr = PixelRatio.get();
 const { width: totalWidth, height: totalHeight } = Dimensions.get('window');
 const SHRINK_BASE = 45;
 
-export default class CardDetail extends Component {
+class CardDetail extends Component {
   constructor(props) {
     super(props);
     this.gameName = this.props.navigation.state.params.gameName;
@@ -33,6 +33,7 @@ export default class CardDetail extends Component {
       isLoading: true,
     }
     this.showText = this.showText.bind(this);
+    this.renderRecItem = this.renderRecItem.bind(this);
   }
 
   componentWillMount() {
@@ -68,9 +69,9 @@ export default class CardDetail extends Component {
     desc = { spread: desc, shrink: desc.slice(0, tail) + '...' };
     return (
       <View style={styles.container}>
-        <MyStatusBar backgroundColor={color.SKY_BLUE} barStyle={'light-content'} />
+        <MyStatusBar barStyle={'light-content'} />
         <ToolBar title={this.gameName} navigation={this.props.navigation} leftIcon={'back'} />
-        <ScrollView style={{ backgroundColor: color.SKY_BLUE }}>
+        <ScrollView style={{ backgroundColor: this.props.theme.themeColor }}>
           <View style={{ backgroundColor: '#FFF' }}>
             {
               this.state.isLoading &&
@@ -89,7 +90,7 @@ export default class CardDetail extends Component {
                       <Text numberOfLines={1} style={styles.gameInfo}>大小: {banner.size}M</Text>
                       <Text numberOfLines={1} style={styles.gameInfo}>{banner.title}</Text>
                     </View>
-                    <View style={styles.downloadWrap}>
+                    <View style={[styles.downloadWrap, {backgroundColor: this.props.theme.focusColor}]}>
                       <Text style={styles.download}>下载</Text>
                     </View>
                   </View>
@@ -123,8 +124,8 @@ export default class CardDetail extends Component {
                     <Text style={styles.descTitleText}>应用描述</Text>
                   </View>
                   {this.state.isDescShrink ?
-                    <Text style={styles.descContent}>{desc.shrink}<Text style={styles.showText} onPress={this.showText}> 更多</Text></Text> :
-                    <Text style={styles.descContent}>{desc.spread}<Text style={styles.showText} onPress={this.showText}> 收起</Text></Text>
+                    <Text style={styles.descContent}>{desc.shrink}<Text style={{color: this.props.theme.focusColor}} onPress={this.showText}> 更多</Text></Text> :
+                    <Text style={styles.descContent}>{desc.spread}<Text style={{color: this.props.theme.focusColor}} onPress={this.showText}> 收起</Text></Text>
                   }
                 </View>
 
@@ -183,14 +184,22 @@ export default class CardDetail extends Component {
         <Image source={{ uri: item.icon }} style={styles.recIcon} />
         <Text numberOfLines={1} style={styles.recName}>{item.name}</Text>
         <Text numberOfLines={1} style={styles.recSize}>大小：{item.size}M</Text>
-        <View style={styles.downloadWrap}>
+        <View style={[styles.downloadWrap, {backgroundColor: this.props.theme.focusColor}]}>
           <Text style={styles.download}>下载</Text>
         </View>
       </View>
     );
   }
-
 }
+
+const mapStateToProps = (state) => {
+  let { theme } = state;
+  return {
+    theme,
+  }
+}
+
+export default connect(mapStateToProps)(CardDetail);
 
 const styles = StyleSheet.create({
   container: {
@@ -248,7 +257,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#498FD2',
+    // backgroundColor: '#498FD2',
     borderRadius: 4,
     overflow: 'hidden',
   },
@@ -303,9 +312,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#999',
     lineHeight: 20,
-  },
-  showText: {
-    color: '#406599',
   },
 
   recItem: {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'; 
 import {
   View,
   Image,
@@ -12,7 +13,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Home from '../Home';
 import Theme from './Theme';
 import Setting from './Setting';
-import color from '../../../conf/color';
 
 const RouteConfigs = {
   Home: {
@@ -35,7 +35,7 @@ const contentComponent = (props) => {
   const closeDrawer = () => { props.navigation.navigate('DrawerClose') }; // 跳转option页面的时候先关闭抽屉
   return (
     <View style={[styles.drawerContainer, { backgroundColor: '#FFF'}]}>
-      <View style={styles.userInfo}>
+      <View style={[styles.userInfo, {backgroundColor: props.theme.themeColor}]}>
         <Image style={styles.userAvatar} 
           source={{ uri: 'https://p1.music.126.net/6qCTmJ8zClAaBohZ_Fz6fQ==/18534467511417016.jpg?param=100y100'}}/>
         <Text style={styles.userName}>飒然风影</Text>
@@ -43,25 +43,32 @@ const contentComponent = (props) => {
       <View>
         <TouchableWithoutFeedback onPress={() => { closeDrawer(); navigate('Theme') }}>
           <View style={styles.option}>
-            <Icon name='md-color-palette' size={23} color={color.SKY_BLUE} />
+            <Icon name='md-color-palette' size={23} color={props.theme.themeColor} />
             <Text style={styles.optionText}>主题</Text>
           </View>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={() => { closeDrawer(); navigate('Setting') }}>
           <View style={styles.option}>
-            <Icon name='md-options' size={20} color={color.SKY_BLUE} />
+            <Icon name='md-options' size={20} color={props.theme.themeColor} />
             <Text style={styles.optionText}>设置</Text>
           </View>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={() => { closeDrawer(); navigate('About') }}>
           <View style={styles.option}>
-            <Icon name='ios-megaphone' size={22} color={color.SKY_BLUE} />
+            <Icon name='ios-megaphone' size={22} color={props.theme.themeColor} />
             <Text style={styles.optionText}>关于</Text>
           </View>
         </TouchableWithoutFeedback>
       </View>
     </View>
   );
+}
+
+const mapStateToProps = (state) => {
+  let { theme } = state;
+  return {
+    theme,
+  }
 }
 
 const DrawerNavigatorConfig = {
@@ -72,7 +79,7 @@ const DrawerNavigatorConfig = {
   drawerOpenRoute: 'DrawerOpen',
   drawerCloseRoute: 'DrawerClose',
   drawerToggleRoute: 'DrawerToggle',
-  contentComponent: contentComponent,
+  contentComponent: connect(mapStateToProps)(contentComponent),
   contentOptions: {
     activeTintColor: '#000',
     inactiveTintColor: '#000',
@@ -103,7 +110,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-around',
     height: 150,
-    backgroundColor: color.SKY_BLUE,
+    // backgroundColor: color.SKY_BLUE,
   },
   userAvatar: {
     width: 80,

@@ -22,7 +22,7 @@ export default class Hello extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <MyStatusBar backgroundColor={color.SKY_BLUE} barStyle={'light-content'} />
+        <MyStatusBar barStyle={'light-content'} />
         <ToolBar title={'今日游戏'} leftIcon={'menu'} navigation={this.props.navigation}/>
         <TabContainer screenProps={this.props.screenProps}/>
       </View>

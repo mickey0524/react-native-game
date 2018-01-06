@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   View,
   Image,
@@ -32,7 +33,7 @@ class GameCell extends Component {
           contentOffsetY={this.props.contentOffsetY} />
         <View style={styles.gameInfo}>
           <Text style={styles.gameName}>{ this.props.gameInfo.name }</Text>
-          <View style={styles.download}>
+          <View style={[styles.download, {backgroundColor: this.props.theme.focusColor}]}>
             <Icon name='download' color={'#FFF'} size={8} />
             <Text style={styles.downloadText}>APP下载</Text>
           </View>
@@ -40,8 +41,16 @@ class GameCell extends Component {
       </View>
     );
   }
-
 }
+
+const mapStateTpProps = (state) => {
+  let { theme } = state;
+  return {
+    theme,
+  }
+}
+
+export default connect(mapStateTpProps)(GameCell);
 
 const styles = StyleSheet.create({
   gameWrap: {
@@ -71,7 +80,7 @@ const styles = StyleSheet.create({
   download: {
     width: 60,
     height: 14,
-    backgroundColor: '#2A90D7',
+    // backgroundColor: '#2A90D7',
     borderRadius: 3,
     overflow: 'hidden',
     display: 'flex',
@@ -86,7 +95,3 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-
-export {
-  GameCell,
-}

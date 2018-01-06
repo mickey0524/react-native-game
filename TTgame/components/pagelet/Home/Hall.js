@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'; 
 import {
   View,
   Text,
@@ -20,7 +21,7 @@ import { getImgUrl } from '../../../utils/util';
 const { width: totalWidth, height: totalHeight } = Dimensions.get('window');
 const platform = Platform.OS === 'ios' ? '1' : '0';
 
-export default class Hall extends Component {
+class Hall extends Component {
 
   static navigationOptions = {
     tabBarLabel: '大厅',
@@ -110,7 +111,7 @@ export default class Hall extends Component {
                         <Image style={styles.gameIcon} source={{ uri: getImgUrl(game.avatar, 'HALL_ICON') }}/>
                         <Text numberOfLines={1} style={styles.gameName}>{ game.name }</Text>
                         <Text numberOfLines={1} style={styles.gameSize}>{ game.size }</Text>
-                        <View style={styles.downloadWrap}>
+                        <View style={[styles.downloadWrap, { backgroundColor: this.props.theme.focusColor}]}>
                           <Text style={styles.download}>下载</Text>
                         </View>
                       </View>
@@ -190,6 +191,15 @@ export default class Hall extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  let { theme } = state;
+  return {
+    theme,
+  };
+}
+
+export default connect(mapStateToProps)(Hall);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -259,7 +269,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#498FD2',
+    // backgroundColor: '#498FD2',
     borderRadius: 4,
     overflow: 'hidden',
   },

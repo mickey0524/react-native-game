@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   View,
   Text,
@@ -6,19 +7,20 @@ import {
   StyleSheet,
 } from 'react-native';
 
+import { changeFocusColor, changeThemeColor } from '../../../redux/action/theme';
 import ToolBar from '../../common/ToolBar';
 import { MyStatusBar } from '../../common/MyStatusBar';
 import Icon from 'react-native-vector-icons/Octicons';
 import Picker from 'react-native-picker';
-import color, { color2name, colorArr } from '../../../conf/color';
+import color, { color2name, name2color, rgb2name } from '../../../conf/color';
 
-export default class DrawerHome extends Component {
+class Theme extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      themeColor: 'TT_RED',
-      focusColor: 'SKY_BLUE',
+      themeColor: rgb2name[this.props.theme.themeColor],
+      focusColor: rgb2name[this.props.theme.focusColor],
     }
     this.onPressSelect = this.onPressSelect.bind(this);
   }
@@ -71,8 +73,8 @@ export default class DrawerHome extends Component {
   onPressSelect(mark) {
     this[mark] = this.state[mark];
     Picker.init({
-      pickerData: colorArr,
-      selectedValue: [this.state[mark]],
+      pickerData: Object.keys(name2color),
+      selectedValue: [color2name[this.state[mark]]],
       onPickerConfirm: data => {
         
       },
@@ -83,13 +85,29 @@ export default class DrawerHome extends Component {
       },
       onPickerSelect: data => {
         this.setState({
-          [mark]: data[0],
+          [mark]: name2color[data[0]],
         });
       }
     });
     Picker.show();
   }
 }
+
+const mapStateToProps = (state) => {
+  let { theme } = state;
+  return {
+    theme,
+  }
+}
+
+const mapDispatchToProps = () => {
+  return {
+    changeFocusColor,
+    changeThemeColor,
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Theme);
 
 const styles = StyleSheet.create({
   container: {

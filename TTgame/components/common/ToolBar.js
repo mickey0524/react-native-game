@@ -17,12 +17,11 @@ class ToolBar extends Component {
   constructor(props) {
     super(props);
     this.onPressLeftIcon = this.onPressLeftIcon.bind(this);
-    console.log(props);
   }
 
   render() {
     return (
-      <View style={styles.toolBar}>
+      <View style={[styles.toolBar, { backgroundColor: this.props.theme.themeColor }]}>
         { 
           <Text style={styles.backIconWrap} onPress={() => this.onPressLeftIcon()}>
             {
@@ -56,13 +55,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = () => {
-  return {
-
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ToolBar);
+export default connect(mapStateToProps)(ToolBar);
 
 const styles = StyleSheet.create({
   toolBar: {
@@ -71,7 +64,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: color.SKY_BLUE,
+    // backgroundColor: color.SKY_BLUE,
   },
   backIconWrap: {
     width: 40,

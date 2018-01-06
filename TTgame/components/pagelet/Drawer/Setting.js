@@ -24,7 +24,7 @@ export default class Setting extends Component {
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: '#FFF' }}>
-        <MyStatusBar backgroundColor={color.SKY_BLUE} barStyle={'light-content'} />
+        <MyStatusBar barStyle={'light-content'} />
         <ToolBar title={'设置'} navigation={this.props.navigation} leftIcon={'back'} />
         <View>
           <View style={styles.optionWrap}>

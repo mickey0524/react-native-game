@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'; 
 import {
   View,
   Text,
@@ -20,7 +21,7 @@ const platform = Platform.OS === 'ios' ? '1' : '0';
 const { width: totalWidth, height: totalHeight } = Dimensions.get('window');
 const dpr = PixelRatio.get();
 
-export default class Rank extends Component {
+class Rank extends Component {
 
   static navigationOptions = {
     tabBarLabel: '榜单',
@@ -110,7 +111,7 @@ export default class Rank extends Component {
             <Text numberOfLines={1} style={styles.gameDesc}>大小：{item.size}</Text>
             <Text numberOfLines={1} style={styles.gameDesc}>{item.desc}</Text>              
           </View>
-          <View style={styles.downloadWrap}>
+          <View style={[styles.downloadWrap, {backgroundColor: this.props.theme.focusColor}]}>
             <Text style={styles.download}>下载</Text>
           </View>
         </View>
@@ -140,6 +141,15 @@ export default class Rank extends Component {
     navigate('CardDetail', { cardId, gameName });
   }
 }
+
+const mapStateToProps = (state) => {
+  let { theme } = state;
+  return {
+    theme,
+  };
+}
+
+export default connect(mapStateToProps)(Rank);
 
 const styles = StyleSheet.create({
   container: {
@@ -212,7 +222,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#498FD2',
+    // backgroundColor: '#498FD2',
     borderRadius: 4,
     overflow: 'hidden',
   },

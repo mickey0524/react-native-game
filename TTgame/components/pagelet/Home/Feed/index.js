@@ -10,11 +10,10 @@ import {
   Dimensions,
 } from 'react-native';
 
-import { GameCell } from './GameCell';
+import GameCell from './GameCell';
 import { ArticleOneImgCell, ArticleThreeImgCell } from './ArticleCell';
 import { MyStatusBar } from '../../../common/MyStatusBar';
 import BottomLoading from '../../../common/BottomLoading';
-import ToolBar from '../../../common/ToolBar';
 import { FEED } from '../../../../conf/api'; 
 
 const { width: totalWidth, height: totalHeight } = Dimensions.get('window');
