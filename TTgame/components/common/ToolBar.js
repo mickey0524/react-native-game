@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   View,
   Image,
@@ -6,16 +7,17 @@ import {
   StyleSheet,
   Dimensions,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
 
+import Icon from 'react-native-vector-icons/Ionicons';
 import color from '../../conf/color';
 
 const totalWidth = Dimensions.get('window').width;
 
-export default class ToolBar extends Component {
+class ToolBar extends Component {
   constructor(props) {
     super(props);
     this.onPressLeftIcon = this.onPressLeftIcon.bind(this);
+    console.log(props);
   }
 
   render() {
@@ -46,6 +48,21 @@ export default class ToolBar extends Component {
     }
   }
 }
+
+const mapStateToProps = (state) => {
+  let { theme } = state;
+  return {
+    theme,
+  }
+}
+
+const mapDispatchToProps = () => {
+  return {
+
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ToolBar);
 
 const styles = StyleSheet.create({
   toolBar: {
