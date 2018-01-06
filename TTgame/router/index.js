@@ -9,7 +9,7 @@ import Setting from '../components/pagelet/Drawer/Setting';
 import About from '../components/pagelet/Drawer/About';
 
 const StackNavigatorConfig = {
-  initialRouteName: 'Theme',
+  initialRouteName: 'Drawer',
   headerMode: 'none',
   mode: 'card',
 };
