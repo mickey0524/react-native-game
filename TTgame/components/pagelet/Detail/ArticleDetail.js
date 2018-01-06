@@ -7,7 +7,7 @@ import {
 
 import { MyStatusBar } from '../../common/MyStatusBar';
 import ToolBar from '../../common/ToolBar';
-import { SKY_BLUE } from '../../../conf/color';
+import color from '../../../conf/color';
 
 export default class ArticleDetail extends Component {
   constructor(props) {
@@ -19,7 +19,7 @@ export default class ArticleDetail extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <MyStatusBar backgroundColor={SKY_BLUE} barStyle={'light-content'} />
+        <MyStatusBar backgroundColor={color.SKY_BLUE} barStyle={'light-content'} />
         <ToolBar title={this.articleName} navigation={this.props.navigation} leftIcon={'back'} />
         <WebView
           scalesPageToFit={true}

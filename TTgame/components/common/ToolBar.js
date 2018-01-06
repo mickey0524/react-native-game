@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { SKY_BLUE } from '../../conf/color';
+import color from '../../conf/color';
 
 const totalWidth = Dimensions.get('window').width;
 
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: SKY_BLUE,
+    backgroundColor: color.SKY_BLUE,
   },
   backIconWrap: {
     width: 40,

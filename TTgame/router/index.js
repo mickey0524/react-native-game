@@ -6,9 +6,10 @@ import CardDetail from '../components/pagelet/Detail/GameDetail';
 import GameBox from '../components/pagelet/GameBox';
 import Theme from '../components/pagelet/Drawer/Theme';
 import Setting from '../components/pagelet/Drawer/Setting';
+import About from '../components/pagelet/Drawer/About';
 
 const StackNavigatorConfig = {
-  initialRouteName: 'Drawer',
+  initialRouteName: 'Theme',
   headerMode: 'none',
   mode: 'card',
 };
@@ -20,6 +21,7 @@ const RouteConfigs = {
   GameBox: { screen: GameBox },
   Theme: { screen: Theme },
   Setting: { screen: Setting },
+  About: { screen: About },
 };
 
 const App = StackNavigator(RouteConfigs, StackNavigatorConfig);

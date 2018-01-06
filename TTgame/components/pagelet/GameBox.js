@@ -15,7 +15,7 @@ import {
 import { MyStatusBar, STATUSBAR_HEIGHT } from '../common/MyStatusBar';
 import ToolBar from '../common/ToolBar';
 import BottomLoading from '../common/BottomLoading';
-import { SKY_BLUE } from '../../conf/color';
+import color from '../../conf/color';
 import { GAME_BOX } from '../../conf/api';
 import { getImgUrl } from '../../utils/util';
 
@@ -44,7 +44,7 @@ export default class GameBox extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <MyStatusBar backgroundColor={SKY_BLUE} barStyle={'light-content'} />
+        <MyStatusBar backgroundColor={color.SKY_BLUE} barStyle={'light-content'} />
         <ToolBar title={this.gameBoxName} navigation={this.props.navigation} leftIcon={'back'} />
         {
           this.state.isLoading &&

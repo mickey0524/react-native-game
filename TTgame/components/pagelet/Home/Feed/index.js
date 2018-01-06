@@ -15,7 +15,6 @@ import { ArticleOneImgCell, ArticleThreeImgCell } from './ArticleCell';
 import { MyStatusBar } from '../../../common/MyStatusBar';
 import BottomLoading from '../../../common/BottomLoading';
 import ToolBar from '../../../common/ToolBar';
-import { SKY_BLUE } from '../../../../conf/color';
 import { FEED } from '../../../../conf/api'; 
 
 const { width: totalWidth, height: totalHeight } = Dimensions.get('window');

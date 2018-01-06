@@ -5,7 +5,7 @@ import Feed from './Feed';
 import Rank from './Rank';
 import Hall from './Hall';
 
-import { SKY_BLUE } from '../../../conf/color';
+import color from '../../../conf/color';
 
 const dpr = PixelRatio.get();
 
@@ -29,7 +29,7 @@ const TabNavigatorConfig = {
   lazy: true,
   tabBarOptions: {
     showIcon: false,
-    activeTintColor: SKY_BLUE,
+    activeTintColor: color.SKY_BLUE,
     inactiveTintColor: '#000',
     labelStyle: {
       fontSize: 15,

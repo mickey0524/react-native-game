@@ -9,6 +9,7 @@
   "dependencies": {
     "react": "16.0.0",
     "react-native": "0.51.0",
+    "react-native-picker": "^4.3.2",
     "react-native-swiper": "^1.5.13",
     "react-native-vector-icons": "^4.4.3",
     "react-navigation": "^1.0.0-beta.22"

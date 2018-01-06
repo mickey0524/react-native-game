@@ -16,7 +16,7 @@ import {
 import { MyStatusBar, STATUSBAR_HEIGHT } from '../../common/MyStatusBar';
 import ToolBar from '../../common/ToolBar';
 import { getImgUrl } from '../../../utils/util';
-import { SKY_BLUE } from '../../../conf/color';
+import color from '../../../conf/color';
 
 const detailData = require("../../../conf/detailMock.json");
 
@@ -68,9 +68,9 @@ export default class CardDetail extends Component {
     desc = { spread: desc, shrink: desc.slice(0, tail) + '...' };
     return (
       <View style={styles.container}>
-        <MyStatusBar backgroundColor={SKY_BLUE} barStyle={'light-content'} />
+        <MyStatusBar backgroundColor={color.SKY_BLUE} barStyle={'light-content'} />
         <ToolBar title={this.gameName} navigation={this.props.navigation} leftIcon={'back'} />
-        <ScrollView style={{ backgroundColor: SKY_BLUE }}>
+        <ScrollView style={{ backgroundColor: color.SKY_BLUE }}>
           <View style={{ backgroundColor: '#FFF' }}>
             {
               this.state.isLoading &&

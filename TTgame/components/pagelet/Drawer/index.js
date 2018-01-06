@@ -12,7 +12,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Home from '../Home';
 import Theme from './Theme';
 import Setting from './Setting';
-import { SKY_BLUE } from '../../../conf/color';
+import color from '../../../conf/color';
 
 const RouteConfigs = {
   Home: {
@@ -26,8 +26,13 @@ const RouteConfigs = {
   },
 };
 
+/**
+ * 自定义抽屉页面
+ * @param {object} props 传入的属性对象 
+ */
 const contentComponent = (props) => {
-  const { navigate } = props.navigation;
+  const { navigate } = props.screenProps; // Drawer传入的外层StackNavigation的navigation
+  const closeDrawer = () => { props.navigation.navigate('DrawerClose') }; // 跳转option页面的时候先关闭抽屉
   return (
     <View style={[styles.drawerContainer, { backgroundColor: '#FFF'}]}>
       <View style={styles.userInfo}>
@@ -36,16 +41,22 @@ const contentComponent = (props) => {
         <Text style={styles.userName}>飒然风影</Text>
       </View>
       <View>
-        <TouchableWithoutFeedback onPress={() => { navigate('Theme') }}>
+        <TouchableWithoutFeedback onPress={() => { closeDrawer(); navigate('Theme') }}>
           <View style={styles.option}>
-            <Icon name='md-color-palette' size={23} color={SKY_BLUE} />
+            <Icon name='md-color-palette' size={23} color={color.SKY_BLUE} />
             <Text style={styles.optionText}>主题</Text>
           </View>
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => { navigate('Setting') }}>
+        <TouchableWithoutFeedback onPress={() => { closeDrawer(); navigate('Setting') }}>
           <View style={styles.option}>
-            <Icon name='md-options' size={20} color={SKY_BLUE} />
+            <Icon name='md-options' size={20} color={color.SKY_BLUE} />
             <Text style={styles.optionText}>设置</Text>
+          </View>
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback onPress={() => { closeDrawer(); navigate('About') }}>
+          <View style={styles.option}>
+            <Icon name='ios-megaphone' size={22} color={color.SKY_BLUE} />
+            <Text style={styles.optionText}>关于</Text>
           </View>
         </TouchableWithoutFeedback>
       </View>
@@ -92,7 +103,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-around',
     height: 150,
-    backgroundColor: SKY_BLUE,
+    backgroundColor: color.SKY_BLUE,
   },
   userAvatar: {
     width: 80,

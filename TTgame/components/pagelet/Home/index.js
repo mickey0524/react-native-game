@@ -7,7 +7,7 @@ import {
 import TabContainer from './ViewPager';
 import ToolBar from '../../common/ToolBar';
 import { MyStatusBar } from '../../common/MyStatusBar';
-import { SKY_BLUE } from '../../../conf/color';
+import color from '../../../conf/color';
 
 export default class Hello extends Component {
   
@@ -22,7 +22,7 @@ export default class Hello extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <MyStatusBar backgroundColor={SKY_BLUE} barStyle={'light-content'} />
+        <MyStatusBar backgroundColor={color.SKY_BLUE} barStyle={'light-content'} />
         <ToolBar title={'今日游戏'} leftIcon={'menu'} navigation={this.props.navigation}/>
         <TabContainer screenProps={this.props.screenProps}/>
       </View>
