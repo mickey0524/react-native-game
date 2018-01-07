@@ -1,2 +1,2 @@
-export const CHANGE_THEME_COLOR = 'CHANGE_THEME_COLOR';
-export const CHANGE_FOCUS_COLOR = 'CHANGE_FOCUS_COLOR';
+export const CHANGE_THEME = 'CHANGE_THEME';
+export const SET_THEME = 'SET_THEME';

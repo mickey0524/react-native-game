@@ -3,11 +3,12 @@ import { connect } from 'react-redux';
 import {
   View,
   Text,
+  AsyncStorage,
   TouchableWithoutFeedback,
   StyleSheet,
 } from 'react-native';
 
-import { changeFocusColor, changeThemeColor } from '../../../redux/action/theme';
+import { changeTheme } from '../../../redux/action/theme';
 import ToolBar from '../../common/ToolBar';
 import { MyStatusBar } from '../../common/MyStatusBar';
 import Icon from 'react-native-vector-icons/Octicons';
@@ -76,7 +77,12 @@ class Theme extends Component {
       pickerData: Object.keys(name2color),
       selectedValue: [color2name[this.state[mark]]],
       onPickerConfirm: data => {
-        
+        let theme = {
+          themeColor: color[this.state.themeColor],
+          focusColor: color[this.state.focusColor],
+        }
+        this.props.changeTheme(theme);
+        AsyncStorage.setItem('theme', JSON.stringify(theme));
       },
       onPickerCancel: () => {
         this.setState({
@@ -100,10 +106,9 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = () => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    changeFocusColor,
-    changeThemeColor,
+    changeTheme: (theme) => dispatch(changeTheme(theme)),
   }
 }
 

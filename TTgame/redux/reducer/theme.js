@@ -1,6 +1,5 @@
 import {
-  CHANGE_THEME_COLOR,
-  CHANGE_FOCUS_COLOR,
+  CHANGE_THEME,
 } from '../../conf/actionTypes';
 
 import color from '../../conf/color';
@@ -13,13 +12,8 @@ const initState = {
 export default function reducer(state = initState, action) {
   let newState = state;
   switch (action.type) {
-    case CHANGE_THEME_COLOR:
-      newState = Object.assign({}, state, { themeColor: action.color });
-      return newState;
-      break;
-    case CHANGE_FOCUS_COLOR:
-      newState = Object.assign({}, state, { focusColor: action.color });
-      return newState;
+    case CHANGE_THEME:
+      return action.theme;
       break;
     default:
       return state;

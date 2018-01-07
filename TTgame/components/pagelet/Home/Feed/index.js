@@ -7,6 +7,7 @@ import {
   ScrollView,
   TouchableWithoutFeedback,
   Platform,
+  AsyncStorage,
   Dimensions,
 } from 'react-native';
 

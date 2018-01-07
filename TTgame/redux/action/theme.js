@@ -1,26 +1,30 @@
 import { 
-  CHANGE_THEME_COLOR,
-  CHANGE_FOCUS_COLOR,
+  CHANGE_THEME,
+  SET_THEME,
  } from '../../conf/actionTypes';
 
+import { fetchTheme } from '../../dao/theme';
+
 /**
- * 修改redux中的themeColor 
- * @param {string} themeColor 修改后的主题颜色 
+ * 修改redux中的theme
+ * @param {object} theme 修改后的主题
  */
-export const changeThemeColor = (themeColor) => {
+export const changeTheme = (theme) => {
   return {
-    type: CHANGE_THEME_COLOR,
-    color: themeColor,
+    type: CHANGE_THEME,
+    theme,
   }
 }
 
 /**
- * 修改redux中的focusColor
- * @param {string} focusColor 修改后的强调颜色 
+ * 打开app的时候设置theme
  */
-export const changeFocusColor = (focusColor) => {
-  return {
-    type: CHANGE_FOCUS_COLOR,
-    color: focusColor,
+export const setTheme = () => {
+  return dispatch => {
+    fetchTheme().then(data => {
+      if (data) {
+        dispatch(changeTheme(JSON.parse(data)));        
+      }
+    });
   }
 }
