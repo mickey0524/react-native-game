@@ -8,3 +8,10 @@ import {
 export const fetchTheme = () => {
   return AsyncStorage.getItem('theme');
 }
+
+/**
+ * 从AsyncStorage中读取mode
+ */
+export const fetchMode = () => {
+  return AsyncStorage.getItem('mode');
+}

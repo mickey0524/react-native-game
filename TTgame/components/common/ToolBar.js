@@ -20,18 +20,19 @@ class ToolBar extends Component {
   }
 
   render() {
+    let isNightMode = this.props.mode == 'night';
     return (
       <View style={[styles.toolBar, { backgroundColor: this.props.theme.themeColor }]}>
         { 
           <Text style={styles.backIconWrap} onPress={() => this.onPressLeftIcon()}>
             {
               this.props.leftIcon == 'back' ?
-              <Icon name='md-arrow-back' size={25} color={'#FFF'} /> :
-              <Icon name='md-menu' size={25} color={'#FFF' }/>
+              <Icon name='md-arrow-back' size={25} color={isNightMode ? '#252525' : '#FFF'} /> :
+              <Icon name='md-menu' size={25} color={isNightMode ? '#252525' : '#FFF'} />
             }
           </Text>
         }
-        <Text style={styles.title} numberOfLines={1}>{this.props.title}</Text>
+        <Text style={[styles.title, {color: isNightMode ? '#252525' : '#FFF'}]} numberOfLines={1}>{this.props.title}</Text>
       </View>
     );
   }
@@ -49,9 +50,10 @@ class ToolBar extends Component {
 }
 
 const mapStateToProps = (state) => {
-  let { theme } = state;
+  let { theme, mode } = state;
   return {
     theme,
+    mode,
   }
 }
 
@@ -76,7 +78,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    color: '#FFF',
+    // color: '#FFF',
     width: 200,
     textAlign: 'center',
   },

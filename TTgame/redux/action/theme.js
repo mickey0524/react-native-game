@@ -1,9 +1,8 @@
 import { 
   CHANGE_THEME,
-  SET_THEME,
  } from '../../conf/actionTypes';
 
-import { fetchTheme } from '../../dao/theme';
+import { fetchTheme } from '../../dao';
 
 /**
  * 修改redux中的theme

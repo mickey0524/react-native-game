@@ -10,6 +10,7 @@ import Theme from '../components/pagelet/Drawer/Theme';
 import Setting from '../components/pagelet/Drawer/Setting';
 import About from '../components/pagelet/Drawer/About';
 import { setTheme } from '../redux/action/theme';
+import { setMode } from '../redux/action/mode';
 
 const StackNavigatorConfig = {
   initialRouteName: 'Drawer',
@@ -35,7 +36,8 @@ class App extends Component {
   }
 
   componentWillMount() {
-    this.props.setTheme();
+    this.props.setTheme(); //设置主题
+    this.props.setMode(); //设置工作模式
   }
   
   render() {
@@ -48,6 +50,7 @@ class App extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     setTheme: () => dispatch(setTheme()),
+    setMode: () => dispatch(setMode()),
   }
 }
 

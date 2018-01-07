@@ -47,6 +47,7 @@ class Hall extends Component {
   }
   
   render() {
+    let isNightMode = this.props.mode == 'night';
     return (
       <View style={styles.container}>
         {
@@ -57,11 +58,11 @@ class Hall extends Component {
         }
         {
           !this.state.isLoading &&
-          <View style={[styles.container, {backgroundColor: '#FFF'}]}>
+          <View style={[styles.container, { backgroundColor: isNightMode ? '#252525' : '#FFF' }]}>
             <FlatList
               data={this.state.hallData}
               keyExtractor={(item, index) => index}
-              ItemSeparatorComponent={() => <View style={styles.ItemSeparator} />}
+              ItemSeparatorComponent={() => <View style={[styles.ItemSeparator, { backgroundColor: isNightMode ? '#424242' : '#F4F5F6' }]} />}           
               renderItem={this.renderItem} 
               onEndReachedThreshold={0.2}
               onEndReached={this.state.hasMore ? this.fetchData : false} />
@@ -76,6 +77,7 @@ class Hall extends Component {
    * @param {object} param0 列表块参数
    */
   renderItem({ item, index }) {
+    let isNightMode = this.props.mode == 'night';
     if (this.state.hallData.length == 1) {
       return null;
     }
@@ -90,7 +92,7 @@ class Hall extends Component {
                   return (
                     <TouchableWithoutFeedback key={index} onPress={() => this.onPressItem(item.title)}>
                       <Image source={{ uri: getImgUrl(item.image_url, 'HALL_SWIPER') }}
-                        style={styles.swiperItem} />
+                        style={[styles.swiperItem, { backgroundColor: isNightMode ? '#000' : '#F4F5F6'}]} />
                     </TouchableWithoutFeedback>
                   );
                 })
@@ -99,8 +101,11 @@ class Hall extends Component {
           }
           <View>
             <View style={styles.gameBoxTitleWrap}>
-              <Text style={styles.gameBoxTitle}>{item.title}</Text>
-              <Text style={styles.gameBoxTitle} onPress={() => this.onPressShowMore(item.game_box_id, item.title)}>查看全部</Text>
+              <Text style={[styles.gameBoxTitle, { color: isNightMode ? '#FFF' : '#222' }]}>{item.title}</Text>
+              <Text style={[styles.gameBoxTitle, { color: isNightMode ? '#FFF' : '#222' }]}
+                onPress={() => this.onPressShowMore(item.game_box_id, item.title)}>
+                查看全部
+              </Text>
             </View>
             <View style={styles.gameList}>
               {
@@ -108,9 +113,9 @@ class Hall extends Component {
                   return (
                     <TouchableWithoutFeedback key={gameIndex} onPress={() => this.onPressItem(item.name)}>
                       <View style={[styles.gameItem, (gameIndex + 1) % 4 == 0 && { marginRight: 0 }]}>
-                        <Image style={styles.gameIcon} source={{ uri: getImgUrl(game.avatar, 'HALL_ICON') }}/>
-                        <Text numberOfLines={1} style={styles.gameName}>{ game.name }</Text>
-                        <Text numberOfLines={1} style={styles.gameSize}>{ game.size }</Text>
+                        <Image style={[styles.gameIcon, { backgroundColor: isNightMode ? '#000' : '#F4F5F6' }]} source={{ uri: getImgUrl(game.avatar, 'HALL_ICON') }}/>
+                        <Text numberOfLines={1} style={[styles.gameName, {color: isNightMode ? '#FFF' : '#222'}]}>{ game.name }</Text>
+                        <Text numberOfLines={1} style={[styles.gameSize, {color: isNightMode ? '#FFF' : '#999'}]}>{ game.size }</Text>
                         <View style={[styles.downloadWrap, { backgroundColor: this.props.theme.focusColor}]}>
                           <Text style={styles.download}>下载</Text>
                         </View>
@@ -120,20 +125,20 @@ class Hall extends Component {
                 })
               }
             </View>
-            <View style={styles.bannerWrap}>
+            <View style={[styles.bannerWrap, { borderColor: isNightMode ? '#424242' : '#F4F5F6' }]}>
               {
                 item.game_banner.length == 1 ?
                 <TouchableWithoutFeedback onPress={() => {this.onPressItem(item.game_banner[0].title)}}>
-                  <Image style={styles.bigBanner}
+                  <Image style={[styles.bigBanner, { backgroundColor: isNightMode ? '#000' : '#F4F5F6' }]}
                     source={{ uri: getImgUrl(item.game_banner[0].image_url, 'HALL_BIG_BANNER') }} />
                 </TouchableWithoutFeedback> :
                 <View style={styles.smallBannerWrap}>
                   <TouchableWithoutFeedback onPress={() => {this.onPressItem(item.game_banner[0].title)}}>
-                    <Image style={styles.smallBanner}
+                    <Image style={[styles.smallBanner, { backgroundColor: isNightMode ? '#000' : '#F4F5F6' }]}
                       source={{ uri: getImgUrl(item.game_banner[0].image_url, 'HALL_SMALL_BANNER') }} />
                   </TouchableWithoutFeedback>
                   <TouchableWithoutFeedback onPress={() => { this.onPressItem(item.game_banner[1].title) }}>
-                    <Image style={styles.smallBanner}
+                    <Image style={[styles.smallBanner, { backgroundColor: isNightMode ? '#000' : '#F4F5F6' }]}
                       source={{ uri: getImgUrl(item.game_banner[1].image_url, 'HALL_SMALL_BANNER') }} />
                   </TouchableWithoutFeedback>         
                 </View>
@@ -192,9 +197,10 @@ class Hall extends Component {
 }
 
 const mapStateToProps = (state) => {
-  let { theme } = state;
+  let { theme, mode } = state;
   return {
     theme,
+    mode,
   };
 }
 
@@ -214,10 +220,10 @@ const styles = StyleSheet.create({
   swiperItem: {
     width: totalWidth,
     height: 140,
-    backgroundColor: '#F4F5F6',
+    // backgroundColor: '#F4F5F6',
   },
   ItemSeparator: {
-    backgroundColor: '#F4F5F6',
+    // backgroundColor: '#F4F5F6',
     width: totalWidth,
     height: 6,
   },
@@ -229,7 +235,7 @@ const styles = StyleSheet.create({
   },
   gameBoxTitle: {
     fontSize: 16,
-    color: '#222',
+    // color: '#222',
     paddingTop: 15,
   },
   gameList: {
@@ -245,7 +251,7 @@ const styles = StyleSheet.create({
     marginRight: 27,
   },
   gameIcon: {
-    backgroundColor: '#FFF',
+    // backgroundColor: '#F4F5F6',
     width: 66,
     height: 66,
     borderRadius: 12,
@@ -253,12 +259,12 @@ const styles = StyleSheet.create({
   gameName: {
     marginTop: 8,
     fontSize: 14,
-    color: '#222',
+    // color: '#222',
     textAlign: 'center',
   },
   gameSize: {
     fontSize: 12,
-    color: '#999',
+    // color: '#999',
     textAlign: 'center',
     marginTop: 6,
     marginBottom: 8,
@@ -278,14 +284,14 @@ const styles = StyleSheet.create({
     color: '#FFF',
   },
   bannerWrap: {
-    borderColor: '#F4F5F6',
+    // borderColor: '#F4F5F6',
     borderStyle: 'solid',
     borderTopWidth: 6,
   },
   bigBanner: {
     width: totalWidth,
     height: 84,
-    backgroundColor: '#F4F5F6',
+    // backgroundColor: '#F4F5F6',
   },
   smallBannerWrap: {
     paddingHorizontal: 15,
@@ -298,6 +304,6 @@ const styles = StyleSheet.create({
     width: 168,
     height: 84,
     borderRadius: 4,
-    backgroundColor: '#F4F5F6',    
+    // backgroundColor: '#F4F5F6',    
   },
 });

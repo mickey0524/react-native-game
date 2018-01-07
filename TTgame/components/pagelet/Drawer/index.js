@@ -31,32 +31,33 @@ const RouteConfigs = {
  * @param {object} props 传入的属性对象 
  */
 const contentComponent = (props) => {
+  let isNightMode = props.mode == 'night';
   const { navigate } = props.screenProps; // Drawer传入的外层StackNavigation的navigation
   const closeDrawer = () => { props.navigation.navigate('DrawerClose') }; // 跳转option页面的时候先关闭抽屉
   return (
-    <View style={[styles.drawerContainer, { backgroundColor: '#FFF'}]}>
+    <View style={[styles.drawerContainer, { backgroundColor: isNightMode ? '#252525' : '#FFF'}]}>
       <View style={[styles.userInfo, {backgroundColor: props.theme.themeColor}]}>
         <Image style={styles.userAvatar} 
           source={{ uri: 'https://p1.music.126.net/6qCTmJ8zClAaBohZ_Fz6fQ==/18534467511417016.jpg?param=100y100'}}/>
-        <Text style={styles.userName}>飒然风影</Text>
+        <Text style={[styles.userName, {color: isNightMode ? '#252525' : '#FFF'}]}>飒然风影</Text>
       </View>
       <View>
         <TouchableWithoutFeedback onPress={() => { closeDrawer(); navigate('Theme') }}>
           <View style={styles.option}>
             <Icon name='md-color-palette' size={23} color={props.theme.themeColor} />
-            <Text style={styles.optionText}>主题</Text>
+            <Text style={[styles.optionText, {color: isNightMode ? '#FFF' : '#252525'}]}>主题</Text>
           </View>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={() => { closeDrawer(); navigate('Setting') }}>
           <View style={styles.option}>
             <Icon name='md-options' size={20} color={props.theme.themeColor} />
-            <Text style={styles.optionText}>设置</Text>
+            <Text style={[styles.optionText, { color: isNightMode ? '#FFF' : '#252525' }]}>设置</Text>
           </View>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={() => { closeDrawer(); navigate('About') }}>
           <View style={styles.option}>
             <Icon name='ios-megaphone' size={22} color={props.theme.themeColor} />
-            <Text style={styles.optionText}>关于</Text>
+            <Text style={[styles.optionText, { color: isNightMode ? '#FFF' : '#252525' }]}>关于</Text>
           </View>
         </TouchableWithoutFeedback>
       </View>
@@ -65,9 +66,10 @@ const contentComponent = (props) => {
 }
 
 const mapStateToProps = (state) => {
-  let { theme } = state;
+  let { theme, mode } = state;
   return {
     theme,
+    mode,
   }
 }
 
@@ -119,7 +121,7 @@ const styles = StyleSheet.create({
   },
   userName: {
     fontSize: 16,
-    color: '#FFF',
+    // color: '#FFF',
   },
   option: {
     display: 'flex',

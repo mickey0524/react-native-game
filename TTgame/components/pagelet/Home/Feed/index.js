@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { 
   View,
   Text, 
@@ -18,7 +19,7 @@ import BottomLoading from '../../../common/BottomLoading';
 import { FEED } from '../../../../conf/api'; 
 
 const { width: totalWidth, height: totalHeight } = Dimensions.get('window');
-export default class Feed extends Component {
+class Feed extends Component {
 
   static navigationOptions = {
     tabBarLabel: '推荐',
@@ -47,13 +48,14 @@ export default class Feed extends Component {
   }
 
   render() {
+    let isNightMode = this.props.mode == 'night';
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, { backgroundColor: isNightMode ? '#252525' : '#FFF'}]}>
         <FlatList
           onScroll={this._onScroll}
           refreshing={this.state.isRefreshing}
           onRefresh={() => this.fetchData(0)}
-          ItemSeparatorComponent={() => <View style={styles.ItemSeparator} />}
+          ItemSeparatorComponent={() => <View style={[styles.ItemSeparator, {backgroundColor: isNightMode ? '#424242' : '#F4F5F6'}]} />}
           initialNumToRender={Math.ceil(totalHeight / 200)}
           data={this.state.feedData}
           keyExtractor={(item, index) => index}
@@ -173,14 +175,24 @@ export default class Feed extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  let { mode } = state;
+  return {
+    mode,
+  }
+}
+
+export default connect(mapStateToProps)(Feed);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF',
+    // backgroundColor: '#FFF',
+    backgroundColor: 'red',
     width: totalWidth,
   },
   ItemSeparator: {
-    backgroundColor: '#F4F5F6',
+    // backgroundColor: '#F4F5F6',
     width: totalWidth,
     height: 6,
   },

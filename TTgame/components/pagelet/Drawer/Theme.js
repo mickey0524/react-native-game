@@ -27,14 +27,15 @@ class Theme extends Component {
   }
 
   render() {
+    let isNightMode = this.props.mode == 'night';
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, { backgroundColor: isNightMode ? '#252525' : '#FFF' }]}>
         <MyStatusBar backgroundColor={color.SKY_BLUE} barStyle={'light-content'} />
         <ToolBar title={'主题'} navigation={this.props.navigation} leftIcon={'back'} />
         <View style={styles.optionWrap}>
           <View>
-            <Text>主题的默认颜色</Text>
-            <Text style={{ fontSize: 12, color: '#999', marginTop: 3 }}>
+            <Text style={{ color: isNightMode ? '#FFF' : '#000' }}>主题的默认颜色</Text>
+            <Text style={{ fontSize: 12, color: isNightMode ? '#FFF' : '#999', marginTop: 3 }}>
               当前颜色：<Text style={{ color: color[this.state.themeColor]}}>
                         {color2name[this.state.themeColor]}
                       </Text>
@@ -42,15 +43,15 @@ class Theme extends Component {
           </View>
           <TouchableWithoutFeedback onPress={() => this.onPressSelect('themeColor')}>
             <View style={styles.selectColor}>
-              <Text style={{ color: '#999', marginRight: 15 }}>{color2name[this.state.themeColor]}</Text>
-              <Icon name='rocket' size={20} color={'#999'}/> 
+              <Text style={{ color: isNightMode ? '#FFF' :'#999', marginRight: 15 }}>{color2name[this.state.themeColor]}</Text>
+              <Icon name='rocket' size={20} color={isNightMode ? '#FFF' : '#999'}/> 
             </View>
           </TouchableWithoutFeedback>
         </View>
         <View style={styles.optionWrap}>
           <View>
-            <Text>主题的强调颜色</Text>
-            <Text style={{ fontSize: 12, color: '#999', marginTop: 3 }}>
+            <Text style={{ color: isNightMode ? '#FFF' : '#000' }}>主题的强调颜色</Text>
+            <Text style={{ fontSize: 12, color: isNightMode ? '#FFF' : '#999', marginTop: 3 }}>
               当前颜色：<Text style={{ color: color[this.state.focusColor] }}>
                 {color2name[this.state.focusColor]}
               </Text>
@@ -58,8 +59,8 @@ class Theme extends Component {
           </View>
           <TouchableWithoutFeedback onPress={() => this.onPressSelect('focusColor')}>
             <View style={styles.selectColor}>
-              <Text style={{ color: '#999', marginRight: 15 }}>{color2name[this.state.focusColor]}</Text>
-              <Icon name='rocket' size={20} color={'#999'} />
+              <Text style={{ color: isNightMode ? '#FFF' : '#999', marginRight: 15 }}>{color2name[this.state.focusColor]}</Text>
+              <Icon name='rocket' size={20} color={isNightMode ? '#FFF' : '#999'} />
             </View>
           </TouchableWithoutFeedback>
         </View>
@@ -100,9 +101,10 @@ class Theme extends Component {
 }
 
 const mapStateToProps = (state) => {
-  let { theme } = state;
+  let { theme, mode } = state;
   return {
     theme,
+    mode,
   }
 }
 
@@ -117,7 +119,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(Theme);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF',
+    // backgroundColor: '#FFF',
   },
   optionWrap: {
     display: 'flex',

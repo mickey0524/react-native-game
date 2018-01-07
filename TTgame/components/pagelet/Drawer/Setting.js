@@ -1,46 +1,49 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   View,
   Text,
   Switch,
+  AsyncStorage,
   StyleSheet,
 } from 'react-native';
 
 import ToolBar from '../../common/ToolBar';
 import { MyStatusBar } from '../../common/MyStatusBar';
-import color from '../../../conf/color';
+import { changeMode } from '../../../redux/action/mode';
 
-export default class Setting extends Component {
+class Setting extends Component {
   
   constructor(props) {
     super(props);
     this.state = {
-      isNightMode: false,
+      isNightMode: this.props.mode == 'night',
       isMobileNetAutoLoadImg: false,
     }
     this.onSwitchChange = this.onSwitchChange.bind(this);
   }
   
   render() {
+    let isNightMode = this.state.isNightMode;
     return (
-      <View style={{ flex: 1, backgroundColor: '#FFF' }}>
+      <View style={{ flex: 1, backgroundColor: isNightMode ? '#252525' : '#FFF' }}>
         <MyStatusBar barStyle={'light-content'} />
         <ToolBar title={'设置'} navigation={this.props.navigation} leftIcon={'back'} />
         <View>
           <View style={styles.optionWrap}>
-            <Text style={styles.optionTitle}>夜间模式</Text>
+            <Text style={[styles.optionTitle, { color: isNightMode ? '#FFF' : '#000' }]}>夜间模式</Text>
             <Switch
               value={this.state.isNightMode} 
               onValueChange={(newVal) => this.onSwitchChange(newVal, 'isNightMode')} />
           </View>
           <View style={styles.optionWrap}>
-            <Text style={styles.optionTitle}>使用移动网络时默认加载图片</Text>
+            <Text style={[styles.optionTitle, { color: isNightMode ? '#FFF' : '#000' }]}>使用移动网络时默认加载图片</Text>
             <Switch
               value={this.state.isMobileNetAutoLoadImg} 
               onValueChange={(newVal) => this.onSwitchChange(newVal, 'isMobileNetAutoLoadImg')}/>        
           </View>
           <View style={styles.optionWrap}>
-            <Text style={styles.optionTitle} 
+            <Text style={[styles.optionTitle, { color: isNightMode ? '#FFF' : '#000' }]} 
               onPress={this.onPressClearStorage}>
               清空缓存
             </Text>
@@ -59,6 +62,11 @@ export default class Setting extends Component {
     this.setState({
       [mark]: newVal,
     });
+    if (mark == 'isNightMode') {
+      let mode = newVal ? 'night' : 'day';
+      this.props.changeMode(mode);
+      AsyncStorage.setItem('mode', mode);
+    }
   }
 
   /**
@@ -68,6 +76,21 @@ export default class Setting extends Component {
     
   }
 }
+
+const mapStateToProps = (state) => {
+  let { mode } = state;
+  return {
+    mode,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    changeMode: (mode) => dispatch(changeMode(mode)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Setting);
 
 const styles = StyleSheet.create({
   optionWrap: {

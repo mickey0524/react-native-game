@@ -39,7 +39,7 @@ export default class LazyImage extends Component {
 
   render() {
     return (
-      <View style={{backgroundColor: '#F4F5F6'}}>
+      <View style={{backgroundColor: this.props.isNightMode ? '#000' : '#F4F5F6'}}>
         <Animated.View
           style={{
             opacity: this.state.opacity,

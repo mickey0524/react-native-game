@@ -43,8 +43,9 @@ class GameBox extends Component {
   }
   
   render() {
+    let isNightMode = this.props.mode == 'night';
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, { backgroundColor: isNightMode ? '#252525' : '#FFF'}]}>
         <MyStatusBar barStyle={'light-content'} />
         <ToolBar title={this.gameBoxName} navigation={this.props.navigation} leftIcon={'back'} />
         {
@@ -59,7 +60,7 @@ class GameBox extends Component {
             data={this.state.gameList}
             keyExtractor={(item, index) => index}
             initialNumToRender={7}
-            ItemSeparatorComponent={() => <View style={styles.ItemSeparator} />}
+            ItemSeparatorComponent={() => <View style={[styles.ItemSeparator, {backgroundColor: isNightMode ? '#424242' : '#E8E8E8'}]} />}
             renderItem={this.renderItem}
             onEndReachedThreshold={0.2}
             onEndReached={this.state.hasMore ? this.fetchData : false} />
@@ -104,16 +105,18 @@ class GameBox extends Component {
    * @param {object} param0 游戏item数据
    */
   renderItem({item, index}) {
+    let isNightMode = this.props.mode == 'night';
     return (
       index == this.state.gameList.length - 1 ?
         (this.state.hasMore ? <BottomLoading /> : null) :
         <TouchableWithoutFeedback onPress={() => this.onPressItem(item.name)}>
           <View style={styles.gameItem}> 
-            <Image source={{ uri: getImgUrl(item.avatar, 'GAME_BOX_ICON') }} style={styles.gameIcon}/> 
+            <Image source={{ uri: getImgUrl(item.avatar, 'GAME_BOX_ICON') }}
+              style={[styles.gameIcon, { backgroundColor: isNightMode ? '#000' : '#F4F5F6'}]}/> 
             <View style={styles.gameInfo}>
-              <Text numberOfLines={1} style={styles.gameName}>{item.name}</Text>
-              <Text numberOfLines={1} style={styles.gameDesc}>{item.size}</Text>
-              <Text numberOfLines={1} style={styles.gameDesc}>{item.desc}</Text>
+              <Text numberOfLines={1} style={[styles.gameName, { color: isNightMode ? '#FFF' : '#222' }]}>{item.name}</Text>
+              <Text numberOfLines={1} style={[styles.gameName, { color: isNightMode ? '#FFF' : '#999' }]}>{item.size}</Text>
+              <Text numberOfLines={1} style={[styles.gameName, { color: isNightMode ? '#FFF' : '#999' }]}>{item.desc}</Text>
             </View>
             <View style={[styles.downloadWrap, {backgroundColor: this.props.theme.focusColor}]}>
               <Text style={styles.download}>下载</Text>
@@ -125,9 +128,10 @@ class GameBox extends Component {
 }
 
 const mapStateToProps = (state) => {
-  let { theme } = state;
+  let { theme, mode } = state;
   return {
     theme,
+    mode,
   };
 }
 
@@ -136,7 +140,7 @@ export default connect(mapStateToProps)(GameBox);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF',
+    // backgroundColor: '#FFF',
   },
   maskWrap: {
     width: totalWidth,
@@ -146,7 +150,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   ItemSeparator: {
-    backgroundColor: '#E8E8E8',
+    // backgroundColor: '#E8E8E8',
     width: totalWidth,
     height: 1 / dpr,
   },
@@ -161,7 +165,7 @@ const styles = StyleSheet.create({
   gameIcon: {
     width: 74,
     height: 74,
-    backgroundColor: '#F4F5F6',
+    // backgroundColor: '#F4F5F6',
     marginRight: 10,
     borderRadius: 12,
   },
@@ -175,11 +179,11 @@ const styles = StyleSheet.create({
   },
   gameName: {
     fontSize: 17,
-    color: '#222',
+    // color: '#222',
   },
   gameDesc: {
     fontSize: 14,
-    color: '#999',
+    // color: '#999',
   },
   downloadWrap: {
     width: 58,

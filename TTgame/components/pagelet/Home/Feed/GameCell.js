@@ -21,18 +21,20 @@ class GameCell extends Component {
   }
 
   render() {
-    let imgUrl = getImgUrl(this.props.gameInfo.image_list[0], 'FEED_CARD');
+    let imgUrl = getImgUrl(this.props.gameInfo.image_list[0], 'FEED_CARD'),
+      isNightMode = this.props.mode == 'night';
     return (
       <View style={styles.gameWrap}>
-        <Text style={styles.gameTitle}>
+        <Text style={[styles.gameTitle, {color: isNightMode ? '#FFF' : '#222'}]}>
           { this.props.gameInfo.title }
         </Text>
         <LazyImage imgUrl={imgUrl}
+          isNightMode={isNightMode}
           imgStyle={styles.gameImg}
           loadDirection={this.props.loadDirection}
           contentOffsetY={this.props.contentOffsetY} />
         <View style={styles.gameInfo}>
-          <Text style={styles.gameName}>{ this.props.gameInfo.name }</Text>
+          <Text style={[styles.gameName, {color: isNightMode ? '#FFF' : '#999'}]}>{ this.props.gameInfo.name }</Text>
           <View style={[styles.download, {backgroundColor: this.props.theme.focusColor}]}>
             <Icon name='download' color={'#FFF'} size={8} />
             <Text style={styles.downloadText}>APP下载</Text>
@@ -44,9 +46,10 @@ class GameCell extends Component {
 }
 
 const mapStateTpProps = (state) => {
-  let { theme } = state;
+  let { theme, mode } = state;
   return {
     theme,
+    mode,
   }
 }
 
@@ -57,7 +60,7 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   gameTitle: {
-    color: '#222',
+    // color: '#222',
     fontSize: 19,
     marginBottom: 8,
   },
@@ -74,7 +77,7 @@ const styles = StyleSheet.create({
   },
   gameName: {
     fontSize: 12,
-    color: '#999999',
+    // color: '#999999',
     marginRight: 5,
   },
   download: {
