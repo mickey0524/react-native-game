@@ -18,7 +18,7 @@ export default class ArticleDetail extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <MyStatusBar barStyle={'light-content'} />
+        <MyStatusBar />
         <ToolBar title={this.articleName} navigation={this.props.navigation} leftIcon={'back'} />
         <WebView
           scalesPageToFit={true}

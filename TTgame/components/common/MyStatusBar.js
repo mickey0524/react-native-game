@@ -13,12 +13,16 @@ class statusBar extends Component {
   constructor(props) {
     super(props);
   }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return this.props.theme.themeColor != nextProps.theme.themeColor;
+  }
   
   render() {
-    const { theme, ...passThroughProps } = this.props;
+    const { theme } = this.props;
     return (
       <View style={[styles.statusBar, { backgroundColor: theme.themeColor }]}>
-        <StatusBar translucent backgroundColor={theme.themeColor} {...passThroughProps} />
+        <StatusBar translucent backgroundColor={theme.themeColor} barStyle={'light-content'} />
       </View>
     );
   }

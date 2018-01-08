@@ -23,49 +23,69 @@ class Theme extends Component {
       themeColor: rgb2name[this.props.theme.themeColor],
       focusColor: rgb2name[this.props.theme.focusColor],
     }
+    this.isPickerOpen = false;
     this.onPressSelect = this.onPressSelect.bind(this);
+    this.onPressWrap = this.onPressWrap.bind(this);
   }
+
+  componentWillUnmount() {
+    if (this.isPickerOpen) {
+      Picker.hide();
+    }
+  } 
 
   render() {
     let isNightMode = this.props.mode == 'night';
     return (
-      <View style={[styles.container, { backgroundColor: isNightMode ? '#252525' : '#FFF' }]}>
-        <MyStatusBar backgroundColor={color.SKY_BLUE} barStyle={'light-content'} />
-        <ToolBar title={'主题'} navigation={this.props.navigation} leftIcon={'back'} />
-        <View style={styles.optionWrap}>
-          <View>
-            <Text style={{ color: isNightMode ? '#FFF' : '#000' }}>主题的默认颜色</Text>
-            <Text style={{ fontSize: 12, color: isNightMode ? '#FFF' : '#999', marginTop: 3 }}>
-              当前颜色：<Text style={{ color: color[this.state.themeColor]}}>
-                        {color2name[this.state.themeColor]}
-                      </Text>
-            </Text>
-          </View>
-          <TouchableWithoutFeedback onPress={() => this.onPressSelect('themeColor')}>
-            <View style={styles.selectColor}>
-              <Text style={{ color: isNightMode ? '#FFF' :'#999', marginRight: 15 }}>{color2name[this.state.themeColor]}</Text>
-              <Icon name='rocket' size={20} color={isNightMode ? '#FFF' : '#999'}/> 
-            </View>
-          </TouchableWithoutFeedback>
-        </View>
-        <View style={styles.optionWrap}>
-          <View>
-            <Text style={{ color: isNightMode ? '#FFF' : '#000' }}>主题的强调颜色</Text>
-            <Text style={{ fontSize: 12, color: isNightMode ? '#FFF' : '#999', marginTop: 3 }}>
-              当前颜色：<Text style={{ color: color[this.state.focusColor] }}>
-                {color2name[this.state.focusColor]}
+      <TouchableWithoutFeedback onPress={this.onPressWrap}>
+        <View style={[styles.container, { backgroundColor: isNightMode ? '#252525' : '#FFF' }]}>
+          <MyStatusBar />
+          <ToolBar title={'主题'} navigation={this.props.navigation} leftIcon={'back'} />
+          <View style={styles.optionWrap}>
+            <View>
+              <Text style={{ color: isNightMode ? '#FFF' : '#000' }}>主题的默认颜色</Text>
+              <Text style={{ fontSize: 12, color: isNightMode ? '#FFF' : '#999', marginTop: 3 }}>
+                当前颜色：<Text style={{ color: color[this.state.themeColor]}}>
+                          {color2name[this.state.themeColor]}
+                        </Text>
               </Text>
-            </Text>
-          </View>
-          <TouchableWithoutFeedback onPress={() => this.onPressSelect('focusColor')}>
-            <View style={styles.selectColor}>
-              <Text style={{ color: isNightMode ? '#FFF' : '#999', marginRight: 15 }}>{color2name[this.state.focusColor]}</Text>
-              <Icon name='rocket' size={20} color={isNightMode ? '#FFF' : '#999'} />
             </View>
-          </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback onPress={() => this.onPressSelect('themeColor')}>
+              <View style={styles.selectColor}>
+                <Text style={{ color: isNightMode ? '#FFF' :'#999', marginRight: 15 }}>{color2name[this.state.themeColor]}</Text>
+                <Icon name='rocket' size={20} color={isNightMode ? '#FFF' : '#999'}/> 
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+          <View style={styles.optionWrap}>
+            <View>
+              <Text style={{ color: isNightMode ? '#FFF' : '#000' }}>主题的强调颜色</Text>
+              <Text style={{ fontSize: 12, color: isNightMode ? '#FFF' : '#999', marginTop: 3 }}>
+                当前颜色：<Text style={{ color: color[this.state.focusColor] }}>
+                  {color2name[this.state.focusColor]}
+                </Text>
+              </Text>
+            </View>
+            <TouchableWithoutFeedback onPress={() => this.onPressSelect('focusColor')}>
+              <View style={styles.selectColor}>
+                <Text style={{ color: isNightMode ? '#FFF' : '#999', marginRight: 15 }}>{color2name[this.state.focusColor]}</Text>
+                <Icon name='rocket' size={20} color={isNightMode ? '#FFF' : '#999'} />
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
         </View>
-      </View>
+      </TouchableWithoutFeedback>
     );
+  }
+
+  /**
+   * 当Picker唤起的时候，点击屏幕其他区域，关闭Picker
+   */
+  onPressWrap() {
+    if (this.isPickerOpen) {
+      Picker.hide();
+      this.isPickerOpen = false;
+    }
   }
 
   /**
@@ -73,8 +93,11 @@ class Theme extends Component {
    * @param {string} mark 区分是选择主题颜色，还是强调颜色 
    */
   onPressSelect(mark) {
+    this.isPickerOpen = true;
     this[mark] = this.state[mark];
+    let title = mark == 'themeColor' ? '请选择主题颜色' : '请选择强调颜色';
     Picker.init({
+      pickerTitleText: title,
       pickerData: Object.keys(name2color),
       selectedValue: [color2name[this.state[mark]]],
       onPickerConfirm: data => {

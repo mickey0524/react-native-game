@@ -46,7 +46,7 @@ class GameBox extends Component {
     let isNightMode = this.props.mode == 'night';
     return (
       <View style={[styles.container, { backgroundColor: isNightMode ? '#252525' : '#FFF'}]}>
-        <MyStatusBar barStyle={'light-content'} />
+        <MyStatusBar />
         <ToolBar title={this.gameBoxName} navigation={this.props.navigation} leftIcon={'back'} />
         {
           this.state.isLoading &&

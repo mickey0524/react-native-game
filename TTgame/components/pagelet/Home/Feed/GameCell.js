@@ -20,6 +20,13 @@ class GameCell extends Component {
     super(props);
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.props.mode != nextProps.mode) {
+      return true;
+    }    
+    return this.props.theme.focusColor != nextProps.theme.focusColor;
+  }
+  
   render() {
     let imgUrl = getImgUrl(this.props.gameInfo.image_list[0], 'FEED_CARD'),
       isNightMode = this.props.mode == 'night';

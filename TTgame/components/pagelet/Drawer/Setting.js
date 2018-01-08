@@ -27,7 +27,7 @@ class Setting extends Component {
     let isNightMode = this.state.isNightMode;
     return (
       <View style={{ flex: 1, backgroundColor: isNightMode ? '#252525' : '#FFF' }}>
-        <MyStatusBar barStyle={'light-content'} />
+        <MyStatusBar />
         <ToolBar title={'设置'} navigation={this.props.navigation} leftIcon={'back'} />
         <View>
           <View style={styles.optionWrap}>

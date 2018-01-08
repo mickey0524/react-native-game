@@ -17,7 +17,7 @@ export default class Setting extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <MyStatusBar barStyle={'light-content'} />
+        <MyStatusBar />
         <ToolBar title={'关于'} navigation={this.props.navigation} leftIcon={'back'} />
         <Text>我爱你</Text>
       </View>

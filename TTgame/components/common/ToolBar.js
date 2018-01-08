@@ -18,6 +18,13 @@ class ToolBar extends Component {
     super(props);
     this.onPressLeftIcon = this.onPressLeftIcon.bind(this);
   }
+  
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.props.mode == nextProps.mode) {
+      return true;
+    }    
+    return this.props.theme.themeColor != nextProps.themeColor;
+  }
 
   render() {
     let isNightMode = this.props.mode == 'night';

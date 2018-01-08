@@ -57,6 +57,7 @@ class CardDetail extends Component {
   }
 
   render() {
+    let isNightMode = this.props.mode == 'night';
     let { banner, content, desc, message, recommend } = this.detailData;
     let engNum = 0;
     for (let num of desc.slice(0, SHRINK_BASE)) {
@@ -69,10 +70,10 @@ class CardDetail extends Component {
     desc = { spread: desc, shrink: desc.slice(0, tail) + '...' };
     return (
       <View style={styles.container}>
-        <MyStatusBar barStyle={'light-content'} />
+        <MyStatusBar />
         <ToolBar title={this.gameName} navigation={this.props.navigation} leftIcon={'back'} />
         <ScrollView style={{ backgroundColor: this.props.theme.themeColor }}>
-          <View style={{ backgroundColor: '#FFF' }}>
+          <View style={{ backgroundColor: isNightMode ? '#252525' : '#FFF' }}>
             {
               this.state.isLoading &&
               <View style={styles.maskWrap}>
@@ -84,7 +85,7 @@ class CardDetail extends Component {
               <View>
                 <ImageBackground style={styles.imageBackground} source={{ uri: banner.background }}>
                   <View style={styles.bannerWrap}>
-                    <Image style={styles.bannerIcon} source={{ uri: banner.icon }} />
+                    <Image style={[styles.bannerIcon, { backgroundColor: isNightMode ? '#000' : '#F4F5F6' }]} source={{ uri: banner.icon }} />
                     <View style={styles.bannerInfo}>
                       <Text numberOfLines={1} style={styles.gameName}>{banner.name}</Text>
                       <Text numberOfLines={1} style={styles.gameInfo}>大小: {banner.size}M</Text>
@@ -96,7 +97,7 @@ class CardDetail extends Component {
                   </View>
                 </ImageBackground>
 
-                <View style={[styles.contentWrap, styles.viewBottomBorder]}>
+                <View style={[styles.contentWrap, styles.viewBottomBorder, { borderColor: isNightMode ? '#424242' : '#F4F5F6'}]}>
                   <FlatList
                     showsHorizontalScrollIndicator={false}
                     horizontal={true}
@@ -105,13 +106,13 @@ class CardDetail extends Component {
                     initialNumToRender={3}
                     data={content.thumbnail}
                     keyExtractor={(item, index) => index}
-                    renderItem={({ item, index }) => <Image source={{ uri: item }} style={[styles.contentImg, index == 0 && { marginLeft: 15 }]} />} />
+                    renderItem={({ item, index }) => <Image source={{ uri: item }} style={[styles.contentImg, index == 0 && { marginLeft: 15 }, { backgroundColor: isNightMode ? '#000' : '#F4F5F6' }]} />} />
                   <View style={styles.contentCategory}>
                     {
                       content.category.map((item, index) => {
                         return (
-                          <View key={index} style={styles.contentCategoryItem}>
-                            <Text>{item}</Text>
+                          <View key={index} style={[styles.contentCategoryItem, { backgroundColor: isNightMode ? '#424242' : '#F4F5F6'}]}>
+                            <Text style={{ color: isNightMode ? '#FFF' : '#000' }}>{item}</Text>
                           </View>
                         );
                       })
@@ -119,30 +120,30 @@ class CardDetail extends Component {
                   </View>
                 </View>
 
-                <View style={styles.viewBottomBorder}>
-                  <View style={styles.descTitle}>
-                    <Text style={styles.descTitleText}>应用描述</Text>
+                <View style={[styles.viewBottomBorder, { borderColor: isNightMode ? '#424242' : '#F4F5F6'}]}>
+                  <View style={[styles.descTitle, { borderColor: isNightMode ? '#424242' : '#E8E8E8' }]}>
+                    <Text style={[styles.descTitleText, { color: isNightMode ? '#FFF' : '#222' }]}>应用描述</Text>
                   </View>
                   {this.state.isDescShrink ?
-                    <Text style={styles.descContent}>{desc.shrink}<Text style={{color: this.props.theme.focusColor}} onPress={this.showText}> 更多</Text></Text> :
-                    <Text style={styles.descContent}>{desc.spread}<Text style={{color: this.props.theme.focusColor}} onPress={this.showText}> 收起</Text></Text>
+                    <Text style={[styles.descContent, { color: isNightMode ? '#FFF' : '#999' }]}>{desc.shrink}<Text style={{color: this.props.theme.focusColor}} onPress={this.showText}> 更多</Text></Text> :
+                    <Text style={[styles.descContent, { color: isNightMode ? '#FFF' : '#999' }]}>{desc.spread}<Text style={{color: this.props.theme.focusColor}} onPress={this.showText}> 收起</Text></Text>
                   }
                 </View>
 
-                <View style={styles.viewBottomBorder}>
-                  <View style={styles.descTitle}>
-                    <Text style={styles.descTitleText}>其他信息</Text>
+                <View style={[styles.viewBottomBorder, { borderColor: isNightMode ? '#424242' : '#F4F5F6'}]}>
+                  <View style={[styles.descTitle, { borderColor: isNightMode ? '#424242' : '#E8E8E8' }]}>
+                    <Text style={[styles.descTitleText, { color: isNightMode ? '#FFF' : '#222' }]}>其他信息</Text>
                   </View>
-                  <Text style={styles.descContent}>
+                  <Text style={[styles.descContent, { color: isNightMode ? '#FFF' : '#999' }]}>
                     <Text>当前版本：{message.version}</Text>
                     <Text>{'\r\n'}更新信息：{message.modifyTime}</Text>
                     <Text>{'\r\n'}客服信息：{message.phone}</Text>
                   </Text>
                 </View>
 
-                <View style={styles.viewBottomBorder}>
-                  <View style={[styles.descTitle, { marginBottom: 0 }]}>
-                    <Text style={styles.descTitleText}>游戏推荐</Text>
+                <View style={[styles.viewBottomBorder, { borderColor: isNightMode ? '#424242' : '#F4F5F6'}]}>
+                  <View style={[styles.descTitle, { marginBottom: 0, borderColor: isNightMode ? '#424242' : '#E8E8E8' }]}>
+                    <Text style={[styles.descTitleText, { color: isNightMode ? '#FFF' : '#222' }]}>游戏推荐</Text>
                   </View>
                   <FlatList
                     style={{ paddingVertical: 20 }}
@@ -179,11 +180,12 @@ class CardDetail extends Component {
    * 渲染推荐的item  
    */
   renderRecItem({ item }) {
+    let isNightMode = this.props.mode == 'night';
     return (
       <View style={styles.recItem}>
-        <Image source={{ uri: item.icon }} style={styles.recIcon} />
-        <Text numberOfLines={1} style={styles.recName}>{item.name}</Text>
-        <Text numberOfLines={1} style={styles.recSize}>大小：{item.size}M</Text>
+        <Image source={{ uri: item.icon }} style={[styles.recIcon, { backgroundColor: isNightMode ? '#000' : '#F4F5F6' }]} />
+        <Text numberOfLines={1} style={[styles.recName, { color: isNightMode ? '#FFF' : '#000' }]}>{item.name}</Text>
+        <Text numberOfLines={1} style={[styles.recSize, { color: isNightMode ? '#FFF' : '#999' }]}>大小：{item.size}M</Text>
         <View style={[styles.downloadWrap, {backgroundColor: this.props.theme.focusColor}]}>
           <Text style={styles.download}>下载</Text>
         </View>
@@ -193,9 +195,10 @@ class CardDetail extends Component {
 }
 
 const mapStateToProps = (state) => {
-  let { theme } = state;
+  let { theme, mode } = state;
   return {
     theme,
+    mode,
   }
 }
 
@@ -207,7 +210,7 @@ const styles = StyleSheet.create({
   },
   viewBottomBorder: {
     borderBottomWidth: 6,
-    borderColor: '#F4F5F6',
+    // borderColor: '#F4F5F6',
     borderStyle: 'solid',
   },
 
@@ -272,7 +275,7 @@ const styles = StyleSheet.create({
   contentImg: {
     width: 135,
     height: 240,
-    backgroundColor: '#F4F5F6',
+    // backgroundColor: '#F4F5F6',
   },
   contentCategory: {
     padding: 15,
@@ -283,7 +286,7 @@ const styles = StyleSheet.create({
     marginRight: 5,
     paddingVertical: 4,
     paddingHorizontal: 10,
-    backgroundColor: '#F4F5F6',
+    // backgroundColor: '#F4F5F6',
     borderWidth: 1 / dpr,
     borderStyle: 'solid',
     borderColor: '#E8E8E8',
@@ -300,17 +303,17 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     borderBottomWidth: 1 / dpr,
     borderStyle: 'solid',
-    borderColor: '#E8E8E8',
+    // borderColor: '#E8E8E8',
   },
   descTitleText: {
     fontSize: 14,
-    color: '#222',
+    // color: '#222',
   },
   descContent: {
     paddingHorizontal: 15,
     paddingBottom: 15,
     fontSize: 14,
-    color: '#999',
+    // color: '#999',
     lineHeight: 20,
   },
 
@@ -324,16 +327,16 @@ const styles = StyleSheet.create({
     height: 59,
     borderRadius: 13,
     marginBottom: 11,
-    backgroundColor: '#F4F5F6',
+    // backgroundColor: '#F4F5F6',
   },
   recName: {
     fontSize: 14,
-    color: '#222',
+    // color: '#222',
     marginBottom: 5,
   },
   recSize: {
     fontSize: 12,
-    color: '#999',
+    // color: '#999',
     marginBottom: 10,
   },
 });

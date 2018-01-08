@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   View,
   Image,
@@ -8,7 +9,7 @@ import {
   Easing,
 } from 'react-native';
 
-export default class extends Component {
+class BottomLoading extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,7 +29,7 @@ export default class extends Component {
   render() {
     return (
       <View style={styles.bottomLoading}>
-        <Text style={styles.bottomLoadingText}>正在努力加载</Text>
+        <Text style={[styles.bottomLoadingText, {color: this.props.mode == 'night' ? '#FFF' : '#999'}]}>正在努力加载</Text>
         <Animated.Image
           style={[styles.bottomLoadingImg, {
             transform: [{
@@ -56,6 +57,15 @@ export default class extends Component {
 
 }
 
+const mapStateToProps = (state) => {
+  let { mode } = state;
+  return {
+    mode,
+  }
+}
+
+export default connect(mapStateToProps)(BottomLoading);
+
 const styles = StyleSheet.create({
   bottomLoading: {
     display: 'flex',
@@ -66,7 +76,7 @@ const styles = StyleSheet.create({
   },
   bottomLoadingText: {
     fontSize: 12,
-    color: '#999999',
+    // color: '#999999',
     marginRight: 5,
   },
   bottomLoadingImg: {
