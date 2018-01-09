@@ -101,7 +101,8 @@ class ArticleThreeImgCell extends Component {
                     loadImgWithoutWifi={this.props.loadImgWithoutWifi}
                     contentOffsetY={this.props.contentOffsetY}
                     loadDirection={this.props.loadDirection}
-                    imgStyle={[styles.threeImg, index == 2 && { marginRight: 0 }]}
+                    marginRight={index == 2 ? 0 : 3}
+                    imgStyle={styles.threeImg}
                     imgUrl={img} />
               );
             })
@@ -131,7 +132,7 @@ const styles = StyleSheet.create({
   threeImg: {
     width: 113,
     height: 74,
-    marginRight: 3,
+    // marginRight: 3,
     // backgroundColor: '#F4F5F6',
   },
 

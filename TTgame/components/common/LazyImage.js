@@ -53,7 +53,8 @@ export default class LazyImage extends Component {
   render() {
     return (
       <TouchableWithoutFeedback onPress={this.onPressImg}>
-        <View style={{ backgroundColor: this.props.isNightMode ? '#000' : '#F4F5F6'}}>
+        <View style={[{ backgroundColor: this.props.isNightMode ? '#000' : '#F4F5F6' },
+          this.props.marginRight && { marginRight: this.props.marginRight }]}>
           <Animated.View
             style={{
               opacity: this.state.opacity,
@@ -62,7 +63,7 @@ export default class LazyImage extends Component {
               onLoad={this.startAnimation}
               style={this.props.imgStyle}
               source={this.state.isImgShow ? { uri: this.props.imgUrl } : {}}
-              ref={(img) => {this.img = img;}} />
+              ref={(img) => { this.img = img; }} />
           </Animated.View>
         </View>
       </TouchableWithoutFeedback>
