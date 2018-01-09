@@ -11,6 +11,7 @@ import {
 import ToolBar from '../../common/ToolBar';
 import { MyStatusBar } from '../../common/MyStatusBar';
 import { changeMode } from '../../../redux/action/mode';
+import { changeLoadImgMode } from '../../../redux/action/netInfo';
 
 class Setting extends Component {
   
@@ -18,7 +19,7 @@ class Setting extends Component {
     super(props);
     this.state = {
       isNightMode: this.props.mode == 'night',
-      isMobileNetAutoLoadImg: false,
+      isMobileNetAutoLoadImg: this.props.loadImgWithoutWifi,
     }
     this.onSwitchChange = this.onSwitchChange.bind(this);
   }
@@ -66,6 +67,9 @@ class Setting extends Component {
       let mode = newVal ? 'night' : 'day';
       this.props.changeMode(mode);
       AsyncStorage.setItem('mode', mode);
+    } else {
+      this.props.changeLoadImgMode(newVal);
+      AsyncStorage.setItem('loadImgWithoutWifi', String(newVal));
     }
   }
 
@@ -78,15 +82,17 @@ class Setting extends Component {
 }
 
 const mapStateToProps = (state) => {
-  let { mode } = state;
+  let { mode, loadImgWithoutWifi } = state;
   return {
     mode,
+    loadImgWithoutWifi,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     changeMode: (mode) => dispatch(changeMode(mode)),
+    changeLoadImgMode: (ifLoadImgWithoutWifi) => dispatch(changeLoadImgMode(ifLoadImgWithoutWifi)),
   }
 }
 

@@ -15,3 +15,10 @@ export const fetchTheme = () => {
 export const fetchMode = () => {
   return AsyncStorage.getItem('mode');
 }
+
+/**
+ * 从AsyncStorage中读取loadImgMode
+ */
+export const fetchLoadImgMode = () => {
+  return AsyncStorage.getItem('loadImgWithoutWifi');
+}
