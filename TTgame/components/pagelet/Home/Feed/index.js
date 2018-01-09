@@ -156,6 +156,8 @@ class Feed extends Component {
               {
                 item.type == 'card' ? 
                   <GameCell
+                    netInfo={this.props.netInfo}
+                    loadImgWithoutWifi={this.props.loadImgWithoutWifi}
                     focusColor={this.props.theme.focusColor}
                     mode={this.props.mode}
                     gameInfo={item}
@@ -163,11 +165,15 @@ class Feed extends Component {
                     loadDirection={this.loadDirection} />
                   : item.article_type == 3 ? 
                     <ArticleThreeImgCell
+                      netInfo={this.props.netInfo}
+                      loadImgWithoutWifi={this.props.loadImgWithoutWifi}
                       mode={this.props.mode}
                       articleInfo={item} 
                       contentOffsetY={this.state.contentOffsetY}
                       loadDirection={this.loadDirection} /> : 
                     <ArticleOneImgCell
+                      netInfo={this.props.netInfo}
+                      loadImgWithoutWifi={this.props.loadImgWithoutWifi}
                       mode={this.props.mode} 
                       articleInfo={item}
                       contentOffsetY={this.state.contentOffsetY}
@@ -180,10 +186,12 @@ class Feed extends Component {
 }
 
 const mapStateToProps = (state) => {
-  let { mode, theme } = state;
+  let { mode, theme, netInfo, loadImgWithoutWifi } = state;
   return {
     mode,
     theme,
+    netInfo,
+    loadImgWithoutWifi,
   }
 }
 

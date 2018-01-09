@@ -23,6 +23,14 @@ class ArticleOneImgCell extends Component {
     imgUrl = imgUrl.replace('origin', 'list');
     this.imgUrl = imgUrl;
   }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.props.mode != nextProps.mode ||
+      this.props.contentOffsetY != nextProps.contentOffsetY) {
+      return true;
+    }
+    return false;
+  }
   
   render() {
     let isNightMode = this.props.mode == 'night';
@@ -31,9 +39,12 @@ class ArticleOneImgCell extends Component {
         <View style={styles.oneImgWrap}>
           <Text style={[styles.oneTitle, { color: isNightMode ? '#FFF' : '#222' }]}>{this.props.articleInfo.title}</Text>
           <LazyImage
+            isNightMode={isNightMode}
+            netInfo={this.props.netInfo}
+            loadImgWithoutWifi={this.props.loadImgWithoutWifi}   
             contentOffsetY={this.props.contentOffsetY}          
             loadDirection={this.props.loadDirection}
-            imgStyle={[styles.oneImg, { backgroundColor: isNightMode ? '#000' : '#F4F5F6' }]}
+            imgStyle={styles.oneImg}
             imgUrl={this.imgUrl } />
         </View>
         <View style={styles.articleInfo}>
@@ -64,7 +75,15 @@ class ArticleThreeImgCell extends Component {
     });
     this.imgList = imgList;
   }
-  
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.props.mode != nextProps.mode ||
+      this.props.contentOffsetY != nextProps.contentOffsetY) {
+      return true;
+    }
+    return false;
+  }
+
   render() {
     let isNightMode = this.props.mode == 'night';
     return (
@@ -74,12 +93,15 @@ class ArticleThreeImgCell extends Component {
           {
             this.imgList.map((img, index) => {
               return (
-                index <= 2 && 
+                index <= 2 &&
                   <LazyImage
                     key={index}
+                    isNightMode={isNightMode}
+                    netInfo={this.props.netInfo}
+                    loadImgWithoutWifi={this.props.loadImgWithoutWifi}
                     contentOffsetY={this.props.contentOffsetY}
                     loadDirection={this.props.loadDirection}
-                    imgStyle={[styles.threeImg, index == 2 && { marginRight: 0 }, { backgroundColor: isNightMode ? '#000' : '#F4F5F6' }]}
+                    imgStyle={[styles.threeImg, index == 2 && { marginRight: 0 }]}
                     imgUrl={img} />
               );
             })

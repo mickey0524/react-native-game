@@ -69,7 +69,7 @@ class App extends Component {
   netInfoHandler(status) {
     let netInfo = status.type.toLocaleLowerCase();
     netInfo = netInfo == 'wifi' ? 'wifi' : 'nowifi';
-    this.props.changeNetInfo(netInfo);
+    // this.props.changeNetInfo(netInfo);
   }
 }
 

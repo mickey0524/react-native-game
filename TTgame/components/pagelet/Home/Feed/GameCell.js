@@ -21,8 +21,10 @@ export default class GameCell extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     if (this.props.mode != nextProps.mode ||
-      this.props.focusColor != nextProps.focusColor || 
-      this.props.contentOffsetY != nextProps.contentOffsetY) { 
+      this.props.focusColor != nextProps.focusColor ||
+      this.props.contentOffsetY != nextProps.contentOffsetY ||
+      this.props.netInfo != nextProps.netInfo ||
+      this.props.loadImgWithoutWifi != nextProps.loadImgWithoutWifi) { 
       return true;
     }    
     return false;
@@ -37,7 +39,10 @@ export default class GameCell extends Component {
           { this.props.gameInfo.title }
         </Text>
         <LazyImage imgUrl={imgUrl}
+          isNightMode={isNightMode}
           imgStyle={styles.gameImg}
+          netInfo={this.props.netInfo}
+          loadImgWithoutWifi={this.props.loadImgWithoutWifi}          
           loadDirection={this.props.loadDirection}
           contentOffsetY={this.props.contentOffsetY} />
         <View style={styles.gameInfo}>
@@ -51,16 +56,6 @@ export default class GameCell extends Component {
     );
   }
 }
-
-// const mapStateTpProps = (state) => {
-//   let { theme, mode } = state;
-//   return {
-//     theme,
-//     mode,
-//   }
-// }
-
-// export default connect(mapStateTpProps)(GameCell);
 
 const styles = StyleSheet.create({
   gameWrap: {

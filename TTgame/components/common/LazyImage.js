@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   View,
   Image,
+  TouchableWithoutFeedback,
   Animated,
   Easing,
   Dimensions,
@@ -20,6 +21,7 @@ export default class LazyImage extends Component {
     this.shouldUpdate = false;
     this.compareDis = this.compareDis.bind(this);
     this.startAnimation = this.startAnimation.bind(this);
+    this.onPressImg = this.onPressImg.bind(this);
   }
 
   componentDidMount() {
@@ -35,28 +37,50 @@ export default class LazyImage extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
+    if (this.props.isNightMode != nextProps.isNightMode) {
+      return true;
+    }
     return this.shouldUpdate;
   }
   
-  componentWillReceiveProps(nextProps) {
-    this.compareDis(nextProps.contentOffsetY);
+  componentWillReceiveProps(nextProps) {    
+    if (this.props.netInfo == 'wifi' ||
+      (this.props.netInfo == 'nowifi' && this.props.loadImgWithoutWifi)) {
+      this.compareDis(nextProps.contentOffsetY);
+    }
   }
 
   render() {
     return (
-      <View>
-        <Animated.View
-          style={{
-            opacity: this.state.opacity,
-          }}>
-          <Image
-            onLoad={this.startAnimation}
-            style={this.props.imgStyle}
-            source={this.state.isImgShow ? { uri: this.props.imgUrl } : {}}
-            ref={(img) => {this.img = img;}} />
-        </Animated.View>
-      </View>
+      <TouchableWithoutFeedback onPress={this.onPressImg}>
+        <View style={{ backgroundColor: this.props.isNightMode ? '#000' : '#F4F5F6'}}>
+          <Animated.View
+            style={{
+              opacity: this.state.opacity,
+            }}>
+            <Image
+              onLoad={this.startAnimation}
+              style={this.props.imgStyle}
+              source={this.state.isImgShow ? { uri: this.props.imgUrl } : {}}
+              ref={(img) => {this.img = img;}} />
+          </Animated.View>
+        </View>
+      </TouchableWithoutFeedback>
     );
+  }
+
+  /**
+   * 点击图片 
+   */
+  onPressImg() {
+    if (!this.state.isImgShow &&
+      this.props.netInfo == 'nowifi' &&
+      !this.props.loadImgWithoutWifi) {
+      this.setState({
+        isImgShow: true,
+      });
+      this.shouldUpdate = true;
+    }
   }
 
   /**
@@ -69,6 +93,7 @@ export default class LazyImage extends Component {
       useNativeDriver: true,
       easing: Easing.linear,
     }).start();
+    this.shouldUpdate = false;    
   }
 
   /**
@@ -81,8 +106,6 @@ export default class LazyImage extends Component {
       this.setState({
         isImgShow: true,
       });
-    } else {
-      this.shouldUpdate = false;
     }
   }
 }
