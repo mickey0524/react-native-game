@@ -17,6 +17,7 @@ export default class LazyImage extends Component {
       isImgShow: false,
       opacity: new Animated.Value(0),
     };
+    this.shouldUpdate = false;
     this.compareDis = this.compareDis.bind(this);
     this.startAnimation = this.startAnimation.bind(this);
   }
@@ -33,13 +34,17 @@ export default class LazyImage extends Component {
     }, 0);
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return this.shouldUpdate;
+  }
+  
   componentWillReceiveProps(nextProps) {
     this.compareDis(nextProps.contentOffsetY);
   }
 
   render() {
     return (
-      <View style={{backgroundColor: this.props.isNightMode ? '#000' : '#F4F5F6'}}>
+      <View>
         <Animated.View
           style={{
             opacity: this.state.opacity,
@@ -72,9 +77,12 @@ export default class LazyImage extends Component {
    */
   compareDis(contentOffsetY) {
     if (!this.state.isImgShow && contentOffsetY + totalHeight > this.scrollThreshold) {
+      this.shouldUpdate = true;
       this.setState({
         isImgShow: true,
       });
+    } else {
+      this.shouldUpdate = false;
     }
   }
 }

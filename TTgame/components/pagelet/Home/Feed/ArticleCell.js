@@ -25,20 +25,21 @@ class ArticleOneImgCell extends Component {
   }
   
   render() {
+    let isNightMode = this.props.mode == 'night';
     return (
       <View style={{padding: 15}}>
         <View style={styles.oneImgWrap}>
-          <Text style={styles.oneTitle}>{this.props.articleInfo.title}</Text>
+          <Text style={[styles.oneTitle, { color: isNightMode ? '#FFF' : '#222' }]}>{this.props.articleInfo.title}</Text>
           <LazyImage
             contentOffsetY={this.props.contentOffsetY}          
             loadDirection={this.props.loadDirection}
-            imgStyle={styles.oneImg}
+            imgStyle={[styles.oneImg, { backgroundColor: isNightMode ? '#000' : '#F4F5F6' }]}
             imgUrl={this.imgUrl } />
         </View>
         <View style={styles.articleInfo}>
-          <Text style={styles.articleInfoText}>{this.props.articleInfo.source}</Text>
-          <Text style={styles.articleInfoText}>{this.props.articleInfo.comment_num}评论</Text>
-          <Text style={styles.articleInfoText}>{this.updateTime}</Text>
+          <Text style={[styles.articleInfoText, { color: isNightMode ? '#FFF' : '#999' }]}>{this.props.articleInfo.source}</Text>
+          <Text style={[styles.articleInfoText, { color: isNightMode ? '#FFF' : '#999' }]}>{this.props.articleInfo.comment_num}评论</Text>
+          <Text style={[styles.articleInfoText, { color: isNightMode ? '#FFF' : '#999' }]}>{this.updateTime}</Text>
         </View>
       </View>
     );
@@ -47,7 +48,7 @@ class ArticleOneImgCell extends Component {
 
 class ArticleThreeImgCell extends Component {
   constructor(props) {
-    super(props)
+    super(props);
   }
 
   componentWillMount() {
@@ -65,9 +66,10 @@ class ArticleThreeImgCell extends Component {
   }
   
   render() {
+    let isNightMode = this.props.mode == 'night';
     return (
       <View style={{ padding: 15 }}>
-        <Text style={styles.threeTitle}>{this.props.articleInfo.title}</Text>
+        <Text style={[styles.threeTitle, { color: isNightMode ? '#FFF' : '#222' }]}>{this.props.articleInfo.title}</Text>
         <View style={styles.threeImgWrap}>
           {
             this.imgList.map((img, index) => {
@@ -77,16 +79,16 @@ class ArticleThreeImgCell extends Component {
                     key={index}
                     contentOffsetY={this.props.contentOffsetY}
                     loadDirection={this.props.loadDirection}
-                    imgStyle={[styles.threeImg, index == 2 && { marginRight: 0 }]}
+                    imgStyle={[styles.threeImg, index == 2 && { marginRight: 0 }, { backgroundColor: isNightMode ? '#000' : '#F4F5F6' }]}
                     imgUrl={img} />
               );
             })
           }
         </View>
         <View style={styles.articleInfo}>
-          <Text style={styles.articleInfoText}>{this.props.articleInfo.source}</Text>
-          <Text style={styles.articleInfoText}>{this.props.articleInfo.comment_num}评论</Text>
-          <Text style={styles.articleInfoText}>{this.updateTime}</Text>
+          <Text style={[styles.articleInfoText, { color: isNightMode ? '#FFF' : '#999' }]}>{this.props.articleInfo.source}</Text>
+          <Text style={[styles.articleInfoText, { color: isNightMode ? '#FFF' : '#999' }]}>{this.props.articleInfo.comment_num}评论</Text>
+          <Text style={[styles.articleInfoText, { color: isNightMode ? '#FFF' : '#999' }]}>{this.updateTime}</Text>
         </View>
       </View>
     )
@@ -96,7 +98,7 @@ class ArticleThreeImgCell extends Component {
 const styles = StyleSheet.create({
   threeTitle: {
     fontSize: 19,
-    color: '#222222',
+    // color: '#222222',
     marginBottom: 10,
   },
   threeImgWrap: {
@@ -108,7 +110,7 @@ const styles = StyleSheet.create({
     width: 113,
     height: 74,
     marginRight: 3,
-    backgroundColor: '#F4F5F6',
+    // backgroundColor: '#F4F5F6',
   },
 
   oneImgWrap: {
@@ -118,14 +120,14 @@ const styles = StyleSheet.create({
   },
   oneTitle: {
     fontSize: 19,
-    color: '#222222',
+    // color: '#222222',
     width: 210,
     marginRight: 20,
   },
   oneImg: {
     width: 113,
     height: 74,
-    backgroundColor: '#F4F5F6',    
+    // backgroundColor: '#F4F5F6',
   },
 
   articleInfo: {
@@ -134,7 +136,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   articleInfoText: {
-    color: '#999',
+    // color: '#999',
     fontSize: 12,
     marginRight: 6,
   }

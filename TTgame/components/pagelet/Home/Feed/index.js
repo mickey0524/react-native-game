@@ -155,16 +155,20 @@ class Feed extends Component {
             <View>
               {
                 item.type == 'card' ? 
-                  <GameCell 
+                  <GameCell
+                    focusColor={this.props.theme.focusColor}
+                    mode={this.props.mode}
                     gameInfo={item}
                     contentOffsetY={this.state.contentOffsetY}
                     loadDirection={this.loadDirection} />
                   : item.article_type == 3 ? 
                     <ArticleThreeImgCell
+                      mode={this.props.mode}
                       articleInfo={item} 
                       contentOffsetY={this.state.contentOffsetY}
                       loadDirection={this.loadDirection} /> : 
                     <ArticleOneImgCell
+                      mode={this.props.mode} 
                       articleInfo={item}
                       contentOffsetY={this.state.contentOffsetY}
                       loadDirection={this.loadDirection} />
@@ -176,9 +180,10 @@ class Feed extends Component {
 }
 
 const mapStateToProps = (state) => {
-  let { mode } = state;
+  let { mode, theme } = state;
   return {
     mode,
+    theme,
   }
 }
 

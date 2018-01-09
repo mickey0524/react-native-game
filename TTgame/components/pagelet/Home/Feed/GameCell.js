@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 import {
   View,
   Image,
@@ -13,18 +13,19 @@ import LazyImage from '../../../common/LazyImage';
 import { getImgUrl } from '../../../../utils/util';
 
 const totalHeight = Dimensions.get('window').height;
-const REFRESH_CONTROL_HEIGHT = 60; // 因为Flatlist加载的时候会出现菊花图，高度计算需要减去
 
-class GameCell extends Component {
+export default class GameCell extends Component {
   constructor(props) {
     super(props);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.props.mode != nextProps.mode) {
+    if (this.props.mode != nextProps.mode ||
+      this.props.focusColor != nextProps.focusColor || 
+      this.props.contentOffsetY != nextProps.contentOffsetY) { 
       return true;
     }    
-    return this.props.theme.focusColor != nextProps.theme.focusColor;
+    return false;
   }
   
   render() {
@@ -36,13 +37,12 @@ class GameCell extends Component {
           { this.props.gameInfo.title }
         </Text>
         <LazyImage imgUrl={imgUrl}
-          isNightMode={isNightMode}
           imgStyle={styles.gameImg}
           loadDirection={this.props.loadDirection}
           contentOffsetY={this.props.contentOffsetY} />
         <View style={styles.gameInfo}>
           <Text style={[styles.gameName, {color: isNightMode ? '#FFF' : '#999'}]}>{ this.props.gameInfo.name }</Text>
-          <View style={[styles.download, {backgroundColor: this.props.theme.focusColor}]}>
+          <View style={[styles.download, {backgroundColor: this.props.focusColor}]}>
             <Icon name='download' color={'#FFF'} size={8} />
             <Text style={styles.downloadText}>APP下载</Text>
           </View>
@@ -52,15 +52,15 @@ class GameCell extends Component {
   }
 }
 
-const mapStateTpProps = (state) => {
-  let { theme, mode } = state;
-  return {
-    theme,
-    mode,
-  }
-}
+// const mapStateTpProps = (state) => {
+//   let { theme, mode } = state;
+//   return {
+//     theme,
+//     mode,
+//   }
+// }
 
-export default connect(mapStateTpProps)(GameCell);
+// export default connect(mapStateTpProps)(GameCell);
 
 const styles = StyleSheet.create({
   gameWrap: {
