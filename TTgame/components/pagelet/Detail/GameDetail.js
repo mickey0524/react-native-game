@@ -10,9 +10,12 @@ import {
   FlatList,
   ScrollView,
   ActivityIndicator,
+  Modal,
+  TouchableWithoutFeedback,
   Dimensions,
   PixelRatio,
 } from 'react-native';
+import ImageViewer from 'react-native-image-zoom-viewer';
 
 import { MyStatusBar, STATUSBAR_HEIGHT } from '../../common/MyStatusBar';
 import ToolBar from '../../common/ToolBar';
@@ -29,11 +32,14 @@ class CardDetail extends Component {
     super(props);
     this.gameName = this.props.navigation.state.params.gameName;
     this.state = {
+      isImgViewerShow: false,
       isDescShrink: true,
       isLoading: true,
+      imgViewerIndex: 0,
     }
     this.showText = this.showText.bind(this);
     this.renderRecItem = this.renderRecItem.bind(this);
+    this.onPressContentImg = this.onPressContentImg.bind(this);
   }
 
   componentWillMount() {
@@ -59,6 +65,12 @@ class CardDetail extends Component {
   render() {
     let isNightMode = this.props.mode == 'night';
     let { banner, content, desc, message, recommend } = this.detailData;
+    let imageViewerArr = [];
+    content.thumbnail.forEach(url => {
+      imageViewerArr.push({
+        url,
+      });
+    });
     let engNum = 0;
     for (let num of desc.slice(0, SHRINK_BASE)) {
       if (/^[a-zA-Z]$/gi.test(num)) {
@@ -106,7 +118,12 @@ class CardDetail extends Component {
                     initialNumToRender={3}
                     data={content.thumbnail}
                     keyExtractor={(item, index) => index}
-                    renderItem={({ item, index }) => <Image source={{ uri: item }} style={[styles.contentImg, index == 0 && { marginLeft: 15 }, { backgroundColor: isNightMode ? '#000' : '#F4F5F6' }]} />} />
+                    renderItem={({ item, index }) =>
+                      <TouchableWithoutFeedback onPress={() => this.onPressContentImg(index)}>
+                        <Image source={{ uri: item }}
+                          style={[styles.contentImg, index == 0 && { marginLeft: 15 }, { backgroundColor: isNightMode ? '#000' : '#F4F5F6' }]} />
+                      </TouchableWithoutFeedback>
+                  } />
                   <View style={styles.contentCategory}>
                     {
                       content.category.map((item, index) => {
@@ -162,8 +179,25 @@ class CardDetail extends Component {
             }
           </View>
         </ScrollView>
+        <Modal visible={this.state.isImgViewerShow} transparent={true}>
+          <ImageViewer 
+            index={this.state.imgViewerIndex}
+            imageUrls={imageViewerArr} 
+            onClick={() => { this.setState({ isImgViewerShow: false }) }}
+            saveToLocalByLongPress={false}/>
+        </Modal>
       </View>
     );
+  }
+
+  /**
+   * 点击content里的图片，打开imgViewer
+   */
+  onPressContentImg(index) {
+    this.setState({
+      imgViewerIndex: index,
+      isImgViewerShow: true,
+    });
   }
 
   /**
