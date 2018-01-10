@@ -12,12 +12,13 @@ import GameBox from '../components/pagelet/GameBox';
 import Theme from '../components/pagelet/Drawer/Theme';
 import Setting from '../components/pagelet/Drawer/Setting';
 import About from '../components/pagelet/Drawer/About';
+import Search from '../components/pagelet/Search';
 import { setTheme } from '../redux/action/theme';
 import { setMode } from '../redux/action/mode';
 import { setLoadImgMode, changeNetInfo } from '../redux/action/netInfo';
 
 const StackNavigatorConfig = {
-  initialRouteName: 'Drawer',
+  initialRouteName: 'Search',
   headerMode: 'none',
   mode: 'card',
 };
@@ -30,6 +31,7 @@ const RouteConfigs = {
   Theme: { screen: Theme },
   Setting: { screen: Setting },
   About: { screen: About },
+  Search: { screen: Search },
 };
 
 const Stack = StackNavigator(RouteConfigs, StackNavigatorConfig);

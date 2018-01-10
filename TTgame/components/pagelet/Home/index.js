@@ -23,7 +23,11 @@ export default class Hello extends Component {
     return (
       <View style={styles.container}>
         <MyStatusBar />
-        <ToolBar title={'今日游戏'} leftIcon={'menu'} navigation={this.props.navigation}/>
+        <ToolBar title={'今日游戏'}
+          leftIcon={'menu'}
+          rightIcon={'search'}
+          screenProps={this.props.screenProps}
+          navigation={this.props.navigation} />
         <TabContainer screenProps={this.props.screenProps}/>
       </View>
     );

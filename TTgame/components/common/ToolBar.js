@@ -5,6 +5,7 @@ import {
   Image,
   Text,
   StyleSheet,
+  TouchableWithoutFeedback,
   Dimensions,
 } from 'react-native';
 
@@ -30,16 +31,23 @@ class ToolBar extends Component {
     let isNightMode = this.props.mode == 'night';
     return (
       <View style={[styles.toolBar, { backgroundColor: this.props.theme.themeColor }]}>
-        { 
-          <Text style={styles.backIconWrap} onPress={() => this.onPressLeftIcon()}>
+        <Text style={styles.leftIconWrap} onPress={() => this.onPressLeftIcon()}>
+          {
+            this.props.leftIcon == 'back' ?
+            <Icon name='md-arrow-back' size={25} color={isNightMode ? '#252525' : '#FFF'} /> :
+            <Icon name='md-menu' size={25} color={isNightMode ? '#252525' : '#FFF'} />
+          }
+        </Text>
+        <Text style={[styles.title, {color: isNightMode ? '#252525' : '#FFF'}]} numberOfLines={1}>{this.props.title}</Text>
+        {
+          this.props.rightIcon &&
+          <Text style={styles.rightIconWrap} onPress={() => this.onPressRightIcon()}>
             {
-              this.props.leftIcon == 'back' ?
-              <Icon name='md-arrow-back' size={25} color={isNightMode ? '#252525' : '#FFF'} /> :
-              <Icon name='md-menu' size={25} color={isNightMode ? '#252525' : '#FFF'} />
+              this.props.rightIcon == 'search' &&
+              <Icon name="ios-search" size={25} color={isNightMode ? '#252525' : '#FFF'} />
             }
           </Text>
         }
-        <Text style={[styles.title, {color: isNightMode ? '#252525' : '#FFF'}]} numberOfLines={1}>{this.props.title}</Text>
       </View>
     );
   }
@@ -52,6 +60,16 @@ class ToolBar extends Component {
       this.props.navigation.goBack();
     } else {
       this.props.navigation.navigate('DrawerOpen');
+    }
+  }
+
+  /**
+   * 点击toolbar右端的icon，当右边为search的时候跳转搜索页
+   */
+  onPressRightIcon() {
+    if (this.props.rightIcon == 'search') {
+      let { navigate } = this.props.screenProps;
+      navigate('Search');
     }
   }
 }
@@ -75,12 +93,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     // backgroundColor: color.SKY_BLUE,
   },
-  backIconWrap: {
+  leftIconWrap: {
     width: 40,
     height: 50,
     lineHeight: 55,
     position: 'absolute',
     left: 15,
+    textAlign: 'center',
+  },
+  rightIconWrap: {
+    width: 40,
+    height: 50,
+    lineHeight: 55,
+    position: 'absolute',
+    right: 15,
     textAlign: 'center',
   },
   title: {
