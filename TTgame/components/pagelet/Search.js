@@ -4,6 +4,8 @@ import {
   View,
   Text,
   TextInput,
+  Image,
+  TouchableWithoutFeedback,
   StyleSheet,
   Dimensions,
   PixelRatio,
@@ -11,6 +13,7 @@ import {
 
 import { MyStatusBar } from '../common/MyStatusBar';
 import { SEARCH } from '../../conf/api';
+import { getImgUrl } from '../.././utils/util';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const dpr = PixelRatio.get();
@@ -24,7 +27,14 @@ class Search extends Component {
       keyWordArr: [],
       searchKeyWord: '',
       afterFirstFetch: false,
+      isSearchFinish: false,
+      relatedGameList: [],
+      similarGameList: [],
     }
+    this.genGameItem = this.genGameItem.bind(this);
+    this.onFinishSearch = this.onFinishSearch.bind(this);
+    this.onPressKeywordItem = this.onPressKeywordItem.bind(this);
+    this.onPressSubmit = this.onPressSubmit.bind(this);
     this.fetchKeyWord = this.fetchKeyWord.bind(this);
     this.onPressDelete = this.onPressDelete.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
@@ -50,6 +60,7 @@ class Search extends Component {
             style={styles.textInput}
             autoFocus={true}
             value={this.state.searchKeyWord}
+            onSubmitEditing={this.onPressSubmit}
             onChangeText={(searchKeyWord) => { this.onInputChange(searchKeyWord); }}
             placeholder={'请输入关键字'} />
           <Icon name="ios-search" size={20} style={styles.searchIconWrap} color={isNightMode ? '#FFF' : '#707070'} />
@@ -60,26 +71,82 @@ class Search extends Component {
         </View>
 
         <View>
+          { 
+            !this.state.isSearchFinish && 
+            <View>
+              {
+                this.state.keyWordArr.length == 0 ?
+                  this.state.afterFirstFetch && <Text style={styles.noResTip}>抱歉，没有找到相关信息</Text> :
+                  <View>
+                    {
+                      this.state.keyWordArr.map((item, index) => {
+                        return (
+                          <TouchableWithoutFeedback key={index} onPress={() => { this.onPressKeywordItem(item) }}>
+                            <View style={styles.keyWordItem}>
+                              {
+                                this.state.searchKeyWord.length == 0 ?
+                                  <Icon name="ios-time-outline" size={20} color={isNightMode ? '#FFF' : '#CACACA'} /> :
+                                  <Icon name="ios-search" size={20} color={isNightMode ? '#FFF' : '#CACACA'} />
+                              }
+                              <Text style={{ marginLeft: 14 }}>{item}</Text>
+                            </View>
+                          </TouchableWithoutFeedback>
+                        );
+                      })
+                    }
+                  </View>
+              }
+            </View>
+          }
           {
-            this.state.keyWordArr.length == 0 ?
-              this.state.afterFirstFetch && <Text style={styles.noResTip}>抱歉，没有找到相关信息</Text> :
+            this.state.isSearchFinish &&
+            <View>
               <View>
                 {
-                  this.state.keyWordArr.map((item, index) => {
-                    return (
-                      <View key={index} style={styles.keyWordItem}>
-                        {
-                          this.state.searchKeyWord.length == 0 ?
-                            <Icon name="ios-time-outline" size={20} color={isNightMode ? '#FFF' : '#CACACA'} /> :
-                            <Icon name="ios-search" size={20} color={isNightMode ? '#FFF' : '#CACACA'} />
-                        }
-                        <Text style={{ marginLeft: 14 }}>{item}</Text>
-                      </View>
-                    );
-                  })
+                  this.state.relatedGameList.length > 0 &&
+                  <View style={styles.relatedGameList}>
+                    {
+                      this.state.relatedGameList.map(this.genGameItem)
+                    }
+                  </View>
                 }
               </View>
+              <View>
+                {
+                  this.state.similarGameList.length > 0 &&
+                  <View style={styles.similarGameList}>
+                    {
+                      this.state.similarGameList.map(this.genGameItem)
+                    }
+                  </View>
+                }
+              </View>
+            </View>
           }
+        </View>
+      </View>
+    );
+  }
+
+  /**
+   * 生成游戏item
+   * @param {Object} item 游戏item
+   * @param {Number} index 索引
+   */
+  genGameItem(item, index) {
+    return (
+      <View key={index}
+        style={[styles.gameItem]}>
+        <Image
+          source={{ uri: getImgUrl(item.avatar, 'SEARCH_RES_ICON') }}
+          style={styles.gameIcon} />
+        <View style={styles.gameInfo}>
+          <Text numberOfLines={1} style={styles.gameName}>{item.name}</Text>
+          <Text numberOfLines={1} style={styles.gameDesc}>{item.size}</Text>
+          <Text numberOfLines={1} style={styles.gameDesc}>{item.desc}</Text>
+        </View>
+        <View style={[styles.downloadWrap]}>
+          <Text style={styles.download}>下载</Text>
         </View>
       </View>
     );
@@ -124,6 +191,40 @@ class Search extends Component {
    */
   onPressBackOrCancel() {
     this.props.navigation.goBack();
+  }
+
+  /**
+   * 点击软键盘的确定 
+   */
+  onPressSubmit() {
+    if (this.state.searchKeyWord) {
+      this.onFinishSearch(this.state.searchKeyWord);
+    }
+  }
+
+  /**
+   * 点击推荐列表的元素
+   * @param {String} keyword 关键词
+   */
+  onPressKeywordItem(keyword) {
+    this.onFinishSearch(keyword);
+  }
+
+  /**
+   * 进入搜索结果页面
+   * @param {String} keyword 关键字
+   */
+  onFinishSearch(keyword) {
+    this.setState({ isSearchFinish: true }, () => {
+      let url = `${SEARCH}&variety=1&keyword=${keyword}`;
+      fetch(url).then(res => res.json()).then(data => {
+        data = data.data;
+        this.setState({
+          relatedGameList: data.related_game_list,
+          similarGameList: data.similar_game_list,
+        });
+      })
+    });
   }
 }
 
@@ -197,5 +298,53 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderWidth: 1 / dpr,
     borderColor: '#E8E8E8',
-  }
+  },
+  relatedGameList: {
+    borderStyle: 'solid',
+    borderColor: '#F3F4F5',
+    borderBottomWidth: 6,
+  },
+  gameItem: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginHorizontal: 15,
+    paddingVertical: 15,
+    borderStyle: 'solid',
+    borderColor: '#E8E8E8',
+    borderBottomWidth: 1 / dpr,
+  },
+  gameIcon: {
+    width: 59,
+    height: 59,
+    borderRadius: 12,
+    marginRight: 15,
+  },
+  gameInfo: {
+    width: 197,
+    marginRight: 15,
+  },
+  gameName: {
+    fontSize: 14,
+    color: '#222',
+  },
+  gameDesc: {
+    fontSize: 12,
+    color: '#999',
+    marginTop: 4,
+  },
+  downloadWrap: {
+    width: 58,
+    height: 28,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#498FD2',
+    borderRadius: 4,
+    overflow: 'hidden',
+  },
+  download: {
+    fontSize: 14,
+    color: '#FFF',
+  },
 });

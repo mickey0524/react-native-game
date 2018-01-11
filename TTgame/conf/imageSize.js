@@ -46,4 +46,8 @@ export default {
     width: 74,
     height: 74,
   },
+  SEARCH_RES_ICON: {
+    width: 59,
+    height: 59,
+  },
 }
