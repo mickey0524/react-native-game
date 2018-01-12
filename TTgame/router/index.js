@@ -18,7 +18,7 @@ import { setMode } from '../redux/action/mode';
 import { setLoadImgMode, changeNetInfo } from '../redux/action/netInfo';
 
 const StackNavigatorConfig = {
-  initialRouteName: 'Search',
+  initialRouteName: 'Drawer',
   headerMode: 'none',
   mode: 'card',
 };

@@ -52,21 +52,27 @@ class Search extends Component {
       <View style={[ styles.container, { backgroundColor: isNightMode ? '#252525' : '#FFF' }]}>
         <MyStatusBar />
 
-        <View style={styles.searchBarWrap}>
+        <View style={[styles.searchBarWrap, { borderColor: isNightMode ? '#424242' : '#E8E8E8' }]}>
           <Text style={{ marginHorizontal: 14 }} onPress={this.onPressBackOrCancel}>
-            <Icon name="ios-arrow-back" size={24} color={'#000'} />
+            <Icon name="ios-arrow-back" size={24} color={ isNightMode ? '#FFF' : '#000' } />
           </Text>
           <TextInput
             ref={(input) => { this.input = input; } }
-            style={styles.textInput}
+            style={[styles.textInput,
+              { backgroundColor: isNightMode ? '#252525' : '#F4F5F6',
+                borderColor: isNightMode ? '#424242' : '#E8E8E8',
+                color: isNightMode ? '#FFF' : '#000' }]}
             autoFocus={true}
             onFocus={this.onTextInputFocus}
             value={this.state.searchKeyWord}
             onSubmitEditing={this.onPressSubmit}
             onChangeText={(searchKeyWord) => { this.onInputChange(searchKeyWord); }}
+            placeholderTextColor={ isNightMode ? '#FFF' : '#000' }
             placeholder={'请输入关键字'} />
-          <Icon name="ios-search" size={20} style={styles.searchIconWrap} color={isNightMode ? '#FFF' : '#707070'} />
-          <Text style={styles.deleteIconWrap} onPress={this.onPressDelete}>
+          <Icon name="ios-search" size={20}
+            style={[styles.searchIconWrap, { backgroundColor: isNightMode ? '#252525' : '#F4F5F6' }]}
+            color={isNightMode ? '#FFF' : '#707070'} />
+          <Text style={[styles.deleteIconWrap, , { backgroundColor: isNightMode ? '#252525' : '#F4F5F6' }]} onPress={this.onPressDelete}>
             <Icon name="ios-close-circle" size={20} color={isNightMode ? '#FFF' : '#707070'} />
           </Text>
           <Text style={[styles.cancelText, { color: this.props.theme.focusColor }]} 
@@ -81,19 +87,24 @@ class Search extends Component {
             <View>
               {
                 this.state.keyWordArr.length == 0 ?
-                  this.state.afterFirstFetch && <Text style={styles.noResTip}>抱歉，没有找到相关信息</Text> :
+                  this.state.afterFirstFetch && 
+                  <View style={{ borderColor: isNightMode ? '#424242' : '#E8E8E8', borderStyle: 'solid', borderBottomWidth: 1 / dpr }}>
+                    <Text style={[styles.noResTip, { color: isNightMode ? '#FFF' : '#999' }]}>
+                      抱歉，没有找到相关信息
+                    </Text>
+                  </View> :
                   <View>
                     {
                       this.state.keyWordArr.map((item, index) => {
                         return (
                           <TouchableWithoutFeedback key={index} onPress={() => { this.onPressKeywordItem(item) }}>
-                            <View style={styles.keyWordItem}>
+                            <View style={[styles.keyWordItem, { borderColor: isNightMode ? '#424242' : '#E8E8E8' }]}>
                               {
                                 this.state.searchKeyWord.length == 0 ?
                                   <Icon name="ios-time-outline" size={20} color={isNightMode ? '#FFF' : '#CACACA'} /> :
                                   <Icon name="ios-search" size={20} color={isNightMode ? '#FFF' : '#CACACA'} />
                               }
-                              <Text style={{ marginLeft: 14 }}>{item}</Text>
+                              <Text style={{ marginLeft: 14, color: isNightMode ? '#FFF' : '#000' }}>{item}</Text>
                             </View>
                           </TouchableWithoutFeedback>
                         );
@@ -109,9 +120,9 @@ class Search extends Component {
               <View>
                 {
                   this.state.relatedGameList.length > 0 &&
-                  <View style={styles.relatedGameList}>
+                  <View style={[styles.relatedGameList, { borderColor: isNightMode ? '#424242' : 'F3F4F5' }]}>
                     {
-                      this.state.relatedGameList.map(this.genGameItem)
+                      this.state.relatedGameList.map((item, index) => this.genGameItem(item, index, 'relate'))
                     }
                   </View>
                 }
@@ -121,7 +132,7 @@ class Search extends Component {
                   this.state.similarGameList.length > 0 &&
                   <View style={styles.similarGameList}>
                     {
-                      this.state.similarGameList.map(this.genGameItem)
+                      this.state.similarGameList.map((item, index) => this.genGameItem(item, index, 'similar'))
                     }
                   </View>
                 }
@@ -137,18 +148,22 @@ class Search extends Component {
    * 生成游戏item
    * @param {Object} item 游戏item
    * @param {Number} index 索引
+   * @param {String} mark 标识
    */
-  genGameItem(item, index) {
+  genGameItem(item, index, mark) {
+    let isNightMode = this.props.mode == 'night';    
     return (
       <View key={index}
-        style={[styles.gameItem]}>
+        style={[styles.gameItem,
+          { borderColor: isNightMode ? '#424242' : '#E8E8E8' },
+          mark == 'relate' && index == this.state.relatedGameList.length - 1 && { borderBottomWidth: 0 }]}>
         <Image
           source={{ uri: getImgUrl(item.avatar, 'SEARCH_RES_ICON') }}
           style={styles.gameIcon} />
         <View style={styles.gameInfo}>
-          <Text numberOfLines={1} style={styles.gameName}>{item.name}</Text>
-          <Text numberOfLines={1} style={styles.gameDesc}>{item.size}</Text>
-          <Text numberOfLines={1} style={styles.gameDesc}>{item.desc}</Text>
+          <Text numberOfLines={1} style={[styles.gameName, { color: isNightMode ? '#FFF' : '#222' }]}>{item.name}</Text>
+          <Text numberOfLines={1} style={[styles.gameDesc, { color: isNightMode ? '#FFF' : '#999' }]}>{item.size}</Text>
+          <Text numberOfLines={1} style={[styles.gameDesc, { color: isNightMode ? '#FFF' : '#999' }]}>{item.desc}</Text>
         </View>
         <View style={[styles.downloadWrap, { backgroundColor: this.props.theme.focusColor }]}>
           <Text style={styles.download}>下载</Text>
@@ -268,8 +283,8 @@ const styles = StyleSheet.create({
     height: 44,
     alignItems: 'center',
     borderStyle: 'solid',
-    borderWidth: 1 / dpr,
-    borderColor: '#E8E8E8',
+    borderBottomWidth: 1 / dpr,
+    // borderColor: '#E8E8E8',
   },
   textInput: {
     width: 273,
@@ -277,18 +292,18 @@ const styles = StyleSheet.create({
     borderColor: '#E8E8E8',
     borderWidth: 1 / dpr,
     borderStyle: 'solid',
-    backgroundColor: '#F4F5F6',
+    // backgroundColor: '#F4F5F6',
     borderRadius: 4,
     paddingHorizontal: 32,
   },
   searchIconWrap: {
     position: 'absolute',
-    backgroundColor: '#F4F5F6',
+    // backgroundColor: '#F4F5F6',
     left: 46,
   },
   deleteIconWrap: {
     position: 'absolute',
-    backgroundColor: '#F4F5F6',
+    // backgroundColor: '#F4F5F6',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -302,12 +317,10 @@ const styles = StyleSheet.create({
   noResTip: {
     height: 42,
     fontSize: 16,
-    color: '#999',
+    // color: '#999',
     textAlign: 'center',
     lineHeight: 42,
-    borderStyle: 'solid',
-    borderWidth: 1 / dpr,
-    borderColor: '#E8E8E8',
+    // borderColor: '#E8E8E8',
   },
   keyWordItem: {
     display: 'flex',
@@ -316,12 +329,12 @@ const styles = StyleSheet.create({
     height: 42,
     paddingLeft: 15,
     borderStyle: 'solid',
-    borderWidth: 1 / dpr,
-    borderColor: '#E8E8E8',
+    borderBottomWidth: 1 / dpr,
+    // borderColor: '#E8E8E8',
   },
   relatedGameList: {
     borderStyle: 'solid',
-    borderColor: '#F3F4F5',
+    // borderColor: '#F3F4F5',
     borderBottomWidth: 6,
   },
   gameItem: {
@@ -331,7 +344,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     paddingVertical: 15,
     borderStyle: 'solid',
-    borderColor: '#E8E8E8',
+    // borderColor: '#E8E8E8',
     borderBottomWidth: 1 / dpr,
   },
   gameIcon: {
@@ -346,11 +359,11 @@ const styles = StyleSheet.create({
   },
   gameName: {
     fontSize: 14,
-    color: '#222',
+    // color: '#222',
   },
   gameDesc: {
     fontSize: 12,
-    color: '#999',
+    // color: '#999',
     marginTop: 4,
   },
   downloadWrap: {
