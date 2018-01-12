@@ -31,6 +31,7 @@ class Search extends Component {
       relatedGameList: [],
       similarGameList: [],
     }
+    this.onTextInputFocus = this.onTextInputFocus.bind(this);
     this.genGameItem = this.genGameItem.bind(this);
     this.onFinishSearch = this.onFinishSearch.bind(this);
     this.onPressKeywordItem = this.onPressKeywordItem.bind(this);
@@ -56,9 +57,10 @@ class Search extends Component {
             <Icon name="ios-arrow-back" size={24} color={'#000'} />
           </Text>
           <TextInput
-            refs={(input) => { this.input = input; } }
+            ref={(input) => { this.input = input; } }
             style={styles.textInput}
             autoFocus={true}
+            onFocus={this.onTextInputFocus}
             value={this.state.searchKeyWord}
             onSubmitEditing={this.onPressSubmit}
             onChangeText={(searchKeyWord) => { this.onInputChange(searchKeyWord); }}
@@ -181,7 +183,17 @@ class Search extends Component {
    * 点击输入框右端删除按钮
    */
   onPressDelete() {
-    this.setState({ searchKeyWord: '' }, () => {
+    this.setState({ searchKeyWord: '', isSearchFinish: false }, () => {
+      this.fetchKeyWord();
+      this.input.focus();
+    });
+  }
+
+  /**
+   * 当输入框获得焦点 
+   */
+  onTextInputFocus() {
+    this.setState({ isSearchFinish: false }, () => {
       this.fetchKeyWord();
     });
   }
@@ -207,7 +219,12 @@ class Search extends Component {
    * @param {String} keyword 关键词
    */
   onPressKeywordItem(keyword) {
-    this.onFinishSearch(keyword);
+    this.input.blur();    
+    this.setState({
+      searchKeyWord: keyword,
+    }, () => {
+      this.onFinishSearch(keyword);
+    })
   }
 
   /**
