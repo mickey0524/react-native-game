@@ -69,7 +69,10 @@ class Search extends Component {
           <Text style={styles.deleteIconWrap} onPress={this.onPressDelete}>
             <Icon name="ios-close-circle" size={20} color={isNightMode ? '#FFF' : '#707070'} />
           </Text>
-          <Text style={styles.cancelText} onPress={this.onPressBackOrCancel}>取消</Text>
+          <Text style={[styles.cancelText, { color: this.props.theme.focusColor }]} 
+            onPress={this.onPressBackOrCancel}>
+            取消
+          </Text>
         </View>
 
         <View>
@@ -147,7 +150,7 @@ class Search extends Component {
           <Text numberOfLines={1} style={styles.gameDesc}>{item.size}</Text>
           <Text numberOfLines={1} style={styles.gameDesc}>{item.desc}</Text>
         </View>
-        <View style={[styles.downloadWrap]}>
+        <View style={[styles.downloadWrap, { backgroundColor: this.props.theme.focusColor }]}>
           <Text style={styles.download}>下载</Text>
         </View>
       </View>
@@ -294,7 +297,7 @@ const styles = StyleSheet.create({
   cancelText: {
     marginLeft: 15,
     fontSize: 17,
-    color: '#2A90D7',
+    // color: '#2A90D7',
   },
   noResTip: {
     height: 42,
@@ -356,7 +359,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#498FD2',
+    // backgroundColor: '#498FD2',
     borderRadius: 4,
     overflow: 'hidden',
   },
