@@ -39,7 +39,7 @@ class History extends Component {
   }
 
   render() {
-    let isNightMode = this.props.mode == 'day';
+    let isNightMode = this.props.mode == 'night';
     return (
       <View style={{ flex: 1, backgroundColor: isNightMode ? '#252525' : '#FFF' }}>
         <MyStatusBar />
@@ -104,7 +104,7 @@ class History extends Component {
    * @param {Object} param0 文章数据
    */
   renderArticleItem({ item, index }) {
-    let isNightMode = this.props.mode == 'day';    
+    let isNightMode = this.props.mode == 'night';    
     let updateTime = /(.*):/gi.exec(item.update_time)[1];
     return (
       <View style={{ padding: 15 }}>
@@ -123,7 +123,7 @@ class History extends Component {
    * @param {Object} param0 游戏数据 
    */
   renderGameItem({ item, index }) {
-    let isNightMode = this.props.mode == 'day';    
+    let isNightMode = this.props.mode == 'night';    
     return (
       <View style={{ padding: 15 }}>
         <Text style={[styles.title, { color: isNightMode ? '#FFF' : '#222' }]}>{item.title}</Text>
