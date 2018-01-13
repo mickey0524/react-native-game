@@ -2,37 +2,46 @@ import {
   AsyncStorage,
 } from 'react-native';
 
-/**
- * 从AsyncStorage中读取theme
- */
-export const fetchTheme = () => {
-  return AsyncStorage.getItem('theme');
+import {
+  fetchTheme,
+  setTheme,
+} from './theme';
+
+import {
+  fetchMode,
+  setMode,
+} from './mode';
+
+import {
+  fetchLoadImgMode,
+  setLoadImgMode,
+} from './loadImgMode';
+
+import {
+  fetchArticleHisotry,
+  fetchGameHisotry,
+  setArticleHistory,
+  setGameHistory,
+} from './history';
+
+export {
+  fetchTheme,
+  setTheme,
 }
 
-/**
- * 从AsyncStorage中读取mode
- */
-export const fetchMode = () => {
-  return AsyncStorage.getItem('mode');
+export {
+  fetchMode,
+  setMode,
 }
 
-/**
- * 从AsyncStorage中读取loadImgMode
- */
-export const fetchLoadImgMode = () => {
-  return AsyncStorage.getItem('loadImgWithoutWifi');
+export {
+  fetchLoadImgMode,
+  setLoadImgMode,
 }
 
-/**
- * 从AsyncStorage中读取文章访问记录
- */
-export const fetchArticleHisotry = () => {
-  return AsyncStorage.getItem('articleHistory');
-}
-
-/**
- * 从AsyncStorage中读取游戏访问记录
- */
-export const fetchGameHisotry = () => {
-  return AsyncStorage.getItem('gameHistory');
+export {
+  fetchArticleHisotry,
+  fetchGameHisotry,
+  setArticleHistory,
+  setGameHistory,
 }

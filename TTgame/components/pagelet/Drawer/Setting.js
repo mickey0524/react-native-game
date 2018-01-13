@@ -12,6 +12,7 @@ import ToolBar from '../../common/ToolBar';
 import { MyStatusBar } from '../../common/MyStatusBar';
 import { changeMode } from '../../../redux/action/mode';
 import { changeLoadImgMode } from '../../../redux/action/netInfo';
+import { setMode, setLoadImgMode } from '../../../dao/index'; 
 
 class Setting extends Component {
   
@@ -66,10 +67,10 @@ class Setting extends Component {
     if (mark == 'isNightMode') {
       let mode = newVal ? 'night' : 'day';
       this.props.changeMode(mode);
-      AsyncStorage.setItem('mode', mode);
+      setMode(mode);
     } else {
       this.props.changeLoadImgMode(newVal);
-      AsyncStorage.setItem('loadImgWithoutWifi', String(newVal));
+      setLoadImgMode(String(newVal));
     }
   }
 

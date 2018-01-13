@@ -17,7 +17,12 @@ import { ArticleOneImgCell, ArticleThreeImgCell } from './ArticleCell';
 import { MyStatusBar } from '../../../common/MyStatusBar';
 import BottomLoading from '../../../common/BottomLoading';
 import { FEED } from '../../../../conf/api';
-import { fetchArticleHisotry, fetchGameHisotry } from '../../../../dao/index';
+import { 
+  fetchArticleHisotry,
+  fetchGameHisotry,
+  setArticleHistory,
+  setGameHistory,
+} from '../../../../dao/index';
 
 const { width: totalWidth, height: totalHeight } = Dimensions.get('window');
 class Feed extends Component {
@@ -102,7 +107,7 @@ class Feed extends Component {
           articleHistoryList = JSON.parse(articleHistoryList);
           articleHistoryList.unshift(articleItem);
         }
-        AsyncStorage.setItem('articleHistory', JSON.stringify(articleHistoryList));
+        setArticleHistory(JSON.stringify(articleHistoryList));
         navigate('ArticleDetail', { source: `https://open.toutiao.com/a${articleId}/`, articleName });
       });
     } else {
@@ -120,7 +125,7 @@ class Feed extends Component {
           gameHistoryList = JSON.parse(gameHistoryList);
           gameHistoryList.unshift(gameItem);
         }
-        AsyncStorage.setItem('gameHistory', JSON.stringify(gameHistoryList));
+        setGameHistory(JSON.stringify(gameHistoryList));
         navigate('CardDetail', { cardId, gameName });
       });
     }

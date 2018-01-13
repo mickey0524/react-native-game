@@ -14,6 +14,7 @@ import { MyStatusBar } from '../../common/MyStatusBar';
 import Icon from 'react-native-vector-icons/Octicons';
 import Picker from 'react-native-picker';
 import color, { color2name, name2color, rgb2name } from '../../../conf/color';
+import { fetchTheme, setTheme } from '../../../dao/index';
 
 class Theme extends Component {
 
@@ -106,7 +107,8 @@ class Theme extends Component {
           focusColor: color[this.state.focusColor],
         }
         this.props.changeTheme(theme);
-        AsyncStorage.setItem('theme', JSON.stringify(theme));
+        setTheme(JSON.stringify(theme));
+        // AsyncStorage.setItem('theme', JSON.stringify(theme));
       },
       onPickerCancel: () => {
         this.setState({
