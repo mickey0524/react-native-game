@@ -10,6 +10,7 @@ import {
 import { DrawerNavigator } from 'react-navigation';
 
 import Icon from 'react-native-vector-icons/Ionicons';
+import FIcon from 'react-native-vector-icons/Foundation';
 import Home from '../Home';
 import Theme from './Theme';
 import Setting from './Setting';
@@ -42,21 +43,27 @@ const contentComponent = (props) => {
         <Text style={[styles.userName, {color: isNightMode ? '#252525' : '#FFF'}]}>飒然风影</Text>
       </View>
       <View>
+        <TouchableWithoutFeedback onPress={() => { closeDrawer(); navigate('History'); }}>
+          <View style={styles.option}>
+            <FIcon name='foot' style={styles.optionIcon} size={25} color={props.theme.themeColor} />
+            <Text style={[styles.optionText, { color: isNightMode ? '#FFF' : '#252525' }]}>足迹</Text>
+          </View> 
+        </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={() => { closeDrawer(); navigate('Theme') }}>
           <View style={styles.option}>
-            <Icon name='md-color-palette' size={23} color={props.theme.themeColor} />
+            <Icon name='md-color-palette' style={styles.optionIcon} size={23} color={props.theme.themeColor} />
             <Text style={[styles.optionText, {color: isNightMode ? '#FFF' : '#252525'}]}>主题</Text>
           </View>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={() => { closeDrawer(); navigate('Setting') }}>
           <View style={styles.option}>
-            <Icon name='md-options' size={20} color={props.theme.themeColor} />
+            <Icon name='md-options' style={styles.optionIcon}  size={20} color={props.theme.themeColor} />
             <Text style={[styles.optionText, { color: isNightMode ? '#FFF' : '#252525' }]}>设置</Text>
           </View>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={() => { closeDrawer(); navigate('About') }}>
           <View style={styles.option}>
-            <Icon name='ios-megaphone' size={22} color={props.theme.themeColor} />
+            <Icon name='ios-megaphone' style={styles.optionIcon} size={22} color={props.theme.themeColor} />
             <Text style={[styles.optionText, { color: isNightMode ? '#FFF' : '#252525' }]}>关于</Text>
           </View>
         </TouchableWithoutFeedback>
@@ -128,6 +135,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 15,
     alignItems: 'center',
+  },
+  optionIcon: {
+    width: 20,
   },
   optionText: {
     marginLeft: 25,
