@@ -22,3 +22,17 @@ export const fetchMode = () => {
 export const fetchLoadImgMode = () => {
   return AsyncStorage.getItem('loadImgWithoutWifi');
 }
+
+/**
+ * 从AsyncStorage中读取文章访问记录
+ */
+export const fetchArticleHisotry = () => {
+  return AsyncStorage.getItem('articleHistory');
+}
+
+/**
+ * 从AsyncStorage中读取游戏访问记录
+ */
+export const fetchGameHisotry = () => {
+  return AsyncStorage.getItem('gameHistory');
+}

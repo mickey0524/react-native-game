@@ -16,7 +16,8 @@ import GameCell from './GameCell';
 import { ArticleOneImgCell, ArticleThreeImgCell } from './ArticleCell';
 import { MyStatusBar } from '../../../common/MyStatusBar';
 import BottomLoading from '../../../common/BottomLoading';
-import { FEED } from '../../../../conf/api'; 
+import { FEED } from '../../../../conf/api';
+import { fetchArticleHisotry, fetchGameHisotry } from '../../../../dao/index';
 
 const { width: totalWidth, height: totalHeight } = Dimensions.get('window');
 class Feed extends Component {
@@ -44,7 +45,7 @@ class Feed extends Component {
   }
 
   componentWillMount() {
-    this.fetchData(0);    
+    this.fetchData(0);
   }
 
   render() {
@@ -87,11 +88,41 @@ class Feed extends Component {
     if (item.type == 'article') {
       let articleId = /groupid=(.*)$/gi.exec(item.article_url)[1],
         articleName = item.title;
-      navigate('ArticleDetail', { source: `https://open.toutiao.com/a${articleId}/`, articleName });
+      let articleItem = {
+        id: articleId,
+        title: articleName,
+        source: item.source,
+        comment_num: item.comment_num,
+        update_time: item.update_time,
+      };
+      fetchArticleHisotry().then(articleHistoryList => {
+        if (!articleHistoryList) {
+          articleHistoryList = [articleItem];
+        } else {
+          articleHistoryList = JSON.parse(articleHistoryList);
+          articleHistoryList.unshift(articleItem);
+        }
+        AsyncStorage.setItem('articleHistory', JSON.stringify(articleHistoryList));
+        navigate('ArticleDetail', { source: `https://open.toutiao.com/a${articleId}/`, articleName });
+      });
     } else {
       let cardId = item.app_info.download_info.id,
         gameName = item.name;
-      navigate('CardDetail', { cardId, gameName });
+      let gameItem = {
+        id: cardId,
+        name: gameName,
+        title: item.title,
+      };
+      fetchGameHisotry().then(gameHistoryList => {
+        if (!gameHistoryList) {
+          gameHistoryList = [gameItem];
+        } else {
+          gameHistoryList = JSON.parse(gameHistoryList);
+          gameHistoryList.unshift(gameItem);
+        }
+        AsyncStorage.setItem('gameHistory', JSON.stringify(gameHistoryList));
+        navigate('CardDetail', { cardId, gameName });
+      });
     }
   }
 

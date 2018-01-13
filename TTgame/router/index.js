@@ -12,6 +12,7 @@ import GameBox from '../components/pagelet/GameBox';
 import Theme from '../components/pagelet/Drawer/Theme';
 import Setting from '../components/pagelet/Drawer/Setting';
 import About from '../components/pagelet/Drawer/About';
+import History from '../components/pagelet/Drawer/History';
 import Search from '../components/pagelet/Search';
 import { setTheme } from '../redux/action/theme';
 import { setMode } from '../redux/action/mode';
@@ -28,6 +29,7 @@ const RouteConfigs = {
   CardDetail: { screen: CardDetail },
   ArticleDetail: { screen: ArticleDetail },
   GameBox: { screen: GameBox },
+  History: { screen: History },
   Theme: { screen: Theme },
   Setting: { screen: Setting },
   About: { screen: About },
