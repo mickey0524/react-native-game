@@ -99,52 +99,55 @@ class Hall extends Component {
               }
             </Swiper>
           }
-          <View>
-            <View style={styles.gameBoxTitleWrap}>
-              <Text style={[styles.gameBoxTitle, { color: isNightMode ? '#FFF' : '#222' }]}>{item.title}</Text>
-              <Text style={[styles.gameBoxTitle, { color: isNightMode ? '#FFF' : '#222' }]}
-                onPress={() => this.onPressShowMore(item.game_box_id, item.title)}>
-                查看全部
-              </Text>
-            </View>
-            <View style={styles.gameList}>
-              {
-                item.game_lists.map((game, gameIndex) => {
-                  return (
-                    <TouchableWithoutFeedback key={gameIndex} onPress={() => this.onPressItem(item.name)}>
-                      <View style={[styles.gameItem, (gameIndex + 1) % 4 == 0 && { marginRight: 0 }]}>
-                        <Image style={[styles.gameIcon, { backgroundColor: isNightMode ? '#000' : '#F4F5F6' }]} source={{ uri: getImgUrl(game.avatar, 'HALL_ICON') }}/>
-                        <Text numberOfLines={1} style={[styles.gameName, {color: isNightMode ? '#FFF' : '#222'}]}>{ game.name }</Text>
-                        <Text numberOfLines={1} style={[styles.gameSize, {color: isNightMode ? '#FFF' : '#999'}]}>{ game.size }</Text>
-                        <View style={[styles.downloadWrap, { backgroundColor: this.props.theme.focusColor}]}>
-                          <Text style={styles.download}>下载</Text>
+          {
+            item.game_lists &&
+            <View>
+              <View style={styles.gameBoxTitleWrap}>
+                <Text style={[styles.gameBoxTitle, { color: isNightMode ? '#FFF' : '#222' }]}>{item.title}</Text>
+                <Text style={[styles.gameBoxTitle, { color: isNightMode ? '#FFF' : '#222' }]}
+                  onPress={() => this.onPressShowMore(item.game_box_id, item.title)}>
+                  查看全部
+                </Text>
+              </View>
+              <View style={styles.gameList}>
+                {
+                  item.game_lists.map((game, gameIndex) => {
+                    return (
+                      <TouchableWithoutFeedback key={gameIndex} onPress={() => this.onPressItem(item.name)}>
+                        <View style={[styles.gameItem, (gameIndex + 1) % 4 == 0 && { marginRight: 0 }]}>
+                          <Image style={[styles.gameIcon, { backgroundColor: isNightMode ? '#000' : '#F4F5F6' }]} source={{ uri: getImgUrl(game.avatar, 'HALL_ICON') }}/>
+                          <Text numberOfLines={1} style={[styles.gameName, {color: isNightMode ? '#FFF' : '#222'}]}>{ game.name }</Text>
+                          <Text numberOfLines={1} style={[styles.gameSize, {color: isNightMode ? '#FFF' : '#999'}]}>{ game.size }</Text>
+                          <View style={[styles.downloadWrap, { backgroundColor: this.props.theme.focusColor}]}>
+                            <Text style={styles.download}>下载</Text>
+                          </View>
                         </View>
-                      </View>
-                    </TouchableWithoutFeedback>
-                  );
-                })
-              }
-            </View>
-            <View style={[styles.bannerWrap, { borderColor: isNightMode ? '#424242' : '#F4F5F6' }]}>
-              {
-                item.game_banner.length == 1 ?
-                <TouchableWithoutFeedback onPress={() => {this.onPressItem(item.game_banner[0].title)}}>
-                  <Image style={[styles.bigBanner, { backgroundColor: isNightMode ? '#000' : '#F4F5F6' }]}
-                    source={{ uri: getImgUrl(item.game_banner[0].image_url, 'HALL_BIG_BANNER') }} />
-                </TouchableWithoutFeedback> :
-                <View style={styles.smallBannerWrap}>
+                      </TouchableWithoutFeedback>
+                    );
+                  })
+                }
+              </View>
+              <View style={[styles.bannerWrap, { borderColor: isNightMode ? '#424242' : '#F4F5F6' }]}>
+                {
+                  item.game_banner.length == 1 ?
                   <TouchableWithoutFeedback onPress={() => {this.onPressItem(item.game_banner[0].title)}}>
-                    <Image style={[styles.smallBanner, { backgroundColor: isNightMode ? '#000' : '#F4F5F6' }]}
-                      source={{ uri: getImgUrl(item.game_banner[0].image_url, 'HALL_SMALL_BANNER') }} />
-                  </TouchableWithoutFeedback>
-                  <TouchableWithoutFeedback onPress={() => { this.onPressItem(item.game_banner[1].title) }}>
-                    <Image style={[styles.smallBanner, { backgroundColor: isNightMode ? '#000' : '#F4F5F6' }]}
-                      source={{ uri: getImgUrl(item.game_banner[1].image_url, 'HALL_SMALL_BANNER') }} />
-                  </TouchableWithoutFeedback>         
-                </View>
-              }
+                    <Image style={[styles.bigBanner, { backgroundColor: isNightMode ? '#000' : '#F4F5F6' }]}
+                      source={{ uri: getImgUrl(item.game_banner[0].image_url, 'HALL_BIG_BANNER') }} />
+                  </TouchableWithoutFeedback> :
+                  <View style={styles.smallBannerWrap}>
+                    <TouchableWithoutFeedback onPress={() => {this.onPressItem(item.game_banner[0].title)}}>
+                      <Image style={[styles.smallBanner, { backgroundColor: isNightMode ? '#000' : '#F4F5F6' }]}
+                        source={{ uri: getImgUrl(item.game_banner[0].image_url, 'HALL_SMALL_BANNER') }} />
+                    </TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress={() => { this.onPressItem(item.game_banner[1].title) }}>
+                      <Image style={[styles.smallBanner, { backgroundColor: isNightMode ? '#000' : '#F4F5F6' }]}
+                        source={{ uri: getImgUrl(item.game_banner[1].image_url, 'HALL_SMALL_BANNER') }} />
+                    </TouchableWithoutFeedback>         
+                  </View>
+                }
+              </View> 
             </View>
-          </View>
+          }
         </View>
     );
   }
