@@ -49,7 +49,7 @@ export default class GameCell extends Component {
         <View style={styles.gameInfo}>
           <Text style={[styles.gameName, { color: this.props.gameInfo.isBrowered ? '#999' : isNightMode ? '#FFF' : '#999'}]}>{ this.props.gameInfo.name }</Text>
           <View style={[styles.download, {backgroundColor: this.props.focusColor}]}>
-            <Icon name='download' color={this.props.gameInfo.isBrowered ? '#FFF' : '#999'} size={8} />
+            <Icon name='download' color={this.props.gameInfo.isBrowered ? '#999' : '#FFF'} size={8} />
             <Text style={[styles.downloadText, { color: this.props.gameInfo.isBrowered ? '#999' : '#FFF' }]}>APP下载</Text>
           </View>
         </View>
