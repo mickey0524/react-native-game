@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 
 import ToolBar from '../../common/ToolBar';
-import { MyStatusBar } from '../../common/MyStatusBar';
+import { MyStatusBar, STATUSBAR_HEIGHT } from '../../common/MyStatusBar';
 import { fetchArticleHisotry, fetchGameHisotry } from '../../../dao/index';
 
 const { width: totalWidth, height: totalHeight } = Dimensions.get('window');
@@ -60,6 +60,7 @@ class History extends Component {
           {
             this.state.label == 'article' ?
             <FlatList
+              style={{ height: totalHeight - STATUSBAR_HEIGHT - 90 }}
               data={this.state.articleList}
               keyExtractor={(item, index) => index}
               initialNumToRender={7}
@@ -67,6 +68,7 @@ class History extends Component {
               ItemSeparatorComponent={() => <View style={[styles.ItemSeparator, { backgroundColor: isNightMode ? '#424242' : '#E8E8E8' }]} />}
               renderItem={this.renderArticleItem} /> :
             <FlatList
+              style={{ height: totalHeight - STATUSBAR_HEIGHT - 90 }}              
               data={this.state.gameList}
               keyExtractor={(item, index) => index}
               initialNumToRender={7}
