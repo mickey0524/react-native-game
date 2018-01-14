@@ -37,7 +37,7 @@ class ArticleOneImgCell extends Component {
     return (
       <View style={{padding: 15}}>
         <View style={styles.oneImgWrap}>
-          <Text style={[styles.oneTitle, { color: isNightMode ? '#FFF' : '#222' }]}>{this.props.articleInfo.title}</Text>
+          <Text style={[styles.oneTitle, { color: this.props.articleInfo.isBrowered ? '#999' : isNightMode ? '#FFF' : '#222' }]}>{this.props.articleInfo.title}</Text>
           <LazyImage
             isNightMode={isNightMode}
             netInfo={this.props.netInfo}
@@ -48,9 +48,9 @@ class ArticleOneImgCell extends Component {
             imgUrl={this.imgUrl } />
         </View>
         <View style={styles.articleInfo}>
-          <Text style={[styles.articleInfoText, { color: isNightMode ? '#FFF' : '#999' }]}>{this.props.articleInfo.source}</Text>
-          <Text style={[styles.articleInfoText, { color: isNightMode ? '#FFF' : '#999' }]}>{this.props.articleInfo.comment_num}评论</Text>
-          <Text style={[styles.articleInfoText, { color: isNightMode ? '#FFF' : '#999' }]}>{this.updateTime}</Text>
+          <Text style={[styles.articleInfoText, { color: this.props.articleInfo.isBrowered ? '#999' : isNightMode ? '#FFF' : '#999' }]}>{this.props.articleInfo.source}</Text>
+          <Text style={[styles.articleInfoText, { color: this.props.articleInfo.isBrowered ? '#999' : isNightMode ? '#FFF' : '#999' }]}>{this.props.articleInfo.comment_num}评论</Text>
+          <Text style={[styles.articleInfoText, { color: this.props.articleInfo.isBrowered ? '#999' : isNightMode ? '#FFF' : '#999' }]}>{this.updateTime}</Text>
         </View>
       </View>
     );
@@ -78,7 +78,8 @@ class ArticleThreeImgCell extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     if (this.props.mode != nextProps.mode ||
-      this.props.contentOffsetY != nextProps.contentOffsetY) {
+      this.props.contentOffsetY != nextProps.contentOffsetY ||
+      this.props.articleInfo.isBrowered !== nextProps.isBrowered) {
       return true;
     }
     return false;
@@ -88,7 +89,9 @@ class ArticleThreeImgCell extends Component {
     let isNightMode = this.props.mode == 'night';
     return (
       <View style={{ padding: 15 }}>
-        <Text style={[styles.threeTitle, { color: isNightMode ? '#FFF' : '#222' }]}>{this.props.articleInfo.title}</Text>
+        <Text style={[styles.threeTitle, { color: this.props.articleInfo.isBrowered ? '#999' : isNightMode ? '#FFF' : '#222' } ]}>
+          {this.props.articleInfo.title}
+        </Text>
         <View style={styles.threeImgWrap}>
           {
             this.imgList.map((img, index) => {
@@ -109,9 +112,9 @@ class ArticleThreeImgCell extends Component {
           }
         </View>
         <View style={styles.articleInfo}>
-          <Text style={[styles.articleInfoText, { color: isNightMode ? '#FFF' : '#999' }]}>{this.props.articleInfo.source}</Text>
-          <Text style={[styles.articleInfoText, { color: isNightMode ? '#FFF' : '#999' }]}>{this.props.articleInfo.comment_num}评论</Text>
-          <Text style={[styles.articleInfoText, { color: isNightMode ? '#FFF' : '#999' }]}>{this.updateTime}</Text>
+          <Text style={[styles.articleInfoText, { color: this.props.articleInfo.isBrowered ? '#999' : isNightMode ? '#FFF' : '#999' }]}>{this.props.articleInfo.source}</Text>
+          <Text style={[styles.articleInfoText, { color: this.props.articleInfo.isBrowered ? '#999' : isNightMode ? '#FFF' : '#999' }]}>{this.props.articleInfo.comment_num}评论</Text>
+          <Text style={[styles.articleInfoText, { color: this.props.articleInfo.isBrowered ? '#999' : isNightMode ? '#FFF' : '#999' }]}>{this.updateTime}</Text>
         </View>
       </View>
     )

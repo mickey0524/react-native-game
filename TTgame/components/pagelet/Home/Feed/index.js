@@ -86,9 +86,15 @@ class Feed extends Component {
 
   /**
    * 点击feed流item跳转详情页
-   * @param {object} item feed流元素数据 
+   * @param {object} item feed流元素数据
+   * @param {Number} index feed流元素的索引
    */
-  onPressItem(item) {
+  onPressItem(item, index) {
+    let feedData = this.state.feedData;
+    feedData[index].isBrowered = true;
+    this.setState({
+      feedData,
+    });
     const { navigate } = this.props.screenProps;
     if (item.type == 'article') {
       let articleId = /groupid=(.*)$/gi.exec(item.article_url)[1],
@@ -187,7 +193,7 @@ class Feed extends Component {
     }
     return (
       index == this.state.feedData.length - 1 ? <BottomLoading />
-        : <TouchableWithoutFeedback onPress={() => this.onPressItem(item)}>
+        : <TouchableWithoutFeedback onPress={() => this.onPressItem(item, index)}>
             <View>
               {
                 item.type == 'card' ? 
