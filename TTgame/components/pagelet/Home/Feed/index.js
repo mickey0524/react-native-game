@@ -163,9 +163,30 @@ class Feed extends Component {
     }
     fetch(url).then(res => res.json()).then(res => {
       let curFeedData = this.state.feedData.slice(0, this.state.feedData.length - 1);
-      let feedData = dir ? [...curFeedData, ...res.data, {}] : [...res.data, ...this.state.feedData],
+      Promise.all([ fetchArticleHisotry(), fetchGameHisotry() ]).then((value) => {
+        let [ articleHistory, gameHistory ] = [ JSON.parse(value[0]), JSON.parse(value[1]) ];
+        let newFeedData = res.data.map((item) => {
+          let isFound = false;
+          if (item.type == 'article') {
+            for (let i = 0, len = articleHistory.length; i < len; i++) {
+              if (articleHistory[i].id == /groupid=(.*)$/gi.exec(item.article_url)[1]) {
+                isFound = true;
+                break;
+              }
+            }
+          } else {
+            for (let i = 0, len = gameHistory.length; i < len; i++) {
+              if (gameHistory[i].id == item.app_info.download_info.id) {
+                isFound = true;
+                break;
+              }
+            }
+          }
+          item.isBrowered = isFound;
+          return item;
+        });
+        let feedData = dir ? [...curFeedData, ...res.data, {}] : [...res.data, ...newFeedData],
         isRefreshing = false;
-      setTimeout(() => {
         this.setState({
           feedData,
           isRefreshing,
@@ -176,7 +197,7 @@ class Feed extends Component {
         if (!this.afterFirstFetch) {
           this.afterFirstFetch = true;
         }
-      }, 200);
+      });
     })
     .catch(err => {
       console.log(err);
