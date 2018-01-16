@@ -32,9 +32,11 @@ class History extends Component {
 
   componentWillMount() {
     fetchArticleHisotry().then(data => {
-      this.setState({
-        articleList: JSON.parse(data),
-      });
+      if (data) {
+        this.setState({
+          articleList: JSON.parse(data),
+        });
+      }
     });    
   }
 
@@ -59,22 +61,34 @@ class History extends Component {
         <View>
           {
             this.state.label == 'article' ?
-            <FlatList
-              style={{ height: totalHeight - STATUSBAR_HEIGHT - 90 }}
-              data={this.state.articleList}
-              keyExtractor={(item, index) => index}
-              initialNumToRender={7}
-              ListFooterComponent={() => <View style={[styles.ItemSeparator, { backgroundColor: isNightMode ? '#424242' : '#E8E8E8' }]} />}
-              ItemSeparatorComponent={() => <View style={[styles.ItemSeparator, { backgroundColor: isNightMode ? '#424242' : '#E8E8E8' }]} />}
-              renderItem={this.renderArticleItem} /> :
-            <FlatList
-              style={{ height: totalHeight - STATUSBAR_HEIGHT - 90 }}              
-              data={this.state.gameList}
-              keyExtractor={(item, index) => index}
-              initialNumToRender={7}
-              ListFooterComponent={() => <View style={[styles.ItemSeparator, { backgroundColor: isNightMode ? '#424242' : '#E8E8E8' }]} />}              
-              ItemSeparatorComponent={() => <View style={[styles.ItemSeparator, { backgroundColor: isNightMode ? '#424242' : '#E8E8E8' }]} />}
-              renderItem={this.renderGameItem} />
+            <View>
+              {
+                this.state.articleList.length > 0 ?
+                  <FlatList
+                    style={{ height: totalHeight - STATUSBAR_HEIGHT - 90 }}
+                    data={this.state.articleList}
+                    keyExtractor={(item, index) => index}
+                    initialNumToRender={7}
+                    ListFooterComponent={() => <View style={[styles.ItemSeparator, { backgroundColor: isNightMode ? '#424242' : '#E8E8E8' }]} />}
+                    ItemSeparatorComponent={() => <View style={[styles.ItemSeparator, { backgroundColor: isNightMode ? '#424242' : '#E8E8E8' }]} />}
+                    renderItem={this.renderArticleItem} /> :
+                  <Text style={[styles.noHistory, { color: isNightMode ? '#FFF' : '#000' }]}>暂时没有任何足迹</Text>
+              }
+            </View> :
+            <View> 
+              {
+                this.state.gameList.length > 0 ?
+                  <FlatList
+                    style={{ height: totalHeight - STATUSBAR_HEIGHT - 90 }}              
+                    data={this.state.gameList}
+                    keyExtractor={(item, index) => index}
+                    initialNumToRender={7}
+                    ListFooterComponent={() => <View style={[styles.ItemSeparator, { backgroundColor: isNightMode ? '#424242' : '#E8E8E8' }]} />}              
+                    ItemSeparatorComponent={() => <View style={[styles.ItemSeparator, { backgroundColor: isNightMode ? '#424242' : '#E8E8E8' }]} />}
+                    renderItem={this.renderGameItem} /> :
+                  <Text style={[styles.noHistory, { color: isNightMode ? '#FFF' : '#000' }]}>暂时没有任何足迹</Text>
+              }
+            </View>
           }
         </View>
       </View>
@@ -92,7 +106,9 @@ class History extends Component {
       };
       if (mark == 'game' && this.state.gameList.length == 0) {
         fetchGameHisotry().then(data => {
-          param.gameList = JSON.parse(data);
+          if (data) {
+            param.gameList = JSON.parse(data);
+          }
           this.setState(param);
         })
       } else {
@@ -188,5 +204,10 @@ const styles = StyleSheet.create({
   gameName: {
     fontSize: 12,
     marginRight: 5,
+  },
+  noHistory: {
+    textAlign: 'center',
+    fontSize: 18,
+    marginTop: 15,
   },
 })

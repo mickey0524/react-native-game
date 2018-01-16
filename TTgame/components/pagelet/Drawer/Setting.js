@@ -12,7 +12,7 @@ import ToolBar from '../../common/ToolBar';
 import { MyStatusBar } from '../../common/MyStatusBar';
 import { changeMode } from '../../../redux/action/mode';
 import { changeLoadImgMode } from '../../../redux/action/netInfo';
-import { setMode, setLoadImgMode } from '../../../dao/index'; 
+import { setMode, setLoadImgMode, clearHistory } from '../../../dao/index'; 
 
 class Setting extends Component {
   
@@ -78,7 +78,7 @@ class Setting extends Component {
    * 点击清空缓存
    */
   onPressClearStorage() {
-    
+    clearHistory();
   }
 }
 

@@ -22,6 +22,7 @@ import {
   fetchGameHisotry,
   setArticleHistory,
   setGameHistory,
+  clearHistory,
 } from './history';
 
 export {
@@ -44,4 +45,5 @@ export {
   fetchGameHisotry,
   setArticleHistory,
   setGameHistory,
+  clearHistory,
 }

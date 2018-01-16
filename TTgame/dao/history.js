@@ -31,3 +31,11 @@ export const fetchGameHisotry = () => {
 export const setGameHistory = (gameList) => {
   AsyncStorage.setItem('gameHistory', gameList);
 }
+
+/**
+ * 清空缓存
+ */
+export const clearHistory = () => {
+  AsyncStorage.setItem('articleHistory', JSON.stringify([]));
+  AsyncStorage.setItem('gameHistory', JSON.stringify([]));
+}

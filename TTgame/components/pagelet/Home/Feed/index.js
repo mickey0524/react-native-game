@@ -164,7 +164,7 @@ class Feed extends Component {
     fetch(url).then(res => res.json()).then(res => {
       let curFeedData = this.state.feedData.slice(0, this.state.feedData.length - 1);
       Promise.all([ fetchArticleHisotry(), fetchGameHisotry() ]).then((value) => {
-        let [ articleHistory, gameHistory ] = [ JSON.parse(value[0]), JSON.parse(value[1]) ];
+        let [articleHistory, gameHistory] = [ value[0] ? JSON.parse(value[0]) : [], value[1] ? JSON.parse(value[1]) : [] ];
         let newFeedData = res.data.map((item) => {
           let isFound = false;
           if (item.type == 'article') {
