@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 
 import Prompt from '../../common/Prompt';
+import Message from '../../common/Message';
 import ToolBar from '../../common/ToolBar';
 import { MyStatusBar } from '../../common/MyStatusBar';
 import { changeMode } from '../../../redux/action/mode';
@@ -24,21 +25,27 @@ class Setting extends Component {
       isNightMode: this.props.mode == 'night',
       isMobileNetAutoLoadImg: this.props.loadImgWithoutWifi,
       modalVisible: false,
+      isMessageShow: false,
     }
     this.onSwitchChange = this.onSwitchChange.bind(this);
     this.onPressClearStorage = this.onPressClearStorage.bind(this);
+    this.hideMessage = this.hideMessage.bind(this);
   }
   
   render() {
     let isNightMode = this.state.isNightMode;
     return (
       <View style={{ flex: 1, backgroundColor: isNightMode ? '#252525' : '#FFF' }}>
+        <Message
+          onMessageHide={this.hideMessage}
+          isMessageShow={this.state.isMessageShow}
+          content={'清理完毕'} />
         <Prompt 
           title={'清除缓存'}
           content={'确定要清除缓存的内容吗?'}
           isAskModal={true}
           onClickCancel={() => { this.setState({ modalVisible: false }); }}
-          onClickDetermine={() => { this.setState({ modalVisible: false }); clearHistory(); }}
+          onClickDetermine={() => { this.setState({ modalVisible: false, isMessageShow: true }); clearHistory(); }}
           visible={this.state.modalVisible} />
         <MyStatusBar />
         <ToolBar title={'设置'} navigation={this.props.navigation} leftIcon={'back'} />
@@ -92,6 +99,15 @@ class Setting extends Component {
   onPressClearStorage() {
     this.setState({
       modalVisible: true,
+    });
+  }
+
+  /**
+   * 隐藏Message
+   */
+  hideMessage() {
+    this.setState({
+      isMessageShow: false,
     });
   }
 }
