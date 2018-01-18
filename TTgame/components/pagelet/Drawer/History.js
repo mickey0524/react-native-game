@@ -6,16 +6,12 @@ import {
   ActivityIndicator,
   FlatList,
   StyleSheet,
-  Dimensions,
-  PixelRatio,
 } from 'react-native';
 
 import ToolBar from '../../common/ToolBar';
 import { MyStatusBar, STATUSBAR_HEIGHT } from '../../common/MyStatusBar';
 import { fetchArticleHisotry, fetchGameHisotry } from '../../../dao/index';
-
-const { width: totalWidth, height: totalHeight } = Dimensions.get('window');
-const dpr = PixelRatio.get();
+import { totalWidth, totalHeight, dpr } from '../../../conf/deviceParam'; 
 
 class History extends Component {
   constructor(props) {

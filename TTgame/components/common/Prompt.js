@@ -3,13 +3,10 @@ import {
   View,
   Text,
   Modal,
-  Dimensions,
-  PixelRatio,
   StyleSheet,
 } from 'react-native';
 
-const { width: totalWidth, height: totalHeight } = Dimensions.get('window');
-const dpr = PixelRatio.get();
+import { totalWidth, totalHeight, dpr } from '../../conf/deviceParam';
 
 export default class Prompt extends Component {
   constructor(props) {

@@ -6,13 +6,12 @@ import {
   Text,
   StyleSheet,
   TouchableWithoutFeedback,
-  Dimensions,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
-import color from '../../conf/color';
 
-const totalWidth = Dimensions.get('window').width;
+import color from '../../conf/color';
+import { totalWidth } from '../../conf/deviceParam';
 
 class ToolBar extends Component {
   constructor(props) {

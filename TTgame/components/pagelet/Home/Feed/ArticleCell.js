@@ -4,12 +4,10 @@ import {
   Text,
   Image,
   StyleSheet,
-  Dimensions,
 } from 'react-native';
 
 import LazyImage from '../../../common/LazyImage';
-
-const totalWidth = Dimensions.get('window').width;
+import { totalWidth } from '../../../../conf/deviceParam';
 
 class ArticleOneImgCell extends Component {
   constructor(props) {

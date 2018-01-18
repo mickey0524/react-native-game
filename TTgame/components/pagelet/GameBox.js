@@ -8,11 +8,9 @@ import {
   TouchableWithoutFeedback,
   Image,
   StyleSheet,
-  Platform,
-  Dimensions,
-  PixelRatio,
 } from 'react-native';
 
+import { OS, totalWidth, totalHeight, dpr } from '../../conf/deviceParam';
 import { MyStatusBar, STATUSBAR_HEIGHT } from '../common/MyStatusBar';
 import ToolBar from '../common/ToolBar';
 import BottomLoading from '../common/BottomLoading';
@@ -20,9 +18,7 @@ import color from '../../conf/color';
 import { GAME_BOX } from '../../conf/api';
 import { getImgUrl } from '../../utils/util';
 
-const { width: totalWidth, height: totalHeight } = Dimensions.get('window');
-const platform = Platform.OS === 'ios' ? 1 : 0;
-const dpr = PixelRatio.get();
+const platform = OS === 'ios' ? 1 : 0;
 
 class GameBox extends Component {
   constructor(props) {

@@ -12,19 +12,17 @@ import {
   ActivityIndicator,
   Modal,
   TouchableWithoutFeedback,
-  Dimensions,
-  PixelRatio,
 } from 'react-native';
+
 import ImageViewer from 'react-native-image-zoom-viewer';
 
+import { totalWidth, totalHeight, dpr } from '../../../conf/deviceParam';
 import { MyStatusBar, STATUSBAR_HEIGHT } from '../../common/MyStatusBar';
 import ToolBar from '../../common/ToolBar';
 import { getImgUrl } from '../../../utils/util';
 
 const detailData = require("../../../conf/detailMock.json");
 
-const dpr = PixelRatio.get();
-const { width: totalWidth, height: totalHeight } = Dimensions.get('window');
 const SHRINK_BASE = 45;
 
 class CardDetail extends Component {

@@ -7,11 +7,10 @@ import {
   FlatList,
   ScrollView,
   TouchableWithoutFeedback,
-  Platform,
   AsyncStorage,
-  Dimensions,
 } from 'react-native';
 
+import { OS, totalWidth, totalHeight } from '../../../../conf/deviceParam';
 import GameCell from './GameCell';
 import { ArticleOneImgCell, ArticleThreeImgCell } from './ArticleCell';
 import { MyStatusBar } from '../../../common/MyStatusBar';
@@ -24,7 +23,6 @@ import {
   setGameHistory,
 } from '../../../../dao/index';
 
-const { width: totalWidth, height: totalHeight } = Dimensions.get('window');
 class Feed extends Component {
 
   static navigationOptions = {
@@ -154,7 +152,7 @@ class Feed extends Component {
    */
   fetchData(dir) {
     this.loadDirection = dir;
-    let platform = Platform.OS == 'ios' ? '1' : '0';
+    let platform = OS == 'ios' ? '1' : '0';
     let url = `${FEED}&platform=${platform}`;
     if (!dir) {
       this.setState({

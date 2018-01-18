@@ -5,14 +5,13 @@ import {
   Image,
   Text,
   StyleSheet,
-  Dimensions,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Feather';
+
 import LazyImage from '../../../common/LazyImage';
 import { getImgUrl } from '../../../../utils/util';
-
-const totalHeight = Dimensions.get('window').height;
+import { totalHeight } from '../../../../conf/deviceParam';
 
 export default class GameCell extends Component {
   constructor(props) {

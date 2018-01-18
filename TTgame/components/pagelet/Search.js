@@ -11,13 +11,13 @@ import {
   PixelRatio,
 } from 'react-native';
 
+import Icon from 'react-native-vector-icons/Ionicons';
+
+import { totalHeight, dpr } from '../../conf/deviceParam';
 import { MyStatusBar } from '../common/MyStatusBar';
 import { SEARCH } from '../../conf/api';
 import { getImgUrl } from '../.././utils/util';
-import Icon from 'react-native-vector-icons/Ionicons';
 
-const dpr = PixelRatio.get();
-const { height: totalHeight } = Dimensions.get('window');
 const limit = Math.floor((totalHeight - 44) / 42);
 
 class Search extends Component {

@@ -5,10 +5,9 @@ import {
   TouchableWithoutFeedback,
   Animated,
   Easing,
-  Dimensions,
 } from 'react-native';
 
-const totalHeight = Dimensions.get('window').height;
+import { totalHeight } from '../../conf/deviceParam';
 const REFRESH_CONTROL_HEIGHT = 60; // 因为Flatlist加载的时候会出现菊花图，高度计算需要减去
 
 export default class LazyImage extends Component {

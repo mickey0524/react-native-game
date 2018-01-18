@@ -7,19 +7,15 @@ import {
   SectionList,
   ActivityIndicator,
   StyleSheet,
-  Platform,
-  Dimensions,
-  PixelRatio,
   TouchableWithoutFeedback,
 } from 'react-native';
 
+import { OS, totalWidth, totalHeight, dpr } from '../../../conf/deviceParam';
 import { MyStatusBar, STATUSBAR_HEIGHT } from '../../common/MyStatusBar';
 import { RANK_HOT, RANK_NEW } from '../../../conf/api';
 import { getImgUrl } from '../../../utils/util';
 
-const platform = Platform.OS === 'ios' ? '1' : '0';
-const { width: totalWidth, height: totalHeight } = Dimensions.get('window');
-const dpr = PixelRatio.get();
+const platform = OS === 'ios' ? '1' : '0';
 
 class Rank extends Component {
 

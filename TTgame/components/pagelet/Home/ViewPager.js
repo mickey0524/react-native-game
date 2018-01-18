@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { TabNavigator } from 'react-navigation';
-import { PixelRatio } from 'react-native';
 import { connect } from 'react-redux';
 
 import Feed from './Feed';
 import Rank from './Rank';
 import Hall from './Hall';
 import color from '../../../conf/color';
+import { dpr } from '../../../conf/deviceParam';
 
 const DefaultTabBar = TabNavigator.Presets['AndroidTopTabs'].tabBarComponent;
-const dpr = PixelRatio.get();
 
 const RouteConfigs = {
   Feed: {

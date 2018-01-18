@@ -11,6 +11,7 @@ import { DrawerNavigator } from 'react-navigation';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import FIcon from 'react-native-vector-icons/Foundation';
+
 import Home from '../Home';
 import History from './History';
 import Theme from './Theme';

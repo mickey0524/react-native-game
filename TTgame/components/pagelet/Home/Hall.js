@@ -13,13 +13,14 @@ import {
 } from 'react-native';
 
 import Swiper from 'react-native-swiper';
+
+import { totalWidth, totalHeight, OS } from '../../../conf/deviceParam';
 import { MyStatusBar, STATUSBAR_HEIGHT } from '../../common/MyStatusBar';
 import BottomLoading from '../../common/BottomLoading';
 import { HALL } from '../../../conf/api';
 import { getImgUrl } from '../../../utils/util';  
 
-const { width: totalWidth, height: totalHeight } = Dimensions.get('window');
-const platform = Platform.OS === 'ios' ? '1' : '0';
+const platform = OS === 'ios' ? '1' : '0';
 
 class Hall extends Component {
 

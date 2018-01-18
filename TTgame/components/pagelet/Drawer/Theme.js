@@ -8,10 +8,11 @@ import {
   StyleSheet,
 } from 'react-native';
 
+import Icon from 'react-native-vector-icons/Octicons';
+
 import { changeTheme } from '../../../redux/action/theme';
 import ToolBar from '../../common/ToolBar';
 import { MyStatusBar } from '../../common/MyStatusBar';
-import Icon from 'react-native-vector-icons/Octicons';
 import Picker from 'react-native-picker';
 import color, { color2name, name2color, rgb2name } from '../../../conf/color';
 import { fetchTheme, setTheme } from '../../../dao/index';

@@ -4,10 +4,11 @@ import {
   StyleSheet,
   View,
   StatusBar,
-  Platform,
 } from 'react-native';
 
-const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
+import { OS } from '../../conf/deviceParam';
+
+const STATUSBAR_HEIGHT = OS === 'ios' ? 20 : StatusBar.currentHeight;
 
 class statusBar extends Component {
   constructor(props) {

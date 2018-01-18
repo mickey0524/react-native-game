@@ -6,10 +6,9 @@ import {
   Animated,
   Easing,
   StyleSheet,
-  Dimensions,
 } from 'react-native';
 
-const totalWidth = Dimensions.get('window').width;
+import { totalWidth } from '../../conf/deviceParam';
 
 export default class Message extends Component {
   constructor(props) {
