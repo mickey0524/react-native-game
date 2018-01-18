@@ -5,6 +5,7 @@ import {
   Text,
   ActivityIndicator,
   FlatList,
+  TouchableWithoutFeedback,
   StyleSheet,
 } from 'react-native';
 
@@ -24,6 +25,7 @@ class History extends Component {
     this.onPressLabelItem = this.onPressLabelItem.bind(this);
     this.renderArticleItem = this.renderArticleItem.bind(this);
     this.renderGameItem = this.renderGameItem.bind(this);
+    this.onPressItem = this.onPressItem.bind(this);
   }
 
   componentWillMount() {
@@ -121,14 +123,16 @@ class History extends Component {
     let isNightMode = this.props.mode == 'night';    
     let updateTime = /(.*):/gi.exec(item.update_time)[1];
     return (
-      <View style={{ padding: 15 }}>
-        <Text style={[styles.title, { color: isNightMode ? '#FFF' : '#222' }]}>{item.title}</Text>
-        <View style={styles.articleInfo}>
-          <Text style={[styles.articleInfoText, { color: isNightMode ? '#FFF' : '#999' }]}>{item.source}</Text>
-          <Text style={[styles.articleInfoText, { color: isNightMode ? '#FFF' : '#999' }]}>{item.comment_num}评论</Text>
-          <Text style={[styles.articleInfoText, { color: isNightMode ? '#FFF' : '#999' }]}>{updateTime}</Text>
+      <TouchableWithoutFeedback onPress={() => this.onPressItem(item, 'article')}>
+        <View style={{ padding: 15 }}>
+          <Text style={[styles.title, { color: isNightMode ? '#FFF' : '#222' }]}>{item.title}</Text>
+          <View style={styles.articleInfo}>
+            <Text style={[styles.articleInfoText, { color: isNightMode ? '#FFF' : '#999' }]}>{item.source}</Text>
+            <Text style={[styles.articleInfoText, { color: isNightMode ? '#FFF' : '#999' }]}>{item.comment_num}评论</Text>
+            <Text style={[styles.articleInfoText, { color: isNightMode ? '#FFF' : '#999' }]}>{updateTime}</Text>
+          </View>
         </View>
-      </View>
+      </TouchableWithoutFeedback>
     );
   }
 
@@ -139,11 +143,29 @@ class History extends Component {
   renderGameItem({ item, index }) {
     let isNightMode = this.props.mode == 'night';    
     return (
-      <View style={{ padding: 15 }}>
-        <Text style={[styles.title, { color: isNightMode ? '#FFF' : '#222' }]}>{item.title}</Text>
-        <Text style={[styles.gameName, { color: isNightMode ? '#FFF' : '#999' }]}>{item.name}</Text>
-      </View>
+      <TouchableWithoutFeedback onPress={() => this.onPressItem(item, 'game')}>
+        <View style={{ padding: 15 }}>
+          <Text style={[styles.title, { color: isNightMode ? '#FFF' : '#222' }]}>{item.title}</Text>
+          <Text style={[styles.gameName, { color: isNightMode ? '#FFF' : '#999' }]}>{item.name}</Text>
+        </View>
+      </TouchableWithoutFeedback>
     )
+  }
+
+  /**
+   * 点击足迹中的item
+   * @param {Object} item 列表中item的数据 
+   * @param {String} mark 种类分别
+   */
+  onPressItem(item, mark) {
+    let { navigate } = this.props.navigation;
+    if (mark == 'article') {
+      let { id: articleId, title: articleName } = item;
+      navigate('ArticleDetail', { source: `https://open.toutiao.com/a${articleId}/`, articleName });
+    } else {
+      let { id: cardId, name: gameName } = item;
+      navigate('CardDetail', { cardId, gameName });
+    }
   }
 }
 
