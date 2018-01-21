@@ -35,7 +35,7 @@
 * [react官方网站](https://www.google.com.hk/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&ved=0ahUKEwjguZLI2-jYAhXInJQKHbKIAmcQFggrMAA&url=https%3a%2f%2freactjs%2eorg%2f&usg=AOvVaw26YbpVhaFnAB4A6G8-4uAs)
 * [react native中文网](https://www.google.com.hk/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&ved=0ahUKEwjB_tfP2-jYAhVDFpQKHRHCAFQQFggmMAA&url=https%3a%2f%2freactnative%2ecn%2f&usg=AOvVaw2NemzY2WuMQP4AX1dn1Zy4)
 
-* Contribution
+# Contribution
 如果发现了漏洞或者需要新功能, 请在本仓库新建issue, 也可联系邮箱`baihao0524@gmail.com`或`buptbh@163.com`
 
 # License
