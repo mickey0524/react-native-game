@@ -120,7 +120,7 @@ class Search extends Component {
               <View>
                 {
                   this.state.relatedGameList.length > 0 &&
-                  <View style={[styles.relatedGameList, { borderColor: isNightMode ? '#424242' : 'F3F4F5' }]}>
+                  <View style={[styles.relatedGameList, { borderColor: isNightMode ? '#424242' : '#F3F4F5' }]}>
                     {
                       this.state.relatedGameList.map((item, index) => this.genGameItem(item, index, 'relate'))
                     }
@@ -153,23 +153,36 @@ class Search extends Component {
   genGameItem(item, index, mark) {
     let isNightMode = this.props.mode == 'night';    
     return (
-      <View key={index}
-        style={[styles.gameItem,
-          { borderColor: isNightMode ? '#424242' : '#E8E8E8' },
-          mark == 'relate' && index == this.state.relatedGameList.length - 1 && { borderBottomWidth: 0 }]}>
-        <Image
-          source={{ uri: getImgUrl(item.avatar, 'SEARCH_RES_ICON') }}
-          style={styles.gameIcon} />
-        <View style={styles.gameInfo}>
-          <Text numberOfLines={1} style={[styles.gameName, { color: isNightMode ? '#FFF' : '#222' }]}>{item.name}</Text>
-          <Text numberOfLines={1} style={[styles.gameDesc, { color: isNightMode ? '#FFF' : '#999' }]}>{item.size}</Text>
-          <Text numberOfLines={1} style={[styles.gameDesc, { color: isNightMode ? '#FFF' : '#999' }]}>{item.desc}</Text>
+      <TouchableWithoutFeedback key={index} onPress={() => this.onPressGameItem(item)}>
+        <View
+          style={[styles.gameItem,
+            { borderColor: isNightMode ? '#424242' : '#E8E8E8' },
+            mark == 'relate' && index == this.state.relatedGameList.length - 1 && { borderBottomWidth: 0 }]}>
+          <Image
+            source={{ uri: getImgUrl(item.avatar, 'SEARCH_RES_ICON') }}
+            style={[styles.gameIcon, { backgroundColor: isNightMode ? '#000' : '#F4F5F6' }]} />
+          <View style={styles.gameInfo}>
+            <Text numberOfLines={1} style={[styles.gameName, { color: isNightMode ? '#FFF' : '#222' }]}>{item.name}</Text>
+            <Text numberOfLines={1} style={[styles.gameDesc, { color: isNightMode ? '#FFF' : '#999' }]}>{item.size}</Text>
+            <Text numberOfLines={1} style={[styles.gameDesc, { color: isNightMode ? '#FFF' : '#999' }]}>{item.desc}</Text>
+          </View>
+          <View style={[styles.downloadWrap, { backgroundColor: this.props.theme.focusColor }]}>
+            <Text style={styles.download}>下载</Text>
+          </View>
         </View>
-        <View style={[styles.downloadWrap, { backgroundColor: this.props.theme.focusColor }]}>
-          <Text style={styles.download}>下载</Text>
-        </View>
-      </View>
+      </TouchableWithoutFeedback>
     );
+  }
+
+  /**
+   * 点击搜索出来的游戏item，跳转详情页
+   * @param {Object} item 游戏数据
+   */
+  onPressGameItem(item) {
+    let { navigate } = this.props.navigation,
+      cardId = item.download_info.id,
+      gameName = item.name;
+    navigate('CardDetail', { cardId, gameName });
   }
 
   /**
