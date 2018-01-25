@@ -6,9 +6,9 @@ import {
   StatusBar,
 } from 'react-native';
 
-import { OS } from '../../conf/deviceParam';
+import { isAndroid } from '../../conf/deviceParam';
 
-const STATUSBAR_HEIGHT = OS === 'ios' ? 20 : StatusBar.currentHeight;
+const STATUSBAR_HEIGHT = isAndroid ? 0 : 20;
 
 class statusBar extends Component {
   constructor(props) {
@@ -22,7 +22,7 @@ class statusBar extends Component {
   render() {
     const { theme } = this.props;
     return (
-      <View style={[styles.statusBar, { backgroundColor: theme.themeColor }]}>
+      <View style={[styles.statusBar, { backgroundColor: theme.themeColor }, isAndroid && { height: 0 }]}>
         <StatusBar translucent backgroundColor={theme.themeColor} barStyle={'light-content'} />
       </View>
     );
