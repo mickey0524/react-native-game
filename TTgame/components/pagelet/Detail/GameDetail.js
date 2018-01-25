@@ -95,7 +95,7 @@ class CardDetail extends Component {
               <View>
                 <ImageBackground style={styles.imageBackground} source={{ uri: banner.background }}>
                   <View style={styles.bannerWrap}>
-                    <Image style={[styles.bannerIcon, { backgroundColor: isNightMode ? '#000' : '#F4F5F6' }]} source={{ uri: banner.icon }} />
+                    <Image style={[styles.bannerIcon, { backgroundColor: isNightMode ? '#000' : '#F4F5F6', overlayColor: isNightMode ? '#252525' : '#FFF' }]} source={{ uri: banner.icon }} />
                     <View style={styles.bannerInfo}>
                       <Text numberOfLines={1} style={styles.gameName}>{banner.name}</Text>
                       <Text numberOfLines={1} style={styles.gameInfo}>大小: {banner.size}M</Text>
@@ -177,7 +177,10 @@ class CardDetail extends Component {
             }
           </View>
         </ScrollView>
-        <Modal visible={this.state.isImgViewerShow} transparent={true}>
+        <Modal
+          onRequestClose={() => {}}
+          visible={this.state.isImgViewerShow}
+          transparent={true}>
           <ImageViewer 
             index={this.state.imgViewerIndex}
             imageUrls={imageViewerArr} 
@@ -215,7 +218,7 @@ class CardDetail extends Component {
     let isNightMode = this.props.mode == 'night';
     return (
       <View style={styles.recItem}>
-        <Image source={{ uri: item.icon }} style={[styles.recIcon, { backgroundColor: isNightMode ? '#000' : '#F4F5F6' }]} />
+        <Image source={{ uri: item.icon }} style={[styles.recIcon, { backgroundColor: isNightMode ? '#000' : '#F4F5F6', overlayColor: isNightMode ? '#252525' : '#FFF' }]} />
         <Text numberOfLines={1} style={[styles.recName, { color: isNightMode ? '#FFF' : '#000' }]}>{item.name}</Text>
         <Text numberOfLines={1} style={[styles.recSize, { color: isNightMode ? '#FFF' : '#999' }]}>大小：{item.size}M</Text>
         <View style={[styles.downloadWrap, {backgroundColor: this.props.theme.focusColor}]}>
@@ -267,14 +270,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   bannerIcon: {
-    width: 70,
-    height: 70,
+    width: 70 / 375 * totalWidth,
+    height: 70 / 375 * totalWidth,
     borderRadius: 13,
-    marginRight: 15,
+    marginRight: 15 / 375 * totalWidth,
   },
   bannerInfo: {
-    marginRight: 15,
-    width: 185,
+    marginRight: 15 / 375 * totalWidth,
+    width: 185 / 375 * totalWidth,
     backgroundColor: 'transparent',
   },
   gameName: {
@@ -287,7 +290,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   downloadWrap: {
-    width: 58,
+    width: 58 / 375 * totalWidth,
     height: 28,
     display: 'flex',
     alignItems: 'center',

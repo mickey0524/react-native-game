@@ -19,6 +19,7 @@ export default class Prompt extends Component {
     return (
       <View>
         <Modal
+          onRequestClose={() => {}}
           visible={this.props.visible}
           animationType={'fade'}
           transparent={true} >

@@ -104,7 +104,7 @@ class Rank extends Component {
                 : index == 2 ? <Image source={require('../../../assets/ic_game_no.3.png')} style={styles.rankIcon} />
                   : <Text style={styles.rankText}>{index + 1}</Text>
           }
-          <Image source={{ uri: item.avatar }} style={[styles.gameIcon, { backgroundColor: isNightMode ? '#000' : '#F4F5F6'}]} />
+          <Image source={{ uri: item.avatar }} style={[styles.gameIcon, { backgroundColor: isNightMode ? '#000' : '#F4F5F6', overlayColor: isNightMode ? '#252525' : '#FFF'}]} />
           <View style={styles.gameInfo}>
             <Text numberOfLines={1} style={[styles.gameName, { color: isNightMode ? '#FFF' : '#222' }]}>{item.name}</Text>
             <Text numberOfLines={1} style={[styles.gameDesc, { color: isNightMode ? '#FFF' : '#999' }]}>大小：{item.size}</Text>
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     // backgroundColor: '#F4F5F6',
     height: 28,
     width: totalWidth,
-    paddingLeft: 15,
+    paddingLeft: 15 / 375 * totalWidth,
     display: 'flex',
     justifyContent: 'center',
   },
@@ -181,31 +181,31 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 15,
+    paddingVertical: 15 / 375 * totalWidth,
     paddingRight: 15,
-    paddingLeft: 11,
+    paddingLeft: 11 / 375 * totalWidth,
   },
   rankIcon: {
-    width: 24,
+    width: 24 / 375 * totalWidth,
     height: 24,
-    marginRight: 11,
+    marginRight: 11 / 375 * totalWidth,
   },
   rankText: {
-    marginRight: 11,
+    marginRight: 11 / 375 * totalWidth,
     fontSize: 18,
     color: '#999',
-    width: 24,
+    width: 24 / 375 * totalWidth,
     textAlign: 'center',
   },
   gameIcon: {
-    width: 66,
+    width: 66 / 375 * totalWidth,
     height: 66,
     borderRadius: 12,
     // backgroundColor: '#F4F5F6',
-    marginRight: 10,
+    marginRight: 10 / 375 * totalWidth,
   },
   gameInfo: {
-    width: 170,
+    width: 170 / 375 * totalWidth,
     marginRight: 10,
   },
   gameName: {
@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
     marginTop: 6,
   },
   downloadWrap: {
-    width: 58,
+    width: 58 / 375 * totalWidth,
     height: 28,
     display: 'flex',
     alignItems: 'center',

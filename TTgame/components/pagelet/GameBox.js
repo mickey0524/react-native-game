@@ -108,7 +108,7 @@ class GameBox extends Component {
         <TouchableWithoutFeedback onPress={() => this.onPressItem(item.name)}>
           <View style={styles.gameItem}> 
             <Image source={{ uri: getImgUrl(item.avatar, 'GAME_BOX_ICON') }}
-              style={[styles.gameIcon, { backgroundColor: isNightMode ? '#000' : '#F4F5F6'}]}/> 
+              style={[styles.gameIcon, { backgroundColor: isNightMode ? '#000' : '#F4F5F6', overlayColor: isNightMode ? '#252525' : '#FFF'}]}/> 
             <View style={styles.gameInfo}>
               <Text numberOfLines={1} style={[styles.gameName, { color: isNightMode ? '#FFF' : '#222' }]}>{item.name}</Text>
               <Text numberOfLines={1} style={[styles.gameName, { color: isNightMode ? '#FFF' : '#999' }]}>{item.size}</Text>
@@ -156,13 +156,13 @@ const styles = StyleSheet.create({
     width: totalWidth,
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 15,
+    padding: 15 / 375 * totalWidth,
   },
   gameIcon: {
-    width: 74,
-    height: 74,
+    width: 74 / 375 * totalWidth,
+    height: 74 / 375 * totalWidth,
     // backgroundColor: '#F4F5F6',
-    marginRight: 10,
+    marginRight: 10 / 375 * totalWidth,
     borderRadius: 12,
   },
   gameInfo: {
@@ -170,8 +170,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     paddingVertical: 2,
     justifyContent: 'space-between',
-    width: 191,
-    marginRight: 12,
+    width: 191 / 375 * totalWidth,
+    marginRight: 12 / 375 * totalWidth,
   },
   gameName: {
     fontSize: 17,
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     // color: '#999',
   },
   downloadWrap: {
-    width: 58,
+    width: 58 / 375 * totalWidth,
     height: 28,
     display: 'flex',
     alignItems: 'center',

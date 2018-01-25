@@ -7,6 +7,7 @@ import {
   Image,
   FlatList,
   TouchableWithoutFeedback,
+  Linking,
   StyleSheet,
   Dimensions,
   Platform,
@@ -116,7 +117,7 @@ class Hall extends Component {
                     return (
                       <TouchableWithoutFeedback key={gameIndex} onPress={() => this.onPressItem(item.name)}>
                         <View style={[styles.gameItem, (gameIndex + 1) % 4 == 0 && { marginRight: 0 }]}>
-                          <Image style={[styles.gameIcon, { backgroundColor: isNightMode ? '#000' : '#F4F5F6' }]} source={{ uri: getImgUrl(game.avatar, 'HALL_ICON') }}/>
+                          <Image style={[styles.gameIcon, { backgroundColor: isNightMode ? '#000' : '#F4F5F6', overlayColor: isNightMode ? '#252525' : '#FFF' }]} source={{ uri: getImgUrl(game.avatar, 'HALL_ICON') }}/>
                           <Text numberOfLines={1} style={[styles.gameName, {color: isNightMode ? '#FFF' : '#222'}]}>{ game.name }</Text>
                           <Text numberOfLines={1} style={[styles.gameSize, {color: isNightMode ? '#FFF' : '#999'}]}>{ game.size }</Text>
                           <View style={[styles.downloadWrap, { backgroundColor: this.props.theme.focusColor}]}>
@@ -137,11 +138,11 @@ class Hall extends Component {
                   </TouchableWithoutFeedback> :
                   <View style={styles.smallBannerWrap}>
                     <TouchableWithoutFeedback onPress={() => {this.onPressItem(item.game_banner[0].title)}}>
-                      <Image style={[styles.smallBanner, { backgroundColor: isNightMode ? '#000' : '#F4F5F6' }]}
+                      <Image style={[styles.smallBanner, { backgroundColor: isNightMode ? '#000' : '#F4F5F6', overlayColor: isNightMode ? '#252525' : '#FFF' }]}
                         source={{ uri: getImgUrl(item.game_banner[0].image_url, 'HALL_SMALL_BANNER') }} />
                     </TouchableWithoutFeedback>
                     <TouchableWithoutFeedback onPress={() => { this.onPressItem(item.game_banner[1].title) }}>
-                      <Image style={[styles.smallBanner, { backgroundColor: isNightMode ? '#000' : '#F4F5F6' }]}
+                      <Image style={[styles.smallBanner, { backgroundColor: isNightMode ? '#000' : '#F4F5F6', overlayColor: isNightMode ? '#252525' : '#FFF' }]}
                         source={{ uri: getImgUrl(item.game_banner[1].image_url, 'HALL_SMALL_BANNER') }} />
                     </TouchableWithoutFeedback>         
                   </View>
@@ -158,8 +159,9 @@ class Hall extends Component {
    * @param {string} gameName 游戏名
    */
   onPressItem(gameName) {
-    const { navigate } = this.props.screenProps;
-    navigate('CardDetail', { gameName });
+    Linking.openURL('https://itunes.apple.com/cn/app/%E7%8E%8B%E8%80%85%E8%8D%A3%E8%80%80/id989673964?mt=8');
+    // const { navigate } = this.props.screenProps;
+    // navigate('CardDetail', { gameName });
   }
 
   /**
@@ -232,7 +234,7 @@ const styles = StyleSheet.create({
     height: 6,
   },
   gameBoxTitleWrap: {
-    paddingHorizontal: 15,
+    paddingHorizontal: 15 / 375 * totalWidth,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -243,7 +245,7 @@ const styles = StyleSheet.create({
     paddingTop: 15,
   },
   gameList: {
-    paddingHorizontal: 15,
+    paddingHorizontal: 15 / 375 * totalWidth,
     paddingBottom: 20,
     display: 'flex',
     flexDirection: 'row',
@@ -251,12 +253,12 @@ const styles = StyleSheet.create({
   },
   gameItem: {
     marginTop: 15,
-    width: 66,
-    marginRight: 27,
+    width: 66 / 375 * totalWidth,
+    marginRight: 27 / 375 * totalWidth,
   },
   gameIcon: {
     // backgroundColor: '#F4F5F6',
-    width: 66,
+    width: 66 / 375 * totalWidth,
     height: 66,
     borderRadius: 12,
   },
@@ -274,7 +276,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   downloadWrap: {
-    width: 66,
+    width: 66 / 375 * totalWidth,
     height: 28,
     display: 'flex',
     alignItems: 'center',
@@ -298,14 +300,14 @@ const styles = StyleSheet.create({
     // backgroundColor: '#F4F5F6',
   },
   smallBannerWrap: {
-    paddingHorizontal: 15,
-    paddingVertical: 10,
+    paddingHorizontal: 15 / 375 * totalWidth,
+    paddingVertical: 10 / 375 * totalWidth,
     display: 'flex',
     flexDirection: 'row',
     justifyContent:'space-between',
   },
   smallBanner: {
-    width: 168,
+    width: 168 / 375 * totalWidth,
     height: 84,
     borderRadius: 4,
     // backgroundColor: '#F4F5F6',    

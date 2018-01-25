@@ -30,22 +30,22 @@ class ToolBar extends Component {
     let isNightMode = this.props.mode == 'night';
     return (
       <View style={[styles.toolBar, { backgroundColor: this.props.theme.themeColor }]}>
-        <Text style={styles.leftIconWrap} onPress={() => this.onPressLeftIcon()}>
+        <TouchableWithoutFeedback onPress={() => this.onPressLeftIcon()}>
           {
             this.props.leftIcon == 'back' ?
-            <Icon name='md-arrow-back' size={25} color={isNightMode ? '#252525' : '#FFF'} /> :
-            <Icon name='md-menu' size={25} color={isNightMode ? '#252525' : '#FFF'} />
+            <Icon name='md-arrow-back' style={styles.leftIconWrap} size={25} color={isNightMode ? '#252525' : '#FFF'} /> :
+            <Icon name='md-menu' style={styles.leftIconWrap} size={25} color={isNightMode ? '#252525' : '#FFF'} />
           }
-        </Text>
+        </TouchableWithoutFeedback>
         <Text style={[styles.title, {color: isNightMode ? '#252525' : '#FFF'}]} numberOfLines={1}>{this.props.title}</Text>
         {
           this.props.rightIcon &&
-          <Text style={styles.rightIconWrap} onPress={() => this.onPressRightIcon()}>
+          <TouchableWithoutFeedback onPress={() => this.onPressRightIcon()}>
             {
               this.props.rightIcon == 'search' &&
-              <Icon name="ios-search" size={25} color={isNightMode ? '#252525' : '#FFF'} />
+              <Icon name="ios-search" style={styles.rightIconWrap} size={25} color={isNightMode ? '#252525' : '#FFF'} />
             }
-          </Text>
+          </TouchableWithoutFeedback>
         }
       </View>
     );
@@ -93,25 +93,25 @@ const styles = StyleSheet.create({
     // backgroundColor: color.SKY_BLUE,
   },
   leftIconWrap: {
-    width: 40,
-    height: 50,
-    lineHeight: 55,
+    // width: 40,
+    // height: 50,
+    // lineHeight: 55,
     position: 'absolute',
-    left: 15,
-    textAlign: 'center',
+    left: 25 / 375 * totalWidth,
+    // textAlign: 'center',
   },
   rightIconWrap: {
-    width: 40,
-    height: 50,
-    lineHeight: 55,
+    // width: 40,
+    // height: 50,
+    // lineHeight: 55,
     position: 'absolute',
-    right: 15,
-    textAlign: 'center',
+    right: 25 / 375 * totalWidth,
+    // textAlign: 'center',
   },
   title: {
     fontSize: 20,
     // color: '#FFF',
-    width: 200,
+    width: 200 / 375 * totalWidth,
     textAlign: 'center',
   },
 });

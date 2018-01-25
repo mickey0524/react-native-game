@@ -7,8 +7,8 @@ import {
   Easing,
 } from 'react-native';
 
-import { totalHeight } from '../../conf/deviceParam';
-const REFRESH_CONTROL_HEIGHT = 60; // 因为Flatlist加载的时候会出现菊花图，高度计算需要减去
+import { isAndroid, totalHeight } from '../../conf/deviceParam';
+const REFRESH_CONTROL_HEIGHT = isAndroid ? 0 : 60; // 因为Flatlist加载的时候会出现菊花图，高度计算需要减去
 
 export default class LazyImage extends Component {
   constructor(props) {
@@ -52,7 +52,8 @@ export default class LazyImage extends Component {
   render() {
     return (
       <TouchableWithoutFeedback onPress={this.onPressImg}>
-        <View style={[{ backgroundColor: this.props.isNightMode ? '#000' : '#F4F5F6' },
+        <View ref={(img) => { this.img = img; }} 
+          style={[{ backgroundColor: this.props.isNightMode ? '#000' : '#F4F5F6' },
           this.props.marginRight && { marginRight: this.props.marginRight }]}>
           <Animated.View
             style={{
@@ -61,8 +62,7 @@ export default class LazyImage extends Component {
             <Image
               onLoad={this.startAnimation}
               style={this.props.imgStyle}
-              source={this.state.isImgShow ? { uri: this.props.imgUrl } : {}}
-              ref={(img) => { this.img = img; }} />
+              source={this.state.isImgShow ? { uri: this.props.imgUrl } : {}} />
           </Animated.View>
         </View>
       </TouchableWithoutFeedback>

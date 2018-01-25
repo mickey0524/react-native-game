@@ -211,11 +211,11 @@ class Feed extends Component {
       return null;
     }
     return (
-      index == this.state.feedData.length - 1 ? <BottomLoading />
+        index == this.state.feedData.length - 1 ? <BottomLoading />
         : <TouchableWithoutFeedback onPress={() => this.onPressItem(item, index)}>
             <View>
               {
-                item.type == 'card' ? 
+                item.type == 'card' ?
                   <GameCell
                     netInfo={this.props.netInfo}
                     loadImgWithoutWifi={this.props.loadImgWithoutWifi}

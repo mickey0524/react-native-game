@@ -13,7 +13,7 @@ import {
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { totalHeight, dpr } from '../../conf/deviceParam';
+import { totalWidth, totalHeight, dpr } from '../../conf/deviceParam';
 import { MyStatusBar } from '../common/MyStatusBar';
 import { SEARCH } from '../../conf/api';
 import { getImgUrl } from '../.././utils/util';
@@ -63,6 +63,7 @@ class Search extends Component {
                 borderColor: isNightMode ? '#424242' : '#E8E8E8',
                 color: isNightMode ? '#FFF' : '#000' }]}
             autoFocus={true}
+            underlineColorAndroid={"transparent"}
             onFocus={this.onTextInputFocus}
             value={this.state.searchKeyWord}
             onSubmitEditing={this.onPressSubmit}
@@ -88,8 +89,8 @@ class Search extends Component {
               {
                 this.state.keyWordArr.length == 0 ?
                   this.state.afterFirstFetch && 
-                  <View style={{ borderColor: isNightMode ? '#424242' : '#E8E8E8', borderStyle: 'solid', borderBottomWidth: 1 / dpr }}>
-                    <Text style={[styles.noResTip, { color: isNightMode ? '#FFF' : '#999' }]}>
+                  <View style={[styles.noResTip, { borderColor: isNightMode ? '#424242' : '#E8E8E8' }]}>
+                    <Text style={{ fontSize: 16, color: isNightMode ? '#FFF' : '#999' }}>
                       抱歉，没有找到相关信息
                     </Text>
                   </View> :
@@ -160,7 +161,7 @@ class Search extends Component {
             mark == 'relate' && index == this.state.relatedGameList.length - 1 && { borderBottomWidth: 0 }]}>
           <Image
             source={{ uri: getImgUrl(item.avatar, 'SEARCH_RES_ICON') }}
-            style={[styles.gameIcon, { backgroundColor: isNightMode ? '#000' : '#F4F5F6' }]} />
+            style={[styles.gameIcon, { backgroundColor: isNightMode ? '#000' : '#F4F5F6', overlayColor: isNightMode ? '#252525' : '#FFF' }]} />
           <View style={styles.gameInfo}>
             <Text numberOfLines={1} style={[styles.gameName, { color: isNightMode ? '#FFF' : '#222' }]}>{item.name}</Text>
             <Text numberOfLines={1} style={[styles.gameDesc, { color: isNightMode ? '#FFF' : '#999' }]}>{item.size}</Text>
@@ -300,7 +301,7 @@ const styles = StyleSheet.create({
     // borderColor: '#E8E8E8',
   },
   textInput: {
-    width: 273,
+    width: 273 / 375 * totalWidth,
     height: 28,
     borderColor: '#E8E8E8',
     borderWidth: 1 / dpr,
@@ -308,11 +309,12 @@ const styles = StyleSheet.create({
     // backgroundColor: '#F4F5F6',
     borderRadius: 4,
     paddingHorizontal: 32,
+    paddingVertical: 0, // 兼容android
   },
   searchIconWrap: {
     position: 'absolute',
     // backgroundColor: '#F4F5F6',
-    left: 46,
+    left: 46 / 375 * totalWidth,
   },
   deleteIconWrap: {
     position: 'absolute',
@@ -320,7 +322,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    right: 71, 
+    right: 71 / 375 * totalWidth, 
   },
   cancelText: {
     marginLeft: 15,
@@ -328,12 +330,12 @@ const styles = StyleSheet.create({
     // color: '#2A90D7',
   },
   noResTip: {
+    borderStyle: 'solid',
+    borderBottomWidth: 1 / dpr,
     height: 42,
-    fontSize: 16,
-    // color: '#999',
-    textAlign: 'center',
-    lineHeight: 42,
-    // borderColor: '#E8E8E8',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   keyWordItem: {
     display: 'flex',
@@ -354,7 +356,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    marginHorizontal: 15,
+    marginHorizontal: 15 / 375 * totalWidth,
     paddingVertical: 15,
     borderStyle: 'solid',
     // borderColor: '#E8E8E8',
@@ -364,11 +366,11 @@ const styles = StyleSheet.create({
     width: 59,
     height: 59,
     borderRadius: 12,
-    marginRight: 15,
+    marginRight: 15 / 375 * totalWidth,
   },
   gameInfo: {
-    width: 197,
-    marginRight: 15,
+    width: 195 / 375 * totalWidth,
+    marginRight: 15 / 375 * totalWidth,
   },
   gameName: {
     fontSize: 14,
@@ -380,7 +382,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   downloadWrap: {
-    width: 58,
+    width: 58 / 375 * totalWidth,
     height: 28,
     display: 'flex',
     alignItems: 'center',

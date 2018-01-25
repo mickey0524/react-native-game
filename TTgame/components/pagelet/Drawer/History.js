@@ -45,16 +45,20 @@ class History extends Component {
         <MyStatusBar />
         <ToolBar title={'足迹'} navigation={this.props.navigation} leftIcon={'back'} />
         <View style={[styles.label, { backgroundColor: this.props.theme.themeColor }]}>
-          <Text
-            onPress={() => this.onPressLabelItem('article') }
-            style={[styles.labelText, this.state.label == 'article' && { opacity: 1 }]}>
-            文章
-          </Text>
-          <Text
-            onPress={() => this.onPressLabelItem('game') }
-            style={[styles.labelText, this.state.label == 'game' && { opacity: 1 }]}>
-            游戏
-          </Text>
+          <View style={styles.labelItem}>
+            <Text
+              onPress={() => this.onPressLabelItem('article') }
+              style={[styles.labelText, this.state.label == 'article' && { opacity: 1 }]}>
+              文章
+            </Text>
+          </View>
+          <View style={styles.labelItem}>
+            <Text
+              onPress={() => this.onPressLabelItem('game') }
+              style={[styles.labelText, this.state.label == 'game' && { opacity: 1 }]}>
+              游戏
+            </Text>
+          </View>
         </View>
         <View>
           {
@@ -193,15 +197,12 @@ const styles = StyleSheet.create({
     borderColor: '#F4F5F6',
     borderBottomWidth: 1 / dpr,
   },
-  // labelItem: {
-  //   flex: 1,
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  // },
-  labelText: {
+  labelItem: {
     flex: 1,
-    textAlign: 'center',
-    lineHeight: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  labelText: {
     opacity: 0.8,
     fontSize: 15,
     color: '#FFF',
