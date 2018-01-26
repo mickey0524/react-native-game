@@ -1,5 +1,5 @@
 # game
-🔥🚀今日游戏的第三方android和ios客户端，基于react-native、redux，本app纯属个人瞎搞，没有版权，不能上线
+🔥🚀今日游戏的第三方android和ios客户端，基于react-native、redux，本app纯属个人瞎搞，没有版权
 
 # Features
 * 支持浏览游戏相关的新闻，榜单
@@ -20,7 +20,7 @@
   - [x] 切换各种主题，颜色
   - [x] 记录feed流的浏览记录
   - [x] 详情页点击概念图放大，支持手动滑动，类似于JSbridge中的gallery
-  - [x] 兼容android样式
+  - [x] 兼容android正常样式以及back按键
   - [ ] 完成正常下载功能
   - [ ] react-native-fs的介入
   - [ ] react-native-share的接入，完成分享功能
@@ -37,7 +37,7 @@
 * [react native中文网](https://www.google.com.hk/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&ved=0ahUKEwjB_tfP2-jYAhVDFpQKHRHCAFQQFggmMAA&url=https%3a%2f%2freactnative%2ecn%2f&usg=AOvVaw2NemzY2WuMQP4AX1dn1Zy4)
 
 # Contribution
-如果发现了漏洞或者需要新功能, 请在本仓库新建issue, 也可联系邮箱`baihao0524@gmail.com`或`buptbh@163.com`
+如果发现了漏洞或者需要新功能, 请在本仓库新建issue, 也可联系邮箱`buptbh@163.com`或`baihao0524@gmail.com`
 
 # License
 MIT
