@@ -4,3 +4,4 @@ node_modules
 ios/build
 android/app/build
 android/build
+android/.gradle

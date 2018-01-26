@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import {
   NetInfo,
+  BackHandler,
+  ToastAndroid,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { StackNavigator } from 'react-navigation';
@@ -17,6 +19,7 @@ import Search from '../components/pagelet/Search';
 import { setTheme } from '../redux/action/theme';
 import { setMode } from '../redux/action/mode';
 import { setLoadImgMode, changeNetInfo } from '../redux/action/netInfo';
+import { isAndroid } from '../conf/deviceParam';
 
 const StackNavigatorConfig = {
   initialRouteName: 'Drawer',
@@ -42,6 +45,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.netInfoHandler = this.netInfoHandler.bind(this);
+    this.onBackAndroid = this.onBackAndroid.bind(this);
+    this.lastBackPressed = '';
   }
 
   componentWillMount() {
@@ -54,10 +59,16 @@ class App extends Component {
       this.props.changeNetInfo(netInfo);
     });
     NetInfo.addEventListener('connectionChange', this.netInfoHandler);
+    if (isAndroid) {
+      BackHandler.addEventListener('hardwareBackPress', this.onBackAndroid);
+    }
   }
 
   componentWillUnmount() {
     NetInfo.removeEventListener('connectionChange', this.netInfoHandler);
+    if (isAndroid) {
+      BackHandler.removeEventListener('hardwareBackPress', this.onBackAndroid);
+    }
   }
   
   render() {
@@ -74,6 +85,18 @@ class App extends Component {
     let netInfo = status.type.toLocaleLowerCase();
     netInfo = netInfo == 'wifi' ? 'wifi' : 'nowifi';
     this.props.changeNetInfo(netInfo);
+  }
+
+  /**
+   * 响应android的back按键，最近2秒内按过back键，可以退出应用。
+   */
+  onBackAndroid() {
+    if (this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {
+      return false;
+    }
+    this.lastBackPressed = Date.now();
+    ToastAndroid.show('再按一次退出应用', ToastAndroid.SHORT);
+    return true;
   }
 }
 

@@ -20,6 +20,7 @@
   - [x] 切换各种主题，颜色
   - [x] 记录feed流的浏览记录
   - [x] 详情页点击概念图放大，支持手动滑动，类似于JSbridge中的gallery
+  - [x] 兼容android样式
   - [ ] 完成正常下载功能
   - [ ] react-native-fs的介入
   - [ ] react-native-share的接入，完成分享功能
