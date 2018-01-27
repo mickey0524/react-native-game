@@ -51,22 +51,35 @@ export default class LazyImage extends Component {
   }
 
   render() {
+    let imgView = 
+      <View ref={(img) => { this.img = img; }}
+        style={[{ backgroundColor: this.props.isNightMode ? '#000' : '#F4F5F6' },
+        this.props.marginRight && { marginRight: this.props.marginRight }]}>
+        <Animated.View
+          style={{
+            opacity: this.state.opacity,
+          }}>
+          <Image
+            onLoad={this.startAnimation}
+            style={this.props.imgStyle}
+            source={this.state.isImgShow ? { uri: this.props.imgUrl } : {}} />
+        </Animated.View>
+      </View>;
+
     return (
-      <TouchableWithoutFeedback onPress={this.onPressImg}>
-        <View ref={(img) => { this.img = img; }} 
-          style={[{ backgroundColor: this.props.isNightMode ? '#000' : '#F4F5F6' },
-          this.props.marginRight && { marginRight: this.props.marginRight }]}>
-          <Animated.View
-            style={{
-              opacity: this.state.opacity,
-            }}>
-            <Image
-              onLoad={this.startAnimation}
-              style={this.props.imgStyle}
-              source={this.state.isImgShow ? { uri: this.props.imgUrl } : {}} />
-          </Animated.View>
-        </View>
-      </TouchableWithoutFeedback>
+      <View>
+        {
+          !this.state.isImgShow &&
+          this.props.netInfo == 'nowifi' &&
+          !this.props.loadImgWithoutWifi ?
+            <TouchableWithoutFeedback onPress={this.onPressImg}>
+              {imgView}
+            </TouchableWithoutFeedback> :
+            <View>
+              {imgView}
+            </View>
+        }
+      </View>
     );
   }
 
