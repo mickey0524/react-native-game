@@ -4,6 +4,7 @@ import {
   View,
   Image,
   Text,
+  TouchableWithoutFeedback,
   StyleSheet,
 } from 'react-native';
 
@@ -24,7 +25,8 @@ export default class GameCell extends Component {
       this.props.focusColor != nextProps.focusColor ||
       this.props.contentOffsetY != nextProps.contentOffsetY ||
       this.props.netInfo != nextProps.netInfo ||
-      this.props.loadImgWithoutWifi != nextProps.loadImgWithoutWifi) { 
+      this.props.loadImgWithoutWifi != nextProps.loadImgWithoutWifi ||
+      this.props.gameInfo.image_list[0] != nextProps.gameInfo.image_list[0]) { 
       return true;
     }    
     return false;
@@ -45,15 +47,21 @@ export default class GameCell extends Component {
           loadImgWithoutWifi={this.props.loadImgWithoutWifi}          
           loadDirection={this.props.loadDirection}
           contentOffsetY={this.props.contentOffsetY} />
-        <View style={styles.gameInfo}>
-          <Text style={[styles.gameName, { color: this.props.gameInfo.isBrowered ? '#999' : isNightMode ? '#FFF' : '#999'}]}>{ this.props.gameInfo.name }</Text>
-          <View style={[styles.download, {backgroundColor: this.props.focusColor}]}>
-            <Icon name='download' color={this.props.gameInfo.isBrowered ? '#999' : '#FFF'} size={8} />
-            <Text style={[styles.downloadText, { color: this.props.gameInfo.isBrowered ? '#999' : '#FFF' }]}>APP下载</Text>
+        <TouchableWithoutFeedback onPress={this.onPressDownload}>
+          <View style={styles.gameInfo}>
+            <Text style={[styles.gameName, { color: this.props.gameInfo.isBrowered ? '#999' : isNightMode ? '#FFF' : '#999'}]}>{ this.props.gameInfo.name }</Text>
+            <View style={[styles.download, {backgroundColor: this.props.focusColor}]}>
+              <Icon name='download' color={this.props.gameInfo.isBrowered ? '#999' : '#FFF'} size={8} />
+              <Text style={[styles.downloadText, { color: this.props.gameInfo.isBrowered ? '#999' : '#FFF' }]}>APP下载</Text>
+            </View>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
       </View>
     );
+  }
+
+  onPressDownload() {
+    console.log('asd');
   }
 }
 

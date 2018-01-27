@@ -36,7 +36,8 @@ export default class LazyImage extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.props.isNightMode != nextProps.isNightMode) {
+    if (this.props.isNightMode != nextProps.isNightMode ||
+      this.props.imgUrl != nextProps.imgUrl) {
       return true;
     }
     return this.shouldUpdate;
