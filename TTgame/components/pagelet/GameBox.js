@@ -4,6 +4,7 @@ import {
   View,
   Text,
   FlatList,
+  Linking,
   ActivityIndicator,
   TouchableWithoutFeedback,
   Image,
@@ -97,6 +98,14 @@ class GameBox extends Component {
   }
 
   /**
+   * 点击下载
+   * @param {String} downloadUrl 下载链接
+   */
+  onPressDownload(downloadUrl) {
+    Linking.openURL(downloadUrl);
+  }
+
+  /**
    * 渲染item
    * @param {object} param0 游戏item数据
    */
@@ -114,9 +123,11 @@ class GameBox extends Component {
               <Text numberOfLines={1} style={[styles.gameName, { color: isNightMode ? '#FFF' : '#999' }]}>{item.size}</Text>
               <Text numberOfLines={1} style={[styles.gameName, { color: isNightMode ? '#FFF' : '#999' }]}>{item.desc}</Text>
             </View>
-            <View style={[styles.downloadWrap, {backgroundColor: this.props.theme.focusColor}]}>
-              <Text style={styles.download}>下载</Text>
-            </View>
+            <TouchableWithoutFeedback onPress={() => this.onPressDownload(item.download_info.download_url)}>
+              <View style={[styles.downloadWrap, {backgroundColor: this.props.theme.focusColor}]}>
+                <Text style={styles.download}>下载</Text>
+              </View>
+            </TouchableWithoutFeedback>
           </View>
         </TouchableWithoutFeedback>
     );

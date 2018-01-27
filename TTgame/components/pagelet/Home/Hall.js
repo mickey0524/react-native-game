@@ -120,9 +120,11 @@ class Hall extends Component {
                           <Image style={[styles.gameIcon, { backgroundColor: isNightMode ? '#000' : '#F4F5F6', overlayColor: isNightMode ? '#252525' : '#FFF' }]} source={{ uri: getImgUrl(game.avatar, 'HALL_ICON') }}/>
                           <Text numberOfLines={1} style={[styles.gameName, {color: isNightMode ? '#FFF' : '#222'}]}>{ game.name }</Text>
                           <Text numberOfLines={1} style={[styles.gameSize, {color: isNightMode ? '#FFF' : '#999'}]}>{ game.size }</Text>
-                          <View style={[styles.downloadWrap, { backgroundColor: this.props.theme.focusColor}]}>
-                            <Text style={styles.download}>下载</Text>
-                          </View>
+                          <TouchableWithoutFeedback onPress={() => this.onPressDownload(game.download_info.download_url)}>
+                            <View style={[styles.downloadWrap, { backgroundColor: this.props.theme.focusColor}]}>
+                              <Text style={styles.download}>下载</Text>
+                            </View>
+                          </TouchableWithoutFeedback>
                         </View>
                       </TouchableWithoutFeedback>
                     );
@@ -159,9 +161,16 @@ class Hall extends Component {
    * @param {string} gameName 游戏名
    */
   onPressItem(gameName) {
-    Linking.openURL('https://itunes.apple.com/cn/app/%E7%8E%8B%E8%80%85%E8%8D%A3%E8%80%80/id989673964?mt=8');
-    // const { navigate } = this.props.screenProps;
-    // navigate('CardDetail', { gameName });
+    const { navigate } = this.props.screenProps;
+    navigate('CardDetail', { gameName });
+  }
+
+  /**
+   * 点击下载游戏按钮
+   * @param {String} downloadUrl 下载链接
+   */
+  onPressDownload(downloadUrl) {
+    Linking.openURL(downloadUrl);
   }
 
   /**

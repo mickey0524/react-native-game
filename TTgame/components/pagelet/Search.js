@@ -5,6 +5,7 @@ import {
   Text,
   TextInput,
   Image,
+  Linking,
   TouchableWithoutFeedback,
   StyleSheet,
   Dimensions,
@@ -167,12 +168,22 @@ class Search extends Component {
             <Text numberOfLines={1} style={[styles.gameDesc, { color: isNightMode ? '#FFF' : '#999' }]}>{item.size}</Text>
             <Text numberOfLines={1} style={[styles.gameDesc, { color: isNightMode ? '#FFF' : '#999' }]}>{item.desc}</Text>
           </View>
-          <View style={[styles.downloadWrap, { backgroundColor: this.props.theme.focusColor }]}>
-            <Text style={styles.download}>下载</Text>
-          </View>
+          <TouchableWithoutFeedback onPress={() => this.onPressDownload(item.download_info.download_url)}>
+            <View style={[styles.downloadWrap, { backgroundColor: this.props.theme.focusColor }]}>
+              <Text style={styles.download}>下载</Text>
+            </View>
+          </TouchableWithoutFeedback>
         </View>
       </TouchableWithoutFeedback>
     );
+  }
+
+  /**
+   * 点击下载
+   * @param {String} downloadUrl 下载链接
+   */
+  onPressDownload(downloadUrl) {
+    Linking.openURL(downloadUrl);
   }
 
   /**

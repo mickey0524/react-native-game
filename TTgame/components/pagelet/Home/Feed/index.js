@@ -196,8 +196,7 @@ class Feed extends Component {
           this.afterFirstFetch = true;
         }
       });
-    })
-    .catch(err => {
+    }).catch(err => {
       console.log(err);
     });
   }

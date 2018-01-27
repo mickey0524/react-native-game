@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-// import { connect } from 'react-redux';
 import {
   View,
   Image,
   Text,
+  Linking,
   TouchableWithoutFeedback,
   StyleSheet,
 } from 'react-native';
@@ -17,6 +17,7 @@ import { totalHeight } from '../../../../conf/deviceParam';
 export default class GameCell extends Component {
   constructor(props) {
     super(props);
+    this.onPressDownload = this.onPressDownload.bind(this);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -60,8 +61,11 @@ export default class GameCell extends Component {
     );
   }
 
+  /**
+   * 点击下载按钮，ios跳转appstore，android直接下载apk包
+   */
   onPressDownload() {
-    console.log('asd');
+    Linking.openURL(this.props.gameInfo.app_info.download_info.download_url);
   }
 }
 

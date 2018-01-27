@@ -5,6 +5,7 @@ import {
   Text,
   Image,
   SectionList,
+  Linking,
   ActivityIndicator,
   StyleSheet,
   TouchableWithoutFeedback,
@@ -110,9 +111,11 @@ class Rank extends Component {
             <Text numberOfLines={1} style={[styles.gameDesc, { color: isNightMode ? '#FFF' : '#999' }]}>大小：{item.size}</Text>
             <Text numberOfLines={1} style={[styles.gameDesc, { color: isNightMode ? '#FFF' : '#999' }]}>{item.desc}</Text>              
           </View>
-          <View style={[styles.downloadWrap, {backgroundColor: this.props.theme.focusColor}]}>
-            <Text style={styles.download}>下载</Text>
-          </View>
+          <TouchableWithoutFeedback onPress={() => this.onPressDownload(item.download_info.download_url)}>
+            <View style={[styles.downloadWrap, {backgroundColor: this.props.theme.focusColor}]}>
+              <Text style={styles.download}>下载</Text>
+            </View>
+          </TouchableWithoutFeedback>
         </View>
       </TouchableWithoutFeedback>
     );
@@ -139,6 +142,14 @@ class Rank extends Component {
       cardId = item.download_info.id,
       { navigate } = this.props.screenProps;
     navigate('CardDetail', { cardId, gameName });
+  }
+
+  /**
+   * 点击下载
+   * @param {String} downloadUrl 下载链接
+   */
+  onPressDownload(downloadUrl) {
+    Linking.openURL(downloadUrl);
   }
 }
 
