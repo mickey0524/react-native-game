@@ -44,7 +44,9 @@ class GameBox extends Component {
     return (
       <View style={[styles.container, { backgroundColor: isNightMode ? '#252525' : '#FFF'}]}>
         <MyStatusBar />
-        <ToolBar title={this.gameBoxName} navigation={this.props.navigation} leftIcon={'back'} />
+        <ToolBar title={this.gameBoxName} navigation={this.props.navigation}
+          leftIcon={'back'}
+          rightIcon={['more']} />
         {
           this.state.isLoading &&
           <View style={styles.maskWrap}>

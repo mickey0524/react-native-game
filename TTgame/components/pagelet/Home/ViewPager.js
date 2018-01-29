@@ -69,4 +69,25 @@ const TabNavigatorConfig = {
 
 const TabContainer = TabNavigator(RouteConfigs, TabNavigatorConfig);
 
-export default TabContainer;
+// export default TabContainer;
+export default class Tab extends Component {
+  constructor(props) {
+    super(props);
+    this.onNavigationStateChange = this.onNavigationStateChange.bind(this);
+  }
+
+  render() {
+    return (
+      <TabContainer {...this.props} onNavigationStateChange={this.onNavigationStateChange}/>
+    );
+  }
+
+  /**
+   * 当用户点击tab导航
+   * @param {Object} prevState 当前状态 
+   * @param {Object} newState 传入的状态
+   */
+  onNavigationStateChange(prevState, newState) {
+    this.props.onPressTabNav && this.props.onPressTabNav(newState.routes[newState.index].routeName);
+  }
+}

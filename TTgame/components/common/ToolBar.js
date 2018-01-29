@@ -4,6 +4,7 @@ import {
   View,
   Image,
   Text,
+  ActionSheetIOS,
   StyleSheet,
   TouchableWithoutFeedback,
 } from 'react-native';
@@ -40,12 +41,17 @@ class ToolBar extends Component {
         <Text style={[styles.title, {color: isNightMode ? '#252525' : '#FFF'}]} numberOfLines={1}>{this.props.title}</Text>
         {
           this.props.rightIcon &&
-          <TouchableWithoutFeedback onPress={() => this.onPressRightIcon()}>
-            {
-              this.props.rightIcon == 'search' &&
-              <Icon name="ios-search" style={styles.rightIconWrap} size={25} color={isNightMode ? '#252525' : '#FFF'} />
-            }
-          </TouchableWithoutFeedback>
+          this.props.rightIcon.map((icon, index) => {
+            return (
+              <TouchableWithoutFeedback key={index} onPress={() => this.onPressRightIcon(icon)}>
+                {
+                  icon == 'search' ?
+                  <Icon name="ios-search" style={[styles.rightIconWrap, { right: 25 * (2 * index + 1) / 375 * totalWidth}]} size={25} color={isNightMode ? '#252525' : '#FFF'} /> :
+                  <Icon name="ios-more" style={[styles.rightIconWrap, { right: 25 * (2 * index + 1) / 375 * totalWidth }]} size={25} color={isNightMode ? '#252525' : '#FFF'} />
+                }
+              </TouchableWithoutFeedback>
+            );
+          })
         }
       </View>
     );
@@ -63,12 +69,15 @@ class ToolBar extends Component {
   }
 
   /**
-   * 点击toolbar右端的icon，当右边为search的时候跳转搜索页
+   * 点击toolbar右端的icon
+   * @param {String} mark 区分右边icon的种类
    */
-  onPressRightIcon() {
-    if (this.props.rightIcon == 'search') {
+  onPressRightIcon(mark) {
+    if (mark == 'search') {
       let { navigate } = this.props.screenProps;
       navigate('Search');
+    } else {
+      (this.props.onPressToolBarMore && this.props.onPressToolBarMore());
     }
   }
 }
@@ -105,7 +114,7 @@ const styles = StyleSheet.create({
     // height: 50,
     // lineHeight: 55,
     position: 'absolute',
-    right: 25 / 375 * totalWidth,
+    // right: 25 / 375 * totalWidth,
     // textAlign: 'center',
   },
   title: {

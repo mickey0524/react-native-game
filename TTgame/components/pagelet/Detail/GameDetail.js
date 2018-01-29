@@ -81,7 +81,8 @@ class CardDetail extends Component {
     return (
       <View style={styles.container}>
         <MyStatusBar />
-        <ToolBar title={this.gameName} navigation={this.props.navigation} leftIcon={'back'} />
+        <ToolBar title={this.gameName} navigation={this.props.navigation}
+          leftIcon={'back'} rightIcon={['more']} />
         <ScrollView style={{ backgroundColor: this.props.theme.themeColor }}>
           <View style={{ backgroundColor: isNightMode ? '#252525' : '#FFF' }}>
             {

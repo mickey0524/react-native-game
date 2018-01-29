@@ -19,7 +19,8 @@ export default class ArticleDetail extends Component {
     return (
       <View style={styles.container}>
         <MyStatusBar />
-        <ToolBar title={this.articleName} navigation={this.props.navigation} leftIcon={'back'} />
+        <ToolBar title={this.articleName} navigation={this.props.navigation}
+          leftIcon={'back'} rightIcon={['more']} />
         <WebView
           scalesPageToFit={true}
           source={{ uri: this.source }}
