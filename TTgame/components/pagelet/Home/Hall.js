@@ -115,7 +115,7 @@ class Hall extends Component {
                 {
                   item.game_lists.map((game, gameIndex) => {
                     return (
-                      <TouchableWithoutFeedback key={gameIndex} onPress={() => this.onPressItem(item.name)}>
+                      <TouchableWithoutFeedback key={gameIndex} onPress={() => this.onPressItem(game.name)}>
                         <View style={[styles.gameItem, (gameIndex + 1) % 4 == 0 && { marginRight: 0 }]}>
                           <Image style={[styles.gameIcon, { backgroundColor: isNightMode ? '#000' : '#F4F5F6', overlayColor: isNightMode ? '#252525' : '#FFF' }]} source={{ uri: getImgUrl(game.avatar, 'HALL_ICON') }}/>
                           <Text numberOfLines={1} style={[styles.gameName, {color: isNightMode ? '#FFF' : '#222'}]}>{ game.name }</Text>
