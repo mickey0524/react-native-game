@@ -22,6 +22,7 @@
   - [x] 详情页点击概念图放大，支持手动滑动，类似于JSbridge中的gallery
   - [x] 兼容android正常样式以及back按键
   - [x] 完成正常下载功能
+  - [x] 完成用浏览器打开web页面的功能  
   - [ ] react-native-fs的介入
   - [ ] react-native-share的接入，完成分享功能
   - [ ] 抓取pc网页数据，替换详情页mock数据

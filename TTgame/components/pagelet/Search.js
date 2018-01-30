@@ -192,9 +192,9 @@ class Search extends Component {
    */
   onPressGameItem(item) {
     let { navigate } = this.props.navigation,
-      cardId = item.download_info.id,
+      gameId = item.download_info.id,
       gameName = item.name;
-    navigate('CardDetail', { cardId, gameName });
+    navigate('CardDetail', { gameId, gameName });
   }
 
   /**

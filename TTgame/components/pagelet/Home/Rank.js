@@ -139,9 +139,9 @@ class Rank extends Component {
    */
   onPressGameItem(item) {
     let gameName = item.download_info.name,
-      cardId = item.download_info.id,
+      gameId = item.download_info.id,
       { navigate } = this.props.screenProps;
-    navigate('CardDetail', { cardId, gameName });
+    navigate('CardDetail', { gameId, gameName });
   }
 
   /**

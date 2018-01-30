@@ -92,7 +92,7 @@ class Hall extends Component {
               {
                 this.state.swiperArr.map((item, index) => {
                   return (
-                    <TouchableWithoutFeedback key={index} onPress={() => this.onPressItem(item.title)}>
+                    <TouchableWithoutFeedback key={index} onPress={() => this.onPressItem(item.link_url.split('/')[item.link_url.split('/').length - 1], item.title)}>
                       <Image source={{ uri: getImgUrl(item.image_url, 'HALL_SWIPER') }}
                         style={[styles.swiperItem, { backgroundColor: isNightMode ? '#000' : '#F4F5F6'}]} />
                     </TouchableWithoutFeedback>
@@ -115,7 +115,7 @@ class Hall extends Component {
                 {
                   item.game_lists.map((game, gameIndex) => {
                     return (
-                      <TouchableWithoutFeedback key={gameIndex} onPress={() => this.onPressItem(game.name)}>
+                      <TouchableWithoutFeedback key={gameIndex} onPress={() => this.onPressItem(game.download_info.id, game.name)}>
                         <View style={[styles.gameItem, (gameIndex + 1) % 4 == 0 && { marginRight: 0 }]}>
                           <Image style={[styles.gameIcon, { backgroundColor: isNightMode ? '#000' : '#F4F5F6', overlayColor: isNightMode ? '#252525' : '#FFF' }]} source={{ uri: getImgUrl(game.avatar, 'HALL_ICON') }}/>
                           <Text numberOfLines={1} style={[styles.gameName, {color: isNightMode ? '#FFF' : '#222'}]}>{ game.name }</Text>
@@ -134,16 +134,16 @@ class Hall extends Component {
               <View style={[styles.bannerWrap, { borderColor: isNightMode ? '#424242' : '#F4F5F6' }]}>
                 {
                   item.game_banner.length == 1 ?
-                  <TouchableWithoutFeedback onPress={() => {this.onPressItem(item.game_banner[0].title)}}>
+                    <TouchableWithoutFeedback onPress={() => {this.onPressItem(item.game_banner[0].link_url.split('/')[item.game_banner[0].link_url.split('/').length - 1], item.game_banner[0].title)}}>
                     <Image style={[styles.bigBanner, { backgroundColor: isNightMode ? '#000' : '#F4F5F6' }]}
                       source={{ uri: getImgUrl(item.game_banner[0].image_url, 'HALL_BIG_BANNER') }} />
                   </TouchableWithoutFeedback> :
                   <View style={styles.smallBannerWrap}>
-                    <TouchableWithoutFeedback onPress={() => {this.onPressItem(item.game_banner[0].title)}}>
+                    <TouchableWithoutFeedback onPress={() => {this.onPressItem(item.game_banner[0].link_url.split('/')[item.game_banner[0].link_url.split('/').length - 1], item.game_banner[0].title)}}>
                       <Image style={[styles.smallBanner, { backgroundColor: isNightMode ? '#000' : '#F4F5F6', overlayColor: isNightMode ? '#252525' : '#FFF' }]}
                         source={{ uri: getImgUrl(item.game_banner[0].image_url, 'HALL_SMALL_BANNER') }} />
                     </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback onPress={() => { this.onPressItem(item.game_banner[1].title) }}>
+                    <TouchableWithoutFeedback onPress={() => {this.onPressItem(item.game_banner[1].link_url.split('/')[item.game_banner[1].link_url.split('/').length - 1], item.game_banner[0].title)}}>
                       <Image style={[styles.smallBanner, { backgroundColor: isNightMode ? '#000' : '#F4F5F6', overlayColor: isNightMode ? '#252525' : '#FFF' }]}
                         source={{ uri: getImgUrl(item.game_banner[1].image_url, 'HALL_SMALL_BANNER') }} />
                     </TouchableWithoutFeedback>         
@@ -158,11 +158,12 @@ class Hall extends Component {
 
   /**
    * 点击跳转游戏详情页
-   * @param {string} gameName 游戏名
+   * @param {String} gameId 游戏id
+   * @param {String} gameName 游戏名
    */
-  onPressItem(gameName) {
+  onPressItem(gameId, gameName) {
     const { navigate } = this.props.screenProps;
-    navigate('CardDetail', { gameName });
+    navigate('CardDetail', { gameId, gameName });
   }
 
   /**

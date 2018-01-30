@@ -11,24 +11,30 @@ import {
   ScrollView,
   ActivityIndicator,
   Modal,
+  Linking,
+  ActionSheetIOS,
   TouchableWithoutFeedback,
 } from 'react-native';
 
 import ImageViewer from 'react-native-image-zoom-viewer';
+import ActionSheet from 'react-native-actionsheet';
 
-import { totalWidth, totalHeight, dpr } from '../../../conf/deviceParam';
+import { totalWidth, totalHeight, dpr, isAndroid } from '../../../conf/deviceParam';
 import { MyStatusBar, STATUSBAR_HEIGHT } from '../../common/MyStatusBar';
 import ToolBar from '../../common/ToolBar';
 import { getImgUrl } from '../../../utils/util';
 
 const detailData = require("../../../conf/detailMock.json");
-
 const SHRINK_BASE = 45;
+const URL_PREFIX = 'https://ic.snssdk.com/game_channel/detail/',
+  CANCEL_INDEX = 2,
+  OPTIONS = ['在浏览器中打开', '分享', '取消'];
 
 class CardDetail extends Component {
   constructor(props) {
     super(props);
     this.gameName = this.props.navigation.state.params.gameName;
+    this.gameId = this.props.navigation.state.params.gameId;
     this.state = {
       isImgViewerShow: false,
       isDescShrink: true,
@@ -38,6 +44,8 @@ class CardDetail extends Component {
     this.showText = this.showText.bind(this);
     this.renderRecItem = this.renderRecItem.bind(this);
     this.onPressContentImg = this.onPressContentImg.bind(this);
+    this.handlePress = this.handlePress.bind(this);
+    this.onPressToolBarMore = this.onPressToolBarMore.bind(this);
   }
 
   componentWillMount() {
@@ -80,9 +88,21 @@ class CardDetail extends Component {
     desc = { spread: desc, shrink: desc.slice(0, tail) + '...' };
     return (
       <View style={styles.container}>
+        {
+          isAndroid &&
+          <ActionSheet
+            ref={o => this.ActionSheet = o}
+            options={OPTIONS}
+            cancelButtonIndex={CANCEL_INDEX}
+            onPress={this.handlePress} />
+        }
         <MyStatusBar />
-        <ToolBar title={this.gameName} navigation={this.props.navigation}
-          leftIcon={'back'} rightIcon={['more']} />
+        <ToolBar
+          title={this.gameName}
+          navigation={this.props.navigation}
+          onPressToolBarMore={this.onPressToolBarMore}
+          leftIcon={'back'}
+          rightIcon={['more']} />
         <ScrollView style={{ backgroundColor: this.props.theme.themeColor }}>
           <View style={{ backgroundColor: isNightMode ? '#252525' : '#FFF' }}>
             {
@@ -190,6 +210,32 @@ class CardDetail extends Component {
         </Modal>
       </View>
     );
+  }
+
+  /**
+   * 点击ActionSheet的回调函数
+   * @param {Number} index button的索引 
+   */
+  handlePress(index) {
+    if (index == 0) {
+      Linking.openURL(`${URL_PREFIX}${this.gameId}`);
+    } else if (index == 1) {
+
+    }
+  }
+
+  /**
+   * 当点击toolBar上的more icon
+   */
+  onPressToolBarMore() {
+    if (isAndroid) {
+      this.ActionSheet.show();
+    } else {
+      ActionSheetIOS.showActionSheetWithOptions({
+        options: OPTIONS,
+        cancelButtonIndex: CANCEL_INDEX,
+      }, this.handlePress);
+    }
   }
 
   /**

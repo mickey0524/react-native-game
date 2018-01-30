@@ -115,10 +115,10 @@ class Feed extends Component {
         navigate('ArticleDetail', { source: `https://open.toutiao.com/a${articleId}/`, articleName });
       });
     } else {
-      let cardId = item.app_info.download_info.id,
+      let gameId = item.app_info.download_info.id,
         gameName = item.name;
       let gameItem = {
-        id: cardId,
+        id: gameId,
         name: gameName,
         title: item.title,
       };
@@ -130,7 +130,7 @@ class Feed extends Component {
           gameHistoryList.unshift(gameItem);
         }
         setGameHistory(JSON.stringify(gameHistoryList));
-        navigate('CardDetail', { cardId, gameName });
+        navigate('CardDetail', { gameId, gameName });
       });
     }
   }

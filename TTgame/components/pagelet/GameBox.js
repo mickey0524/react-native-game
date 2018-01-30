@@ -5,13 +5,16 @@ import {
   Text,
   FlatList,
   Linking,
+  ActionSheetIOS,
   ActivityIndicator,
   TouchableWithoutFeedback,
   Image,
   StyleSheet,
 } from 'react-native';
 
-import { OS, totalWidth, totalHeight, dpr } from '../../conf/deviceParam';
+import ActionSheet from 'react-native-actionsheet';
+
+import { OS, totalWidth, totalHeight, dpr, isAndroid } from '../../conf/deviceParam';
 import { MyStatusBar, STATUSBAR_HEIGHT } from '../common/MyStatusBar';
 import ToolBar from '../common/ToolBar';
 import BottomLoading from '../common/BottomLoading';
@@ -19,7 +22,10 @@ import color from '../../conf/color';
 import { GAME_BOX } from '../../conf/api';
 import { getImgUrl } from '../../utils/util';
 
-const platform = OS === 'ios' ? 1 : 0;
+const platform = OS === 'ios' ? 1 : 0,
+  URL_PREFIX = 'https://ic.snssdk.com/game_channel/game_box/',
+  CANCEL_INDEX = 2,
+  OPTIONS = ['在浏览器中打开', '分享', '取消'];
 
 class GameBox extends Component {
   constructor(props) {
@@ -33,6 +39,8 @@ class GameBox extends Component {
     }
     this.fetchData = this.fetchData.bind(this);
     this.renderItem = this.renderItem.bind(this);
+    this.onPressToolBarMore = this.onPressToolBarMore.bind(this);
+    this.handlePress = this.handlePress.bind(this);
   } 
   
   componentWillMount() {
@@ -43,8 +51,18 @@ class GameBox extends Component {
     let isNightMode = this.props.mode == 'night';
     return (
       <View style={[styles.container, { backgroundColor: isNightMode ? '#252525' : '#FFF'}]}>
+        {
+          isAndroid &&
+          <ActionSheet
+            ref={o => this.ActionSheet = o}
+            options={OPTIONS}
+            cancelButtonIndex={CANCEL_INDEX}
+            onPress={this.handlePress} />
+        }
         <MyStatusBar />
-        <ToolBar title={this.gameBoxName} navigation={this.props.navigation}
+        <ToolBar title={this.gameBoxName}
+          navigation={this.props.navigation}
+          onPressToolBarMore={this.onPressToolBarMore}
           leftIcon={'back'}
           rightIcon={['more']} />
         {
@@ -91,12 +109,39 @@ class GameBox extends Component {
   }
 
   /**
-   * 点击游戏跳转游戏详情页
-   * @param {string} gameName 游戏名
+   * 点击ActionSheet的回调函数
+   * @param {Number} index button的索引 
    */
-  onPressItem(gameName) {
+  handlePress(index) {
+    if (index == 0) {
+      Linking.openURL(`${URL_PREFIX}${this.gameBoxId}`);
+    } else if (index == 1) {
+
+    }
+  }
+
+  /**
+   * 当点击toolBar上的more icon
+   */
+  onPressToolBarMore() {
+    if (isAndroid) {
+      this.ActionSheet.show();
+    } else {
+      ActionSheetIOS.showActionSheetWithOptions({
+        options: OPTIONS,
+        cancelButtonIndex: CANCEL_INDEX,
+      }, this.handlePress);
+    }
+  }
+
+  /**
+   * 点击游戏跳转游戏详情页
+   * @param {String} gameId 游戏id
+   * @param {String} gameName 游戏名
+   */
+  onPressItem(gameId, gameName) {
     const { navigate } = this.props.navigation;
-    navigate('CardDetail', { gameName });
+    navigate('CardDetail', { gameName, gameId });
   }
 
   /**
@@ -116,7 +161,7 @@ class GameBox extends Component {
     return (
       index == this.state.gameList.length - 1 ?
         (this.state.hasMore ? <BottomLoading /> : null) :
-        <TouchableWithoutFeedback onPress={() => this.onPressItem(item.name)}>
+        <TouchableWithoutFeedback onPress={() => this.onPressItem(item.download_info.id, item.name)}>
           <View style={styles.gameItem}> 
             <Image source={{ uri: getImgUrl(item.avatar, 'GAME_BOX_ICON') }}
               style={[styles.gameIcon, { backgroundColor: isNightMode ? '#000' : '#F4F5F6', overlayColor: isNightMode ? '#252525' : '#FFF'}]}/> 
