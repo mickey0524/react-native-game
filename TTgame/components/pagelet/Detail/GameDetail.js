@@ -18,6 +18,7 @@ import {
 
 import ImageViewer from 'react-native-image-zoom-viewer';
 import ActionSheet from 'react-native-actionsheet';
+import Share from 'react-native-share';
 
 import { totalWidth, totalHeight, dpr, isAndroid } from '../../../conf/deviceParam';
 import { MyStatusBar, STATUSBAR_HEIGHT } from '../../common/MyStatusBar';
@@ -220,7 +221,12 @@ class CardDetail extends Component {
     if (index == 0) {
       Linking.openURL(`${URL_PREFIX}${this.gameId}`);
     } else if (index == 1) {
-
+      let shareOptions = {
+        url: `${URL_PREFIX}${this.gameId}`,
+        message: this.gameName,
+        subject: this.gameName,
+      };
+      Share.open(shareOptions).catch((err) => { err && console.log(err); });
     }
   }
 

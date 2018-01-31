@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 
 import ActionSheet from 'react-native-actionsheet';
+import Share from 'react-native-share';
 
 import { MyStatusBar } from '../../common/MyStatusBar';
 import ToolBar from '../../common/ToolBar';
@@ -59,7 +60,12 @@ export default class ArticleDetail extends Component {
     if (index == 0) {
       Linking.openURL(this.source);
     } else if (index == 1) {
-
+      let shareOptions = {
+        url: this.source,
+        message: this.articleName,
+        subject: this.articleName,
+      };
+      Share.open(shareOptions).catch((err) => { err && console.log(err); });
     }
   }
 

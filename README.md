@@ -24,7 +24,7 @@
   - [x] 完成正常下载功能
   - [x] 完成用浏览器打开web页面的功能  
   - [ ] react-native-fs的介入
-  - [ ] react-native-share的接入，完成分享功能
+  - [x] react-native-share的接入，完成分享功能
   - [ ] 抓取pc网页数据，替换详情页mock数据
 
 # Development

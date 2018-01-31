@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 
 import ActionSheet from 'react-native-actionsheet';
+import Share from 'react-native-share';
 
 import TabContainer from './ViewPager';
 import ToolBar from '../../common/ToolBar';
@@ -70,7 +71,24 @@ export default class Home extends Component {
     if (index == 0) {
       Linking.openURL(`${URL_PREFIX}${this.routeName}`);
     } else if (index == 1) {
-
+      let shareOptions = {
+        url: `${URL_PREFIX}${this.routeName}`,
+        subject: "今日游戏精品推荐",
+      };
+      switch (this.routeName) {
+        case 'Feed':
+          shareOptions.message = '今日游戏精品推荐～';
+          break;
+        case 'Hall':
+          shareOptions.message = '今日游戏游戏大厅～';
+          break;
+        case 'Rank':
+          shareOptions.message = '今日游戏热门榜单～';
+          break;
+        default:
+          break;
+      }
+      Share.open(shareOptions).catch((err) => { err && console.log(err); });
     }
   }
 

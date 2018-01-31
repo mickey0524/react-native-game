@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 
 import ActionSheet from 'react-native-actionsheet';
+import Share from 'react-native-share';
 
 import { OS, totalWidth, totalHeight, dpr, isAndroid } from '../../conf/deviceParam';
 import { MyStatusBar, STATUSBAR_HEIGHT } from '../common/MyStatusBar';
@@ -116,7 +117,12 @@ class GameBox extends Component {
     if (index == 0) {
       Linking.openURL(`${URL_PREFIX}${this.gameBoxId}`);
     } else if (index == 1) {
-
+      let shareOptions = {
+        url: `${URL_PREFIX}${this.gameBoxId}`,
+        message: this.gameBoxName,
+        subject: this.gameBoxName,
+      };
+      Share.open(shareOptions).catch((err) => { err && console.log(err); });
     }
   }
 
