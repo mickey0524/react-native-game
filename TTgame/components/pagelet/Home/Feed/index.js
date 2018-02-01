@@ -107,11 +107,21 @@ class Feed extends Component {
       fetchArticleHisotry().then(articleHistoryList => {
         if (!articleHistoryList) {
           articleHistoryList = [articleItem];
+          setArticleHistory(JSON.stringify(articleHistoryList));
         } else {
           articleHistoryList = JSON.parse(articleHistoryList);
-          articleHistoryList.unshift(articleItem);
+          let isFound = false;
+          for (let i = 0, len = articleHistoryList.length; i < len; i++) {
+            if (articleHistoryList[i].id == articleId) {
+              isFound = true;
+              break;
+            }
+          }
+          if (!isFound) {
+            articleHistoryList.unshift(articleItem);
+            setArticleHistory(JSON.stringify(articleHistoryList));            
+          }
         }
-        setArticleHistory(JSON.stringify(articleHistoryList));
         navigate('ArticleDetail', { source: `https://open.toutiao.com/a${articleId}/`, articleName });
       });
     } else {
@@ -125,11 +135,21 @@ class Feed extends Component {
       fetchGameHisotry().then(gameHistoryList => {
         if (!gameHistoryList) {
           gameHistoryList = [gameItem];
+          setGameHistory(JSON.stringify(gameHistoryList));          
         } else {
           gameHistoryList = JSON.parse(gameHistoryList);
-          gameHistoryList.unshift(gameItem);
+          let isFound = false;
+          for (let i = 0, len = gameHistoryList.length; i < len; i++) {
+            if (gameHistoryList[i].id == gameId) {
+              isFound = true;
+              break;
+            }
+          }
+          if (!isFound) {
+            gameHistoryList.unshift(gameItem);
+            setGameHistory(JSON.stringify(gameHistoryList));            
+          }
         }
-        setGameHistory(JSON.stringify(gameHistoryList));
         navigate('CardDetail', { gameId, gameName });
       });
     }

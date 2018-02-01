@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import {
   View,
   Image,
+  Text,
   TouchableWithoutFeedback,
+  StyleSheet,
   Animated,
   Easing,
 } from 'react-native';
@@ -51,10 +53,21 @@ export default class LazyImage extends Component {
   }
 
   render() {
+    let imgNotLoadInMobileNet = !this.state.isImgShow &&
+      this.props.netInfo == 'nowifi' &&
+      !this.props.loadImgWithoutWifi;
     let imgView = 
-      <View ref={(img) => { this.img = img; }}
-        style={[{ backgroundColor: this.props.isNightMode ? '#000' : '#F4F5F6' },
+      <View
+        ref={(img) => { this.img = img; }}
+        style={[styles.container, { backgroundColor: this.props.isNightMode ? '#000' : '#F4F5F6' },
         this.props.marginRight && { marginRight: this.props.marginRight }]}>
+        { 
+          imgNotLoadInMobileNet &&
+          <Text style={[styles.clickLoadTip,
+            { color: this.props.isNightMode ? '#FFF' : '#000' }]}>
+            点击加载图片
+          </Text>
+        }
         <Animated.View
           style={{
             opacity: this.state.opacity,
@@ -69,9 +82,7 @@ export default class LazyImage extends Component {
     return (
       <View>
         {
-          !this.state.isImgShow &&
-          this.props.netInfo == 'nowifi' &&
-          !this.props.loadImgWithoutWifi ?
+          imgNotLoadInMobileNet ?
             <TouchableWithoutFeedback onPress={this.onPressImg}>
               {imgView}
             </TouchableWithoutFeedback> :
@@ -123,3 +134,15 @@ export default class LazyImage extends Component {
     }
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  clickLoadTip: {
+    position: 'absolute',
+    fontSize: 18,
+  },
+});
