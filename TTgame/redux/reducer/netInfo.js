@@ -3,7 +3,7 @@ import {
   CHANGE_IF_LOAD_IMG_WHIYOUT_WIFI,
 } from '../../conf/actionTypes';
 
-function netInfo(state = 'wifi', action) {
+function netInfo(state = 'nowifi', action) {
   switch (action.type) {
     case CHANGE_NETINFO:
       return action.netInfo;
@@ -14,7 +14,7 @@ function netInfo(state = 'wifi', action) {
   }
 }
 
-function loadImgWithoutWifi(state = true, action) {
+function loadImgWithoutWifi(state = false, action) {
   switch (action.type) {
     case CHANGE_IF_LOAD_IMG_WHIYOUT_WIFI:
       return action.ifLoadImgWithoutWifi;

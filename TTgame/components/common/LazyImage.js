@@ -32,14 +32,19 @@ export default class LazyImage extends Component {
         if (!this.props.loadDirection) {
           this.scrollThreshold -= REFRESH_CONTROL_HEIGHT;
         }
-        this.compareDis(this.props.contentOffsetY);
+        if (this.props.netInfo == 'wifi' ||
+          (this.props.netInfo == 'nowifi' && this.props.loadImgWithoutWifi)) {
+          this.compareDis(this.props.contentOffsetY);
+        }
       });
     }, 0);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
     if (this.props.isNightMode != nextProps.isNightMode ||
-      this.props.imgUrl != nextProps.imgUrl) {
+      this.props.imgUrl != nextProps.imgUrl ||
+      this.props.netInfo != nextProps.netInfo ||
+      this.props.loadImgWithoutWifi != nextProps.loadImgWithoutWifi) {
       return true;
     }
     return this.shouldUpdate;
