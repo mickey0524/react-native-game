@@ -53,8 +53,8 @@ export default class LazyImage extends Component {
   }
   
   componentWillReceiveProps(nextProps) {    
-    if (this.props.netInfo == 'wifi' ||
-      (this.props.netInfo == 'nowifi' && this.props.loadImgWithoutWifi)) {
+    if (nextProps.netInfo == 'wifi' ||
+      (nextProps.netInfo == 'nowifi' && nextProps.loadImgWithoutWifi)) {
       this.compareDis(nextProps.contentOffsetY);
     }
   }
