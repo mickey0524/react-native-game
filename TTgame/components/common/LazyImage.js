@@ -28,9 +28,11 @@ export default class LazyImage extends Component {
   componentDidMount() {
     setTimeout(() => {
       this.img.measure((x, y, width, height, pageX, pageY) => {
-        this.scrollThreshold = this.props.contentOffsetY + pageY;
+        this.scrollEndThreshold = this.props.contentOffsetY + pageY;
+        this.scrollTopThreshold = this.props.contentOffsetY + pageY + height;
         if (!this.props.loadDirection) {
-          this.scrollThreshold -= REFRESH_CONTROL_HEIGHT;
+          this.scrollEndThreshold -= REFRESH_CONTROL_HEIGHT;
+          this.scrollTopThreshold -= REFRESH_CONTROL_HEIGHT;
         }
         if (this.props.netInfo == 'wifi' ||
           (this.props.netInfo == 'nowifi' && this.props.loadImgWithoutWifi)) {
@@ -131,7 +133,8 @@ export default class LazyImage extends Component {
    * @param {number} contentOffsetY 当前列表滚动的距离
    */
   compareDis(contentOffsetY) {
-    if (!this.state.isImgShow && contentOffsetY + totalHeight > this.scrollThreshold) {
+    if (!this.state.isImgShow && contentOffsetY + totalHeight > this.scrollEndThreshold &&
+      contentOffsetY < this.scrollTopThreshold) {
       this.shouldUpdate = true;
       this.setState({
         isImgShow: true,
