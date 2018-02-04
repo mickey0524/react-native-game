@@ -71,7 +71,7 @@ export default class LazyImage extends Component {
         { 
           imgNotLoadInMobileNet &&
           <Text style={[styles.clickLoadTip,
-            { color: this.props.isNightMode ? '#FFF' : '#000' }]}>
+            { color: this.props.isNightMode ? '#E8E8E8' : '#424242' }]}>
             点击加载图片
           </Text>
         }
