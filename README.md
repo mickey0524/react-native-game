@@ -1,5 +1,5 @@
 # game
-🔥🚀今日游戏的第三方android和ios客户端，基于react-native、redux，本app纯属个人瞎搞，没有版权
+🔥🚀今日游戏的第三方android和ios客户端，基于react-native、redux，本app纯属个人瞎搞，没有版权(由于业务重构，项目中引用的api下线，项目已经run不起来)
 
 # Features
 * 支持浏览游戏相关的新闻，榜单
